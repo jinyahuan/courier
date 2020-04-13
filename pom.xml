@@ -29,4 +29,29 @@
         <module>courier-core</module>
         <module>courier-host</module>
     </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <file.encoding>UTF-8</file.encoding>
+
+        <plugin.compiler.version>3.8.0</plugin.compiler.version>
+        <plugin.compiler.conf.source>${java.version}</plugin.compiler.conf.source>
+        <plugin.compiler.conf.target>${java.version}</plugin.compiler.conf.target>
+        <plugin.compiler.conf.encoding>${file.encoding}</plugin.compiler.conf.encoding>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.compiler.version}</version>
+                <configuration>
+                    <source>${plugin.compiler.conf.source}</source>
+                    <target>${plugin.compiler.conf.target}</target>
+                    <encoding>${plugin.compiler.conf.encoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
