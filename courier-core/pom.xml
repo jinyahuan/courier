@@ -28,4 +28,11 @@
         <artifactId>courier</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.jinyahuan.commons</groupId>
+            <artifactId>courier-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>

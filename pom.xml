@@ -38,7 +38,27 @@
         <plugin.compiler.conf.source>${java.version}</plugin.compiler.conf.source>
         <plugin.compiler.conf.target>${java.version}</plugin.compiler.conf.target>
         <plugin.compiler.conf.encoding>${file.encoding}</plugin.compiler.conf.encoding>
+
+        <lombok.version>1.18.12</lombok.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.jinyahuan.commons</groupId>
+                <artifactId>courier-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

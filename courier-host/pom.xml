@@ -33,4 +33,16 @@
         <module>courier-host-simulation</module>
         <module>courier-host-vacancy</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.jinyahuan.commons</groupId>
+            <artifactId>courier-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 </project>
