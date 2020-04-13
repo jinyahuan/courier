@@ -23,4 +23,75 @@ package cn.jinyahuan.commons.courier.api.model;
  * @since 0.1
  */
 public interface ResponseAttributeAccessor {
+    /**
+     * 获取响应的状态码。
+     *
+     * @return
+     */
+    int getState();
+
+    /**
+     * 设置响应的状态码。
+     *
+     * @param state
+     */
+    void setState(int state);
+
+    /**
+     * 获取响应的错误编码。
+     *
+     * @return
+     */
+    String getCode();
+
+    /**
+     * 设置响应的错误编码。
+     *
+     * @return
+     */
+    void setCode(String code);
+
+    /**
+     * 获取响应的错误信息。
+     *
+     * @return
+     */
+    String getMsg();
+
+    /**
+     * 设置响应的错误信息。
+     *
+     * @return
+     */
+    void setMsg(String msg);
+
+    /**
+     * 获取响应的数据。
+     *
+     * @param <T>
+     * @return
+     */
+    <T> T getResponseData();
+
+    /**
+     * 设置响应的数据。
+     *
+     * @param responseData
+     * @param <T>
+     */
+    <T> void setResponseData(T responseData);
+
+    /**
+     * 获取签名。
+     *
+     * @return
+     */
+    String getSign();
+
+    /**
+     * 设置签名。
+     *
+     * @param sign
+     */
+    void setSign(String sign);
 }
