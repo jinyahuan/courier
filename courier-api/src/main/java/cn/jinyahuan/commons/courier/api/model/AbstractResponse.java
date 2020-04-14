@@ -16,6 +16,8 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
+import cn.jinyahuan.commons.courier.api.ResponseState;
+import cn.jinyahuan.commons.courier.api.ResponseStateAccessor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -37,4 +39,14 @@ public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
     protected T responseData;
 
     protected String sign;
+
+    public AbstractResponse() {
+        this(ResponseState.FAILURE);
+    }
+
+    public AbstractResponse(ResponseStateAccessor responseState) {
+        this.state = responseState.getState();
+        this.code = responseState.getCode();
+        this.msg = responseState.getMsg();
+    }
 }

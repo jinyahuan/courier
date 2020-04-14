@@ -29,9 +29,47 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResponseState implements ResponseStateAccessor {
     /**
+     * 失败。
+     */
+    FAILURE(0, "0", "failure"),
+    /**
      * 成功。
      */
-    SUCCESS(1);
+    SUCCESS(1, "1", "ok"),
+    /**
+     * 异步操作提交成功。
+     */
+    ASYNC_SUBMIT_SUCCESS(2, "2", "async submit ok"),
+    /**
+     * 批量操作提交成功。
+     */
+    BATCH_SUBMIT_SUCCESS(3, "3", "batch submit ok"),
+    /**
+     * 定时操作提交成功。
+     */
+    SCHEDULED_SUBMIT_SUCCESS(4, "4", "scheduled submit ok"),
+    /**
+     * 服务不可用。
+     */
+    SERVICE_UNAVAILABLE(101, "101", "service unavailable"),
+    /**
+     * 发送失败。
+     */
+    SEND_FAILURE(201, "201", "send failure"),
+    ;
 
+    /**
+     * 状态码。
+     */
     private final int state;
+
+    /**
+     * 错误编码。
+     */
+    private final String code;
+
+    /**
+     * 错误信息。
+     */
+    private final String msg;
 }

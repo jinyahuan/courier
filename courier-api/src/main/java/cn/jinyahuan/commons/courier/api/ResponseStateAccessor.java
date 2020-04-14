@@ -27,4 +27,18 @@ public interface ResponseStateAccessor {
      * @return
      */
     int getState();
+
+    /**
+     * 获取响应的错误编码。
+     *
+     * @return
+     */
+    String getCode();
+
+    /**
+     * 获取响应的错误信息。
+     *
+     * @return
+     */
+    String getMsg();
 }
