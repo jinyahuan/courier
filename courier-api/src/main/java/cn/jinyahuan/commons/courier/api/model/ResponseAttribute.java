@@ -22,5 +22,7 @@ package cn.jinyahuan.commons.courier.api.model;
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface ResponseAttribute extends ResponseAttributeAccessor {
+public interface ResponseAttribute<T> extends ResponseAttributeAccessor<T> {
+    @Override
+    String toString();
 }

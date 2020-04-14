@@ -16,13 +16,25 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
- * 请求的属性。
- *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface RequestAttribute extends RequestAttributeAccessor {
-    @Override
-    String toString();
+@Getter
+@Setter
+@ToString
+public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
+    protected int state;
+
+    protected String code;
+
+    protected String msg;
+
+    protected T responseData;
+
+    protected String sign;
 }

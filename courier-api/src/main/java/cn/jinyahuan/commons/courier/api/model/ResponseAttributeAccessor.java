@@ -22,7 +22,7 @@ package cn.jinyahuan.commons.courier.api.model;
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface ResponseAttributeAccessor {
+public interface ResponseAttributeAccessor<T> {
     /**
      * 获取响应的状态码。
      *
@@ -47,7 +47,7 @@ public interface ResponseAttributeAccessor {
     /**
      * 设置响应的错误编码。
      *
-     * @return
+     * @param code
      */
     void setCode(String code);
 
@@ -61,25 +61,23 @@ public interface ResponseAttributeAccessor {
     /**
      * 设置响应的错误信息。
      *
-     * @return
+     * @param msg
      */
     void setMsg(String msg);
 
     /**
      * 获取响应的数据。
      *
-     * @param <T>
      * @return
      */
-    <T> T getResponseData();
+    T getResponseData();
 
     /**
      * 设置响应的数据。
      *
      * @param responseData
-     * @param <T>
      */
-    <T> void setResponseData(T responseData);
+    void setResponseData(T responseData);
 
     /**
      * 获取签名。

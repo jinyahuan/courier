@@ -17,12 +17,9 @@
 package cn.jinyahuan.commons.courier.api.model;
 
 /**
- * 请求的属性。
- *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface RequestAttribute extends RequestAttributeAccessor {
-    @Override
-    String toString();
+public abstract class AbstractRequest implements RequestAttribute {
+
 }
