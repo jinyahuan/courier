@@ -16,13 +16,14 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
-import cn.jinyahuan.commons.courier.api.ResponseState;
 import cn.jinyahuan.commons.courier.api.ResponseStateAccessor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 /**
+ * 抽象的响应信息类。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
@@ -30,23 +31,27 @@ import lombok.ToString;
 @Setter
 @ToString
 public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
+    /** 状态码 */
     protected int state;
-
+    /** 错误码 */
     protected String code;
-
+    /** 错误信息 */
     protected String msg;
-
+    /** 响应的数据 */
     protected T responseData;
-
+    /** 签名 */
     protected String sign;
 
-    public AbstractResponse() {
-        this(ResponseState.FAILURE);
-    }
+    public AbstractResponse() {}
 
     public AbstractResponse(ResponseStateAccessor responseState) {
         this.state = responseState.getState();
         this.code = responseState.getCode();
         this.msg = responseState.getMsg();
+    }
+
+    public AbstractResponse(ResponseStateAccessor responseState, T responseData) {
+        this(responseState);
+        this.responseData = responseData;
     }
 }
