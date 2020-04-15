@@ -2,7 +2,7 @@
 [![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)    
 Courier(信使): 集成的各大短信服务商的短信操作功能。提供一个统一化的短信操作方式，有点像[slf4j](https://github.com/qos-ch/slf4j)。
 
-> 注意: 当前处于设计与Demo阶段，会有大量删改，请勿使用！
+> **注意: 当前处于设计与Demo阶段，会有大量删改，请勿使用！**
 
 > 注意: 开发与运行需要 java 8+ (包括)
 
