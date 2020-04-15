@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier.api.state;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,10 +52,6 @@ public enum ResponseState implements ResponseStateAccessor {
      * 服务不可用。
      */
     SERVICE_UNAVAILABLE(101, "101", "service unavailable"),
-    /**
-     * 发送失败。
-     */
-    SEND_FAILURE(201, "201", "send failure"),
     ;
 
     /**

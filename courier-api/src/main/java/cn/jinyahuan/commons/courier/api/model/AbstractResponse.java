@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
-import cn.jinyahuan.commons.courier.api.ResponseStateAccessor;
+import cn.jinyahuan.commons.courier.api.state.ResponseStateAccessor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

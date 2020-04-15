@@ -14,31 +14,22 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier.api.state;
+
+import cn.jinyahuan.commons.courier.api.model.AbstractResponse;
 
 /**
+ * 带有服务不可用状态的响应信息类。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface ResponseStateAccessor {
-    /**
-     * 获取响应的状态码。
-     *
-     * @return
-     */
-    int getState();
+public class ServiceUnavailableResponse<T> extends AbstractResponse<T> {
+    public ServiceUnavailableResponse() {
+        super(ResponseState.SERVICE_UNAVAILABLE);
+    }
 
-    /**
-     * 获取响应的错误编码。
-     *
-     * @return
-     */
-    String getCode();
-
-    /**
-     * 获取响应的错误信息。
-     *
-     * @return
-     */
-    String getMsg();
+    public ServiceUnavailableResponse(T responseData) {
+        super(ResponseState.SERVICE_UNAVAILABLE, responseData);
+    }
 }
