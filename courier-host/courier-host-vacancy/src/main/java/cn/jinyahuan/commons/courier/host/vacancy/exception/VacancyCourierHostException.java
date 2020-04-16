@@ -14,33 +14,24 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
+package cn.jinyahuan.commons.courier.host.vacancy.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import cn.jinyahuan.commons.courier.exception.CourierHostException;
 
 /**
- * 当使用空缺的短信服务商时的处理策略。
+ * 信使服务商空缺异常。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@Getter
-@AllArgsConstructor
-public enum VacancyHostHandleStrategy implements HandleStrategyAttributeAccessor {
-    /**
-     * 抛出某种异常。
-     */
-    THROW_EXCEPTION(1),
-    /**
-     * 响应为服务不可用状态。
-     */
-    RESPONSE_SERVICE_UNAVAILABLE_STATE(2),
-    /**
-     * 寻找其他可用的（已配置的）服务商，如果没找到则响应为服务可不用状态。
-     */
-    LOOKUP_IF_ABSENT_UNAVAILABLE_STATE(3),
-    ;
+public class VacancyCourierHostException extends CourierHostException {
+    static final long serialVersionUID = 1L;
 
-    private final int id;
+    public VacancyCourierHostException() {
+        super();
+    }
+
+    public VacancyCourierHostException(String message) {
+        super(message);
+    }
 }

@@ -19,56 +19,55 @@ package cn.jinyahuan.commons.courier.host.vacancy;
 import cn.jinyahuan.commons.courier.api.Courier;
 import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
-
-import java.util.Objects;
+import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostException;
 
 /**
- * todo
- *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourier implements Courier {
-    private VacancyHostHandleStrategy handleStrategy = VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE;
-
-    public VacancyCourier() {}
-
-    public VacancyCourier(VacancyHostHandleStrategy handleStrategy) {
-        this.handleStrategy = Objects.requireNonNull(handleStrategy);
-    }
-
+public class ThrowableVacancyCourier implements Courier {
     @Override
     public ResponseAttribute send(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute query(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendAsync(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
     }
 
     @Override
     public ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
-        return null;
+        return handle(requestAttribute);
+    }
+
+    /**
+     * 默认的处理逻辑是抛出{@link VacancyCourierHostException}异常。
+     *
+     * @param requestAttribute
+     * @return
+     */
+    protected ResponseAttribute handle(RequestAttribute requestAttribute) {
+        throw new VacancyCourierHostException();
     }
 }
