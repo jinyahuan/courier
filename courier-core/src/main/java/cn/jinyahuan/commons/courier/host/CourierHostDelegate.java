@@ -16,6 +16,8 @@
 
 package cn.jinyahuan.commons.courier.host;
 
+import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+
 /**
  * 服务商委派器。
  * <p>
@@ -27,10 +29,31 @@ package cn.jinyahuan.commons.courier.host;
  */
 public interface CourierHostDelegate {
     /**
-     * 通过一个 key 来指定委派的服务商。
+     * 获取委派的服务商。
      *
      * @param key
      * @return
      */
     CourierHost assign(String key);
+
+    /**
+     * 获取委派的服务商。
+     *
+     * @param request
+     * @return
+     */
+    default CourierHost assign(RequestAttribute request) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * 获取委派的服务商。
+     *
+     * @param key
+     * @param request
+     * @return
+     */
+    default CourierHost assign(String key, RequestAttribute request) {
+        throw new UnsupportedOperationException();
+    }
 }
