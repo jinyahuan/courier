@@ -28,18 +28,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum VacancyHostHandleStrategy implements HandleStrategyAttributeAccessor {
-    /**
-     * 抛出某种异常。
-     */
+    /** 抛出某种异常 */
     THROW_EXCEPTION(1),
-    /**
-     * 响应为服务不可用状态。
-     */
+    /** 响应为服务不可用状态 */
     RESPONSE_SERVICE_UNAVAILABLE_STATE(2),
-    /**
-     * 寻找其他可用的（已配置的）服务商，如果没找到则响应为服务可不用状态。
-     */
-    LOOKUP_IF_ABSENT_UNAVAILABLE_STATE(3),
     ;
 
     private final int id;
