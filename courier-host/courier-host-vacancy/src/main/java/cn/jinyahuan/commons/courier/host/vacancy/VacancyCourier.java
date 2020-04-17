@@ -23,52 +23,83 @@ import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 import java.util.Objects;
 
 /**
- * todo
+ * 空缺服务商的信使。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
 public class VacancyCourier implements Courier {
-    private VacancyHostHandleStrategy handleStrategy = VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE;
+    /**
+     * 默认的处理策略。
+     */
+    private static final VacancyHostHandleStrategy DEFAULT_HANDLE_STRATEGY =
+            VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE;
 
-    public VacancyCourier() {}
+    private Courier courier;
+
+    public VacancyCourier() {
+        this(DEFAULT_HANDLE_STRATEGY);
+    }
 
     public VacancyCourier(VacancyHostHandleStrategy handleStrategy) {
-        this.handleStrategy = Objects.requireNonNull(handleStrategy);
+        init(handleStrategy);
     }
 
     @Override
     public ResponseAttribute send(RequestAttribute requestAttribute) {
-        return null;
+        return courier.send(requestAttribute);
     }
 
     @Override
     public ResponseAttribute query(RequestAttribute requestAttribute) {
-        return null;
+        return courier.query(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendAsync(RequestAttribute requestAttribute) {
-        return null;
+        return courier.sendAsync(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
-        return null;
+        return courier.sendBatch(requestAttribute);
     }
 
     @Override
     public ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
-        return null;
+        return courier.queryBatch(requestAttribute);
     }
 
     @Override
     public ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
-        return null;
+        return courier.sendScheduled(requestAttribute);
     }
 
     @Override
     public ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
-        return null;
+        return courier.queryScheduled(requestAttribute);
+    }
+
+    /**
+     * 初始化。
+     *
+     * @param handleStrategy
+     */
+    protected void init(VacancyHostHandleStrategy handleStrategy) {
+        Objects.requireNonNull(handleStrategy);
+
+        Courier tempCourier;
+        switch (handleStrategy) {
+            case THROW_EXCEPTION:
+                tempCourier = new ThrowableVacancyCourier();
+                break;
+            case RESPONSE_SERVICE_UNAVAILABLE_STATE:
+                tempCourier = new StatefulVacancyCourier(VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE);
+                break;
+            default:
+                throw new UnsupportedOperationException();
+        }
+
+        this.courier = tempCourier;
     }
 }

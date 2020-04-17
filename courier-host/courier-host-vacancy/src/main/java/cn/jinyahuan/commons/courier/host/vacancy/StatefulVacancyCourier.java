@@ -24,6 +24,8 @@ import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableResponse;
 import java.util.Objects;
 
 /**
+ * 状态化的空缺服务商信使。即信使工作时会响应某种状态的信息。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */

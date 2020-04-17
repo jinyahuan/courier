@@ -22,6 +22,8 @@ import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostException;
 
 /**
+ * 抛异常的空缺服务商信使。即信使工作时就会抛异常。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
