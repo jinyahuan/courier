@@ -17,6 +17,7 @@
 package cn.jinyahuan.commons.courier.api.model;
 
 import cn.jinyahuan.commons.courier.api.state.ResponseStateAccessor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,6 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
     /** 状态码 */
     protected int state;
