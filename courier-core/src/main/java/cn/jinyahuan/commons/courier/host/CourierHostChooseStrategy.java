@@ -23,9 +23,11 @@ package cn.jinyahuan.commons.courier.host;
  * @since 0.1
  */
 public enum CourierHostChooseStrategy {
-    /** 随机 */
-    RANDOM,
+    /** 轮询已配置的可用服务商 */
+    ROUND,
     /** 优先优先级高的（值越小优先级越高），同级则随机 */
     PRIORITY_AND_RANDOM,
+    /** 随机选取一个已配置的可用服务商 */
+    RANDOM,
     ;
 }
