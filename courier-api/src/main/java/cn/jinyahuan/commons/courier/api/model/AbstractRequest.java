@@ -23,26 +23,31 @@ import lombok.ToString;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
- * todo 抽象的请求信息类。
+ * 抽象的请求信息类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@Getter
-@Setter
 @ToString
 @EqualsAndHashCode
 public abstract class AbstractRequest implements RequestAttribute {
-    /** 手机号 */
-    protected String phone;
-    /** 模板编码 */
+    /** 所有的手机号 */
+    @Getter
+    @Setter
+    protected String[] phones;
+    /** 模板编号 */
+    @Getter
+    @Setter
     protected String templateCode;
     /** 参数列表 */
+    @Getter
+    @Setter
     protected String[] params;
-    /** 拓展参数列表（可能会去除的参数） */
-    @Deprecated
+    /** 拓展参数列表 */
+    @Deprecated // 可能会去除
     private Map<String, String> extendedParams;
 
     public AbstractRequest() {
@@ -55,8 +60,31 @@ public abstract class AbstractRequest implements RequestAttribute {
      * @param name
      * @param value
      */
-    protected void addExtendedParam(String name, String value) {
+    @Deprecated // 可能会去除
+    protected void setExtendedParam(String name, String value) {
         extendedParams.put(name, value);
+    }
+
+    /**
+     * 获取指定额外参数的值。
+     *
+     * @param name
+     * @return
+     */
+    @Deprecated // 可能会去除
+    protected String getExtendedParam(String name) {
+        return extendedParams.get(name);
+    }
+
+    /**
+     * 获取所有额外的参数。
+     * <p>注意: 返回值只是一个引用，即修改了返回值中的对象的键与值，同时也会作用到此对象。</p>
+     *
+     * @return
+     */
+    @Deprecated // 可能会去除
+    protected Set<Map.Entry<String, String>> getAllExtendedParam() {
+        return extendedParams.entrySet();
     }
 
     /**

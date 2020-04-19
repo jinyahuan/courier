@@ -16,6 +16,8 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
+import java.util.Objects;
+
 /**
  * 请求属性的访问器。
  *
@@ -23,4 +25,60 @@ package cn.jinyahuan.commons.courier.api.model;
  * @since 0.1
  */
 public interface RequestAttributeAccessor {
+    /**
+     * 获取所有的手机号。
+     *
+     * @return
+     */
+    String[] getPhones();
+
+    /**
+     * 设置所有的手机号。
+     *
+     * @param phones
+     */
+    void setPhones(String[] phones);
+
+    /**
+     * 获取模板编号。
+     *
+     * @return
+     */
+    String getTemplateCode();
+
+    /**
+     * 设置模板编号。
+     *
+     * @param templateCode
+     */
+    void setTemplateCode(String templateCode);
+
+    /**
+     * 获取所有的参数。
+     *
+     * @return
+     */
+    String[] getParams();
+
+    /**
+     * 设置所有的参数。
+     *
+     * @param params
+     */
+    void setParams(String[] params);
+
+    // - - -
+
+    /**
+     * 获取第一个手机号。
+     *
+     * @return
+     */
+    default String getPhone() {
+        String[] phones = getPhones();
+        if (Objects.nonNull(phones) && phones.length > 0) {
+            return phones[0];
+        }
+        return null;
+    }
 }
