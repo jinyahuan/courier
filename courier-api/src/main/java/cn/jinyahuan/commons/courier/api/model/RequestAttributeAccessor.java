@@ -81,4 +81,13 @@ public interface RequestAttributeAccessor {
         }
         return null;
     }
+
+    /**
+     * 设置一个手机号。
+     *
+     * @param phone
+     */
+    default void setPhone(String phone) {
+        setPhones(new String[]{phone});
+    }
 }
