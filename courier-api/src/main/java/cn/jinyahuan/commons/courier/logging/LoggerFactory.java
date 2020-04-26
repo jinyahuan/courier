@@ -33,7 +33,14 @@ public class LoggerFactory {
 
     private Constructor<? extends Loggable> loggerConstructor;
 
+    private static final Loggable singletonNoOpLoggerImpl = new NoOpLogger(LoggerFactory.class.getName());
+
     protected String loggerImpl;
+
+    /**
+     * 如果实现类是无操作的日志记录器，是否启用单例模式（节约资源）。
+     */
+    protected boolean singletonNoOpLoggerImplFlag = true;
 
     /**
      * @throws RuntimeException 如果找不到对应的日志记录器实现类，或者找到不指定的构造器
@@ -73,11 +80,18 @@ public class LoggerFactory {
      */
     public Loggable getLogger(String className) {
         Loggable loggable;
-        try {
-            loggable = loggerConstructor.newInstance(className);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+
+        if (DEFAULT_LOGGER_IMPL.equals(getLoggerImpl()) && singletonNoOpLoggerImplFlag) {
+            loggable = singletonNoOpLoggerImpl;
         }
+        else {
+            try {
+                loggable = loggerConstructor.newInstance(className);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         return loggable;
     }
 
