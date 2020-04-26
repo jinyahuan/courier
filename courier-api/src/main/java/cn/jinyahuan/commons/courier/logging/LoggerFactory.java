@@ -80,4 +80,13 @@ public class LoggerFactory {
         }
         return loggable;
     }
+
+    /**
+     * 获取日志记录器的实现类名（全名）。
+     *
+     * @return
+     */
+    public String getLoggerImpl() {
+        return this.loggerImpl;
+    }
 }

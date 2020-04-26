@@ -38,4 +38,16 @@ public interface Loggable {
     void error(String format, Object... args);
 
     boolean isDebugEnabled();
+
+    /**
+     * 日志界别常量类。
+     */
+    final class Level {
+        public static final int OFF = 0;
+        public static final int ERROR = 10;
+        public static final int WARN = 20;
+        public static final int INFO = 30;
+        public static final int DEBUG = 40;
+        public static final int ALL = 50;
+    }
 }

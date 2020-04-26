@@ -14,57 +14,84 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.logging;
+package cn.jinyahuan.commons.courier.logging.log4j.v1;
+
+import cn.jinyahuan.commons.courier.logging.Loggable;
+import org.apache.log4j.Logger;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
-public class PrintStreamLogger implements Loggable {
-    public PrintStreamLogger(String className) {}
+public class Log4jLogger implements Loggable {
+    private Logger log;
 
-    @Override
-    public void debug(String s) {
-        System.out.println(s);
+    public Log4jLogger(String className) {
+        this.log = Logger.getLogger(className);
     }
 
     @Override
+    public void debug(String s) {
+        log.debug(s);
+    }
+
+    /**
+     * @param format 注意格式，参考{@link String#format(String, Object...)}
+     * @param args
+     */
+    @Override
     public void debug(String format, Object... args) {
-        System.out.printf(format, args);
+        String msg = String.format(format, args);
+        log.debug(msg);
     }
 
     @Override
     public void info(String s) {
-        System.out.println(s);
+        log.info(s);
     }
 
+    /**
+     * @param format 注意格式，参考{@link String#format(String, Object...)}
+     * @param args
+     */
     @Override
     public void info(String format, Object... args) {
-        System.out.printf(format, args);
+        String msg = String.format(format, args);
+        log.info(msg);
     }
 
     @Override
     public void warn(String s) {
-        System.err.println(s);
+        log.warn(s);
     }
 
+    /**
+     * @param format 注意格式，参考{@link String#format(String, Object...)}
+     * @param args
+     */
     @Override
     public void warn(String format, Object... args) {
-        System.err.printf(format, args);
+        String msg = String.format(format, args);
+        log.warn(msg);
     }
 
     @Override
     public void error(String s) {
-        System.err.println(s);
+        log.error(s);
     }
 
+    /**
+     * @param format 注意格式，参考{@link String#format(String, Object...)}
+     * @param args
+     */
     @Override
     public void error(String format, Object... args) {
-        System.err.printf(format, args);
+        String msg = String.format(format, args);
+        log.error(msg);
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return true;
+        return log.isDebugEnabled();
     }
 }
