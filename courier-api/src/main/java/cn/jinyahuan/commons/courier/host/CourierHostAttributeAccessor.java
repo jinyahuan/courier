@@ -17,10 +17,37 @@
 package cn.jinyahuan.commons.courier.host;
 
 /**
- * 信使的服务商。
+ * 信使的服务商的属性访问器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierHost extends CourierHostAttributeAccessor {
+public interface CourierHostAttributeAccessor {
+    /**
+     * 获取信使服务商的 id。
+     *
+     * @return
+     */
+    Integer getId();
+
+    /**
+     * 设置信使服务商的 id。
+     *
+     * @param id
+     */
+    void setId(Integer id);
+
+    /**
+     * 获取信使服务商的名称。
+     *
+     * @return
+     */
+    String getName();
+
+    /**
+     * 设置信使服务商的名称。
+     *
+     * @param name
+     */
+    void setName(String name);
 }

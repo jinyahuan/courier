@@ -16,11 +16,27 @@
 
 package cn.jinyahuan.commons.courier.host;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
- * 信使的服务商的属性访问器。
+ * 抽象的信使服务商。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierHostAttributeAccessor {
+@ToString
+@EqualsAndHashCode
+public abstract class AbstractCourierHost implements CourierHost {
+    /** 信使服务商的 id */
+    @Getter
+    @Setter
+    protected Integer id;
+
+    /** 信使服务商的名称 */
+    @Getter
+    @Setter
+    protected String name;
 }
