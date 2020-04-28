@@ -17,17 +17,16 @@
 package cn.jinyahuan.commons.courier.host;
 
 /**
- * 服务商选择策略。
+ * todo 信使服务商的选择策略。
+ * <pre>
+ *     ROUND  轮询已配置的可用服务商
+ *     PRIORITY_AND_RANDOM  优先优先级高的（值越小优先级越高），同级则随机
+ *     RANDOM  随机选取一个已配置的可用服务商
+ *     ...
+ * </pre>
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public enum CourierHostChooseStrategy {
-    /** 轮询已配置的可用服务商 */
-    ROUND,
-    /** 优先优先级高的（值越小优先级越高），同级则随机 */
-    PRIORITY_AND_RANDOM,
-    /** 随机选取一个已配置的可用服务商 */
-    RANDOM,
-    ;
+public interface CourierHostSelectable {
 }
