@@ -14,15 +14,38 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
+package cn.jinyahuan.commons.courier.host.chooser;
 
-import cn.jinyahuan.commons.courier.host.AbstractCourierHost;
+import cn.jinyahuan.commons.courier.host.CourierHost;
+
+import java.util.List;
 
 /**
- * 空缺的信使服务商。
+ * 信使服务商的选择器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierHost extends AbstractCourierHost {
+public interface CourierHostChoosable {
+    /**
+     * 选择一个信使服务商。
+     *
+     * @param key
+     * @return
+     */
+    CourierHost choose(Object key);
+
+    /**
+     * 设置所有启用的信使服务商。
+     *
+     * @param courierHosts
+     */
+    void setEnableCourierHosts(List<CourierHost> courierHosts);
+
+    /**
+     * 获取所有启用的信使服务商。
+     *
+     * @return
+     */
+    List<CourierHost> getEnableCourierHosts();
 }

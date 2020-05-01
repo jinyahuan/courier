@@ -14,15 +14,27 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
+package cn.jinyahuan.commons.courier.host.chooser;
 
-import cn.jinyahuan.commons.courier.host.AbstractCourierHost;
+import cn.jinyahuan.commons.courier.host.CourierHost;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
 
 /**
- * 空缺的信使服务商。
+ * todo 抽象的并发信使服务商的选择器，用于多线程并发场景。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierHost extends AbstractCourierHost {
+@ToString
+public abstract class AbstractConcurrentCourierHostChooser implements CourierHostChoosable {
+    /**
+     * 所有启用的信使服务商。
+     */
+    @Getter
+    @Setter
+    protected volatile List<CourierHost> enableCourierHosts;
 }

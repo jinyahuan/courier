@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host;
+package cn.jinyahuan.commons.courier.host.chooser;
+
+import cn.jinyahuan.commons.courier.host.CourierHost;
 
 /**
- * todo 信使服务商的选择策略。
- * <pre>
- *     ROUND  轮询已配置的可用服务商
- *     PRIORITY_AND_RANDOM  优先优先级高的（值越小优先级越高），同级则随机
- *     RANDOM  随机选取一个已配置的可用服务商
- *     ...
- * </pre>
+ * 信使服务商固定选择器，固定选择某个已配置的服务商。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierHostSelectable {
+public class CourierHostFixedChooser extends AbstractCourierHostChooser {
+    @Override
+    public CourierHost choose(Object key) {
+        // todo implement choose method
+        return null;
+    }
 }

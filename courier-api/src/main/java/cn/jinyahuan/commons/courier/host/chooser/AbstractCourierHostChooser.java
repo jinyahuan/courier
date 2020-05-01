@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier;
+package cn.jinyahuan.commons.courier.host.chooser;
 
-import java.lang.annotation.*;
+import cn.jinyahuan.commons.courier.host.CourierHost;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
 
 /**
- * 服务提供商的优先级。
- * <p>当启用多个服务提供商时，按优先级来决定顺序。值越小优先级越高。
+ * 抽象的信使服务商的选择器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface HostPriority {
-    int value() default Short.MAX_VALUE;
+@ToString
+public abstract class AbstractCourierHostChooser implements CourierHostChoosable {
+    /**
+     * 所有启用的信使服务商。
+     */
+    @Getter
+    @Setter
+    protected List<CourierHost> enableCourierHosts;
 }

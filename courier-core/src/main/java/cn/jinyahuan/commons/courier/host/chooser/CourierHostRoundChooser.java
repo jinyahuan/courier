@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
+package cn.jinyahuan.commons.courier.host.chooser;
 
-import cn.jinyahuan.commons.courier.host.AbstractCourierHost;
+import cn.jinyahuan.commons.courier.host.CourierHost;
 
 /**
- * 空缺的信使服务商。
+ * 信使服务商轮询选择器，轮询选择已配置的服务商。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierHost extends AbstractCourierHost {
+public class CourierHostRoundChooser extends AbstractCourierHostChooser {
+    @Override
+    public CourierHost choose(Object key) {
+        // todo implement choose method
+        return null;
+    }
 }

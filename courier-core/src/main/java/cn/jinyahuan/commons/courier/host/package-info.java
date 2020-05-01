@@ -14,15 +14,7 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
-
-import cn.jinyahuan.commons.courier.host.AbstractCourierHost;
-
 /**
- * 空缺的信使服务商。
  *
- * @author Yahuan Jin
- * @since 0.1
  */
-public class VacancyCourierHost extends AbstractCourierHost {
-}
+package cn.jinyahuan.commons.courier.host;

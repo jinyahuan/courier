@@ -14,15 +14,24 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host.vacancy;
+package cn.jinyahuan.commons.courier.host.chooser;
 
-import cn.jinyahuan.commons.courier.host.AbstractCourierHost;
+import java.lang.annotation.*;
 
 /**
- * 空缺的信使服务商。
+ * 信使服务提供商的优先级。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierHost extends AbstractCourierHost {
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface CourierHostPriority {
+    /**
+     * 优先级。
+     *
+     * @return
+     */
+    int value() default Short.MAX_VALUE;
 }
