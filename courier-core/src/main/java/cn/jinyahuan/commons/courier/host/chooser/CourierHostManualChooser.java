@@ -20,34 +20,36 @@ import cn.jinyahuan.commons.courier.host.CourierHost;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * 信使服务商固定选择器，固定返回某个服务商。
+ * 信使服务商手动选择器，每次返回手动指定特定服务商。
  *
  * @author Yahuan Jin
- * @see CourierHostManualChooser
+ * @see CourierHostFixedChooser
  * @see CourierHostPriorityChooser
  * @see CourierHostRandomChooser
  * @see CourierHostRoundChooser
  * @since 0.1
  */
-public class CourierHostFixedChooser extends AbstractCourierHostChooser {
-    private CourierHost fixedCourierHost;
-
-    public CourierHostFixedChooser(CourierHost fixedCourierHost) {
+public class CourierHostManualChooser extends AbstractCourierHostChooser {
+    public CourierHostManualChooser() {
         super();
-        this.fixedCourierHost = fixedCourierHost;
     }
 
     /**
-     * 固定返回{@link #fixedCourierHost}。
+     * 指定一个信使服务商。
      *
-     * @param key 当前实现类中，此参数无效，所以可以传任何值，包括{@code null}
+     * @param key 需要指定的{@link CourierHost}
      * @return maybe null
      */
     @Override
     public CourierHost choose(Object key) {
-        return fixedCourierHost;
+        CourierHost courierHost = null;
+        if (Objects.nonNull(key) && key instanceof CourierHost) {
+            courierHost = (CourierHost) key;
+        }
+        return courierHost;
     }
 
     /**

@@ -18,16 +18,66 @@ package cn.jinyahuan.commons.courier.host.chooser;
 
 import cn.jinyahuan.commons.courier.host.CourierHost;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * 信使服务商轮询选择器，轮询选择已配置的服务商。
  *
  * @author Yahuan Jin
+ * @see CourierHostFixedChooser
+ * @see CourierHostManualChooser
+ * @see CourierHostPriorityChooser
+ * @see CourierHostRandomChooser
  * @since 0.1
  */
 public class CourierHostRoundChooser extends AbstractCourierHostChooser {
+    private final AtomicInteger currentIndex = new AtomicInteger(-1);
+
+    public CourierHostRoundChooser() {
+        super();
+    }
+
+    public CourierHostRoundChooser(List<CourierHost> enableCourierHosts) {
+        super(enableCourierHosts);
+    }
+
+    /**
+     * 轮询获取一个信使服务商。
+     *
+     * @param key 当前实现类中，此参数无效，所以可以传任何值，包括{@code null}
+     * @return maybe null
+     */
     @Override
     public CourierHost choose(Object key) {
-        // todo implement choose method
-        return null;
+        CourierHost courierHost = null;
+
+        List<CourierHost> enableCourierHosts = getEnableCourierHosts();
+        int count = enableCourierHosts.size();
+        if (count == 1) {
+            courierHost = enableCourierHosts.get(0);
+        }
+        else if (count > 1) {
+            courierHost = enableCourierHosts.get(getNextIndex(count));
+        }
+
+        return courierHost;
+    }
+
+    /**
+     * 获取从 0 开始到指定上限（不包括）内的下一个数，当达到最大值(limit - 1)后进行重新从 0 开始循环获取。
+     * <p>例如: limit 为 4，那么取值为: 0, 1, 2, 3, 0, 1, 2, ...</p>
+     *
+     * @param limit 上限（不包括）
+     * @return
+     */
+    private int getNextIndex(int limit) {
+        for (; ; ) {
+            int current = currentIndex.get();
+            int next = (current + 1) % limit;
+            if (currentIndex.compareAndSet(current, next)) {
+                return next;
+            }
+        }
     }
 }

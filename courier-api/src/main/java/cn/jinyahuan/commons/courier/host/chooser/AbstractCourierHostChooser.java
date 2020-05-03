@@ -17,10 +17,9 @@
 package cn.jinyahuan.commons.courier.host.chooser;
 
 import cn.jinyahuan.commons.courier.host.CourierHost;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import cn.jinyahuan.commons.courier.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,12 +28,31 @@ import java.util.List;
  * @author Yahuan Jin
  * @since 0.1
  */
-@ToString
 public abstract class AbstractCourierHostChooser implements CourierHostChoosable {
     /**
      * 所有启用的信使服务商。
      */
-    @Getter
-    @Setter
     protected List<CourierHost> enableCourierHosts;
+
+    public AbstractCourierHostChooser() {
+        // 不设置成不可变的 List 的原因是：可能有人会通过 getEnableCourierHosts()，然后进行元素的添加操作
+        this.enableCourierHosts = new ArrayList<>(5);
+    }
+
+    public AbstractCourierHostChooser(List<CourierHost> enableCourierHosts) {
+        setEnableCourierHosts(enableCourierHosts);
+    }
+
+    @Override
+    public List<CourierHost> getEnableCourierHosts() {
+        return enableCourierHosts;
+    }
+
+    @Override
+    public void setEnableCourierHosts(List<CourierHost> enableCourierHosts) {
+        int size = CollectionUtils.size(enableCourierHosts);
+        if (size > 0) {
+            this.enableCourierHosts = enableCourierHosts;
+        }
+    }
 }
