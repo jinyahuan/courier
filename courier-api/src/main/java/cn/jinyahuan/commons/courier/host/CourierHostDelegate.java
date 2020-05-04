@@ -20,9 +20,7 @@ import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
 
 /**
  * 服务商委派器。
- * <p>
- * 注意: 委派服务商是强制性的，会使默认的服务商选择策略失效。
- * </p>
+ * <p>推荐结合动态数据来进行实时的委托，比如：Redis, Zookeeper, Database等。</p>
  *
  * @author Yahuan Jin
  * @since 0.1
