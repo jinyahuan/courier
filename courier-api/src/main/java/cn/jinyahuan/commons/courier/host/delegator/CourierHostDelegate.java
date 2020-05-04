@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.host;
+package cn.jinyahuan.commons.courier.host.delegator;
 
 import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.host.CourierHost;
 
 /**
  * 服务商委派器。
