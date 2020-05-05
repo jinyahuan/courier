@@ -36,6 +36,7 @@
 * Oracle JDK 1.8.0_201
 * Maven 3.6.3
 * IntelliJ IDEA 2020.1 (Community Edition)
+  * [lombok 插件][idea_plugin_lombok_uri]
 * Git 2.25.1
 
 备注: 建议```JDK```版本与其相同，其他软件可以选择最新的版本
@@ -71,4 +72,5 @@
 
 [how_to_set_copyright_uri]: https://github.com/jinyahuan/effective-notebook/blob/master/ide/idea/ide_idea_config.md#%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84-copyright
 [how_to_set_file_header_uri]: https://github.com/jinyahuan/effective-notebook/blob/master/ide/idea/ide_idea_config.md#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B4%E6%B3%A8%E9%87%8A
+[idea_plugin_lombok_uri]: https://github.com/jinyahuan/effective-notebook/blob/master/ide/idea/ide_idea_plugin.md#lombok
 [project_pom_uri]: ./pom.xml
