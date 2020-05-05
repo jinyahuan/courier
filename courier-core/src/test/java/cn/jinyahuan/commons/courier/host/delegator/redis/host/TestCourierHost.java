@@ -14,7 +14,28 @@
  * limitations under the License.
  */
 
+package cn.jinyahuan.commons.courier.host.delegator.redis.host;
+
+import cn.jinyahuan.commons.courier.host.CourierHost;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
- *
+ * @author Yahuan Jin
+ * @since 0.1
  */
-package cn.jinyahuan.commons.courier.host;
+@Getter
+@Setter
+@ToString
+public class TestCourierHost implements CourierHost {
+    private Integer id;
+    private String name;
+
+    public TestCourierHost() {}
+
+    public TestCourierHost(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
