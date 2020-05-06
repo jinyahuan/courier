@@ -60,29 +60,29 @@ public class CourierHostJedisDelegatorTest {
     @Test
     public void testAssign() {
         final String key = CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME;
+        String className = String.class.getName();
 
         jedisPool.getResource().del(key);
 
-        String className = String.class.getName();
-        CourierHost host = delegator.assign(className);
+        CourierHost host = delegator.assign();
         assertNull(host);
 
         jedisPool.getResource().set(key, "");
-        host = delegator.assign(className);
+        host = delegator.assign();
         assertNull(host);
 
         jedisPool.getResource().set(key, className);
-        host = delegator.assign(className);
+        host = delegator.assign();
         assertNull(host);
 
         className = TestCourierHost.class.getName();
         jedisPool.getResource().set(key, className);
-        host = delegator.assign(className);
+        host = delegator.assign();
         assertTrue(host instanceof TestCourierHost);
 
         className = OtherCourierHost.class.getName();
         jedisPool.getResource().set(key, className);
-        host = delegator.assign(className);
+        host = delegator.assign();
         assertTrue(host instanceof OtherCourierHost);
 
         jedisPool.getResource().del(key);

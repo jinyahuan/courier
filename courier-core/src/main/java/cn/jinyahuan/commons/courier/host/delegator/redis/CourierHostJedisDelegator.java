@@ -16,10 +16,7 @@
 
 package cn.jinyahuan.commons.courier.host.delegator.redis;
 
-import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
-import cn.jinyahuan.commons.courier.host.CourierHost;
-import cn.jinyahuan.commons.courier.host.delegator.CourierHostDelegate;
-import cn.jinyahuan.commons.courier.util.StringUtils;
+import cn.jinyahuan.commons.courier.host.delegator.AbstractCourierHostDelegator;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.util.Pool;
@@ -31,32 +28,35 @@ import redis.clients.jedis.util.Pool;
  * @since 0.1
  */
 @Slf4j
-public class CourierHostJedisDelegator implements CourierHostDelegate {
-    /**
-     * 存放委派器类名的 key 名。
-     */
-    protected String delegatorKeyName = CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME;
-
+public class CourierHostJedisDelegator extends AbstractCourierHostDelegator {
     protected Pool<Jedis> jedisPool;
 
     public CourierHostJedisDelegator(Pool jedisPool) {
+        super();
+        this.jedisPool = jedisPool;
+    }
+
+    public CourierHostJedisDelegator(Pool jedisPool, String delegatorKeyName) {
+        super(delegatorKeyName);
         this.jedisPool = jedisPool;
     }
 
     /**
-     * @param key
+     * 获取存放委派器类的值。
+     *
      * @return maybe null
      */
     @Override
-    public CourierHost assign(String key) {
-        CourierHost delegator = null;
-
-        String delegatorValue = getDelegatorValue();
-        if (StringUtils.isNotEmpty(delegatorValue)) {
-            delegator = parseDelegator(delegatorValue);
+    protected String getDelegatorClassName(String key) {
+        String className = null;
+        try {
+            Jedis redisClient = getRedisClientInstance();
+            className = redisClient.get(key);
+            redisClient.close();
+        } catch (Exception e) {
+            log.error("Get Delegator class name failure.", e);
         }
-
-        return delegator;
+        return className;
     }
 
     /**
@@ -66,47 +66,5 @@ public class CourierHostJedisDelegator implements CourierHostDelegate {
      */
     protected Jedis getRedisClientInstance() {
         return jedisPool.getResource();
-    }
-
-    /**
-     * 获取存放委派器类的值。
-     *
-     * @return maybe null
-     */
-    protected String getDelegatorValue() {
-        Jedis redisClient = getRedisClientInstance();
-        String value = redisClient.get(delegatorKeyName);
-        redisClient.close();
-        return value;
-    }
-
-    /**
-     * 初始化委派的信使服务商。
-     *
-     * @param delegator
-     */
-    protected void initDelegator(CourierHost delegator) {}
-
-    /**
-     * 将信使服务商的类名转换成实例。
-     *
-     * @param className
-     * @return maybe null
-     */
-    protected CourierHost parseDelegator(String className) {
-        CourierHost delegator = null;
-
-        try {
-            Class clazz = Class.forName(className);
-            // todo 可能有的服务商不提供默认的构造器
-            delegator = (CourierHost) clazz.newInstance();
-
-            initDelegator(delegator);
-
-        } catch (Exception e) {
-            log.warn("Case Delegator class failure: className={}", className, e);
-        }
-
-        return delegator;
     }
 }

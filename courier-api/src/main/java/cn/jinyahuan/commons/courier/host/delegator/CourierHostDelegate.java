@@ -22,11 +22,19 @@ import cn.jinyahuan.commons.courier.host.CourierHost;
 /**
  * 服务商委派器。
  * <p>推荐结合动态数据来进行实时的委托，比如：Redis, Zookeeper, Database等。</p>
+ * <p>推荐的做法是：将{@link CourierHost}的实现类名全名存储到存储容器中，比如 redis 中，然后通过反射来实例化类。</p>
  *
  * @author Yahuan Jin
  * @since 0.1
  */
 public interface CourierHostDelegate {
+    /**
+     * 获取委派的服务商。
+     *
+     * @return
+     */
+    CourierHost assign();
+
     /**
      * 获取委派的服务商。
      *
