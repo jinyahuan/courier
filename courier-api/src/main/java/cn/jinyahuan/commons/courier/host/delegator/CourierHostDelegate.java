@@ -19,6 +19,8 @@ package cn.jinyahuan.commons.courier.host.delegator;
 import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
 import cn.jinyahuan.commons.courier.host.CourierHost;
 
+import java.io.Serializable;
+
 /**
  * 服务商委派器。
  * <p>推荐结合动态数据来进行实时的委托，比如：Redis, Zookeeper, Database等。</p>
@@ -27,7 +29,7 @@ import cn.jinyahuan.commons.courier.host.CourierHost;
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierHostDelegate {
+public interface CourierHostDelegate extends Serializable {
     /**
      * 获取委派的服务商。
      *

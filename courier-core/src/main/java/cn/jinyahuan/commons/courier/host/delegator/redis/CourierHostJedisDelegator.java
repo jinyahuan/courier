@@ -29,6 +29,8 @@ import redis.clients.jedis.util.Pool;
  */
 @Slf4j
 public class CourierHostJedisDelegator extends AbstractCourierHostDelegator {
+    private static final long serialVersionUID = 1L;
+
     protected Pool<Jedis> jedisPool;
 
     public CourierHostJedisDelegator(Pool jedisPool) {

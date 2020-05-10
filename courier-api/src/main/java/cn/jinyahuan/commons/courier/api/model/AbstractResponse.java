@@ -33,6 +33,8 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
+    private static final long serialVersionUID = 1L;
+
     /** 状态码 */
     protected int state;
     /** 错误码 */

@@ -25,6 +25,8 @@ import cn.jinyahuan.commons.courier.api.model.AbstractResponse;
  * @since 0.1
  */
 public class ServiceUnavailableResponse<T> extends AbstractResponse<T> {
+    private static final long serialVersionUID = 1L;
+
     public ServiceUnavailableResponse() {
         super(ResponseState.SERVICE_UNAVAILABLE);
     }

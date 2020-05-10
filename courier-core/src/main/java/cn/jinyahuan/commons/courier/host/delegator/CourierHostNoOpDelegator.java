@@ -26,6 +26,8 @@ import cn.jinyahuan.commons.courier.host.CourierHost;
  * @since 0.1
  */
 public class CourierHostNoOpDelegator implements CourierHostDelegate {
+    private static final long serialVersionUID = 1L;
+
     @Override
     public CourierHost assign() {
         return null;

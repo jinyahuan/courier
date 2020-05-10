@@ -16,13 +16,15 @@
 
 package cn.jinyahuan.commons.courier.api.model;
 
+import java.io.Serializable;
+
 /**
  * 响应的属性。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface ResponseAttribute<T> extends ResponseAttributeAccessor<T> {
+public interface ResponseAttribute<T> extends ResponseAttributeAccessor<T>, Serializable {
     @Override
     String toString();
 }

@@ -34,6 +34,8 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 public abstract class AbstractRequest implements RequestAttribute {
+    private static final long serialVersionUID = 1L;
+
     /** 所有的手机号 */
     @Getter
     @Setter

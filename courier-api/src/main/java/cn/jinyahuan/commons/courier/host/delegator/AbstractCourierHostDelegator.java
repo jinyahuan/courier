@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public abstract class AbstractCourierHostDelegator implements CourierHostDelegate {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 存放委派器类名的 key 名。
      */
