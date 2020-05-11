@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.api;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 
 /**
@@ -29,20 +29,20 @@ public interface ScheduledCourier extends Courierable {
     /**
      * 派送定时的信件。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    default ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
+    default ResponseAttribute sendScheduled(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 
     /**
      * 查询定时的信件。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    default ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
+    default ResponseAttribute queryScheduled(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

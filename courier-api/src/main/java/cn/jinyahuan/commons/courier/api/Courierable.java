@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.api;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 
 /**
@@ -29,16 +29,16 @@ public interface Courierable {
     /**
      * 派送。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    ResponseAttribute send(RequestAttribute requestAttribute);
+    ResponseAttribute send(CourierRequest request);
 
     /**
      * 查询。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    ResponseAttribute query(RequestAttribute requestAttribute);
+    ResponseAttribute query(CourierRequest request);
 }

@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.host.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.host.CourierHost;
 
 import java.io.Serializable;
@@ -51,7 +51,7 @@ public interface CourierHostDelegate extends Serializable {
      * @param request
      * @return
      */
-    default CourierHost assign(RequestAttribute request) {
+    default CourierHost assign(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 
@@ -62,7 +62,7 @@ public interface CourierHostDelegate extends Serializable {
      * @param request
      * @return
      */
-    default CourierHost assign(String key, RequestAttribute request) {
+    default CourierHost assign(String key, CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

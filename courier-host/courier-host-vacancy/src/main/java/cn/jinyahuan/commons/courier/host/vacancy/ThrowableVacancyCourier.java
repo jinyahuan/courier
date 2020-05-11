@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostException;
 
@@ -29,47 +29,47 @@ import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostExc
  */
 public class ThrowableVacancyCourier implements Courier {
     @Override
-    public ResponseAttribute send(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute send(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute query(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute query(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendAsync(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute sendAsync(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute sendBatch(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute queryBatch(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute sendScheduled(CourierRequest request) {
+        return handle(request);
     }
 
     @Override
-    public ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
-        return handle(requestAttribute);
+    public ResponseAttribute queryScheduled(CourierRequest request) {
+        return handle(request);
     }
 
     /**
      * 默认的处理逻辑是抛出{@link VacancyCourierHostException}异常。
      *
-     * @param requestAttribute
+     * @param courierRequest
      * @return
      */
-    protected ResponseAttribute handle(RequestAttribute requestAttribute) {
+    protected ResponseAttribute handle(CourierRequest courierRequest) {
         throw new VacancyCourierHostException();
     }
 }

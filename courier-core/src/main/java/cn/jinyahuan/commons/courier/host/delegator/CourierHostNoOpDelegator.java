@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.host.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.host.CourierHost;
 
 /**
@@ -39,12 +39,12 @@ public class CourierHostNoOpDelegator implements CourierHostDelegate {
     }
 
     @Override
-    public CourierHost assign(RequestAttribute request) {
+    public CourierHost assign(CourierRequest request) {
         return null;
     }
 
     @Override
-    public CourierHost assign(String key, RequestAttribute request) {
+    public CourierHost assign(String key, CourierRequest request) {
         return null;
     }
 }

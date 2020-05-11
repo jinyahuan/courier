@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.host.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class CourierHostNoOpDelegatorTest {
 
     @Test
     public void testAssign_request() {
-        assertNull(delegator.assign((RequestAttribute) null));
+        assertNull(delegator.assign((CourierRequest) null));
     }
 
     @Test

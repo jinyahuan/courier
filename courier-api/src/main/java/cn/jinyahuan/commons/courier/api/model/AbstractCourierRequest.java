@@ -26,14 +26,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 抽象的请求信息类。
+ * 抽象的信使请求属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
 @ToString
 @EqualsAndHashCode
-public abstract class AbstractRequest implements RequestAttribute {
+public abstract class AbstractCourierRequest implements CourierRequest {
     private static final long serialVersionUID = 1L;
 
     /** 所有的手机号 */
@@ -52,7 +52,7 @@ public abstract class AbstractRequest implements RequestAttribute {
     @Deprecated // 可能会去除
     private Map<String, String> extendedParams;
 
-    public AbstractRequest() {
+    public AbstractCourierRequest() {
         init();
     }
 

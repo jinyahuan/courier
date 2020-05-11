@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.api;
 
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 
 /**
@@ -29,20 +29,20 @@ public interface BatchCourier extends Courierable {
     /**
      * 派送批量的信件。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    default ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
+    default ResponseAttribute sendBatch(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 
     /**
      * 查询批量的信件。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    default ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
+    default ResponseAttribute queryBatch(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

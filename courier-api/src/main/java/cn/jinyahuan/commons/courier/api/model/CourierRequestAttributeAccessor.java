@@ -19,12 +19,12 @@ package cn.jinyahuan.commons.courier.api.model;
 import java.util.Objects;
 
 /**
- * 请求属性的访问器。
+ * 信使请求属性的访问器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface RequestAttributeAccessor {
+public interface CourierRequestAttributeAccessor {
     /**
      * 获取所有的手机号。
      *

@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 
 import java.util.Objects;
@@ -46,38 +46,38 @@ public class VacancyCourier implements Courier {
     }
 
     @Override
-    public ResponseAttribute send(RequestAttribute requestAttribute) {
-        return courier.send(requestAttribute);
+    public ResponseAttribute send(CourierRequest request) {
+        return courier.send(request);
     }
 
     @Override
-    public ResponseAttribute query(RequestAttribute requestAttribute) {
-        return courier.query(requestAttribute);
+    public ResponseAttribute query(CourierRequest request) {
+        return courier.query(request);
     }
 
     @Override
-    public ResponseAttribute sendAsync(RequestAttribute requestAttribute) {
-        return courier.sendAsync(requestAttribute);
+    public ResponseAttribute sendAsync(CourierRequest request) {
+        return courier.sendAsync(request);
     }
 
     @Override
-    public ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
-        return courier.sendBatch(requestAttribute);
+    public ResponseAttribute sendBatch(CourierRequest request) {
+        return courier.sendBatch(request);
     }
 
     @Override
-    public ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
-        return courier.queryBatch(requestAttribute);
+    public ResponseAttribute queryBatch(CourierRequest request) {
+        return courier.queryBatch(request);
     }
 
     @Override
-    public ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
-        return courier.sendScheduled(requestAttribute);
+    public ResponseAttribute sendScheduled(CourierRequest request) {
+        return courier.sendScheduled(request);
     }
 
     @Override
-    public ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
-        return courier.queryScheduled(requestAttribute);
+    public ResponseAttribute queryScheduled(CourierRequest request) {
+        return courier.queryScheduled(request);
     }
 
     /**

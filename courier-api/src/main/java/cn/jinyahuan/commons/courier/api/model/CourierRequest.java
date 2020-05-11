@@ -19,12 +19,11 @@ package cn.jinyahuan.commons.courier.api.model;
 import java.io.Serializable;
 
 /**
- * 请求的属性。
+ * 信使请求属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface RequestAttribute extends RequestAttributeAccessor, Serializable {
-    @Override
-    String toString();
+public interface CourierRequest extends CourierRequestAttributeAccessor, Serializable {
+
 }

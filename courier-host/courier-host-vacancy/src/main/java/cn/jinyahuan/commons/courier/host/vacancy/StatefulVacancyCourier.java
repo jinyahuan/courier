@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.RequestAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierRequest;
 import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
 import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableResponse;
 
@@ -37,51 +37,51 @@ public class StatefulVacancyCourier implements Courier {
     }
 
     @Override
-    public ResponseAttribute send(RequestAttribute requestAttribute) {
+    public ResponseAttribute send(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute query(RequestAttribute requestAttribute) {
+    public ResponseAttribute query(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute sendAsync(RequestAttribute requestAttribute) {
+    public ResponseAttribute sendAsync(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute sendBatch(RequestAttribute requestAttribute) {
+    public ResponseAttribute sendBatch(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute queryBatch(RequestAttribute requestAttribute) {
+    public ResponseAttribute queryBatch(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute sendScheduled(RequestAttribute requestAttribute) {
+    public ResponseAttribute sendScheduled(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
     @Override
-    public ResponseAttribute queryScheduled(RequestAttribute requestAttribute) {
+    public ResponseAttribute queryScheduled(CourierRequest request) {
         ResponseAttribute responseAttribute = getResponseInstanceByHandleStrategy(handleStrategy);
-        handle(requestAttribute, responseAttribute);
+        handle(request, responseAttribute);
         return responseAttribute;
     }
 
@@ -108,10 +108,10 @@ public class StatefulVacancyCourier implements Courier {
     /**
      * 默认不进行处理，由子类进行实现。
      *
-     * @param requestAttribute
+     * @param request
      * @return
      */
-    protected void handle(RequestAttribute requestAttribute, ResponseAttribute responseAttribute) {
+    protected void handle(CourierRequest request, ResponseAttribute responseAttribute) {
         // 由子类进行实现
     }
 }
