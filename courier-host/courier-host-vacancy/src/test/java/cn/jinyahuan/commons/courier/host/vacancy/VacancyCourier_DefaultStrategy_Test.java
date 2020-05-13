@@ -17,8 +17,8 @@
 package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
-import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableResponse;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
+import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableCourierResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class VacancyCourier_DefaultStrategy_Test {
     private Courier courier;
-    private static final ResponseAttribute SERVICE_UNAVAILABLE_RESPONSE = new ServiceUnavailableResponse();
+    private static final CourierResponse SERVICE_UNAVAILABLE_RESPONSE = new ServiceUnavailableCourierResponse();
 
     @Before
     public void before() {
@@ -41,43 +41,43 @@ public class VacancyCourier_DefaultStrategy_Test {
 
     @Test
     public void testSend() {
-        ResponseAttribute response = courier.send(null);
+        CourierResponse response = courier.send(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testQuery() {
-        ResponseAttribute response = courier.query(null);
+        CourierResponse response = courier.query(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testSendAsync() {
-        ResponseAttribute response = courier.sendAsync(null);
+        CourierResponse response = courier.sendAsync(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testSendBatch() {
-        ResponseAttribute response = courier.sendBatch(null);
+        CourierResponse response = courier.sendBatch(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testQueryBatch() {
-        ResponseAttribute response = courier.queryBatch(null);
+        CourierResponse response = courier.queryBatch(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testSendScheduled() {
-        ResponseAttribute response = courier.sendScheduled(null);
+        CourierResponse response = courier.sendScheduled(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 
     @Test
     public void testQueryScheduled() {
-        ResponseAttribute response = courier.queryScheduled(null);
+        CourierResponse response = courier.queryScheduled(null);
         assertEquals(SERVICE_UNAVAILABLE_RESPONSE, response);
     }
 }

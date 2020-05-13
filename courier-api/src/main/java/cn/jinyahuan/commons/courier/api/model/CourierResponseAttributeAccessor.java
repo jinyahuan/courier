@@ -17,12 +17,12 @@
 package cn.jinyahuan.commons.courier.api.model;
 
 /**
- * 响应属性的访问器。
+ * 信使响应属性的访问器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface ResponseAttributeAccessor<T> {
+public interface CourierResponseAttributeAccessor<T> {
     /**
      * 获取响应的状态码。
      *

@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.api;
 
 import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
 
 /**
  * 批操作的信使。
@@ -32,7 +32,7 @@ public interface BatchCourier extends Courierable {
      * @param request
      * @return
      */
-    default ResponseAttribute sendBatch(CourierRequest request) {
+    default CourierResponse sendBatch(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 
@@ -42,7 +42,7 @@ public interface BatchCourier extends Courierable {
      * @param request
      * @return
      */
-    default ResponseAttribute queryBatch(CourierRequest request) {
+    default CourierResponse queryBatch(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

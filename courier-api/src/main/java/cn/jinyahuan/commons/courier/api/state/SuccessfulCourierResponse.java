@@ -16,22 +16,24 @@
 
 package cn.jinyahuan.commons.courier.api.state;
 
-import cn.jinyahuan.commons.courier.api.model.AbstractResponse;
+import cn.jinyahuan.commons.courier.api.model.AbstractCourierResponse;
+import lombok.ToString;
 
 /**
- * 带有服务不可用状态的响应信息类。
+ * 带有发送成功状态的信使响应属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class ServiceUnavailableResponse<T> extends AbstractResponse<T> {
+@ToString(callSuper = true)
+public class SuccessfulCourierResponse<T> extends AbstractCourierResponse<T> {
     private static final long serialVersionUID = 1L;
 
-    public ServiceUnavailableResponse() {
-        super(ResponseState.SERVICE_UNAVAILABLE);
+    public SuccessfulCourierResponse() {
+        super(ResponseState.SUCCESS);
     }
 
-    public ServiceUnavailableResponse(T responseData) {
-        super(ResponseState.SERVICE_UNAVAILABLE, responseData);
+    public SuccessfulCourierResponse(T responseData) {
+        super(ResponseState.SUCCESS, responseData);
     }
 }

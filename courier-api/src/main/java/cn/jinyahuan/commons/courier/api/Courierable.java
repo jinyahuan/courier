@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.api;
 
 import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
 
 /**
  * 有信使能力的。
@@ -32,7 +32,7 @@ public interface Courierable {
      * @param request
      * @return
      */
-    ResponseAttribute send(CourierRequest request);
+    CourierResponse send(CourierRequest request);
 
     /**
      * 查询。
@@ -40,5 +40,5 @@ public interface Courierable {
      * @param request
      * @return
      */
-    ResponseAttribute query(CourierRequest request);
+    CourierResponse query(CourierRequest request);
 }

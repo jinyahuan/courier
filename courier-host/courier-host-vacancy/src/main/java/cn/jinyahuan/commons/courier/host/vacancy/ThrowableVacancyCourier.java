@@ -18,7 +18,7 @@ package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
 import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
 import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostException;
 
 /**
@@ -29,47 +29,47 @@ import cn.jinyahuan.commons.courier.host.vacancy.exception.VacancyCourierHostExc
  */
 public class ThrowableVacancyCourier implements Courier {
     @Override
-    public ResponseAttribute send(CourierRequest request) {
+    public CourierResponse send(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute query(CourierRequest request) {
+    public CourierResponse query(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendAsync(CourierRequest request) {
+    public CourierResponse sendAsync(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendBatch(CourierRequest request) {
+    public CourierResponse sendBatch(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute queryBatch(CourierRequest request) {
+    public CourierResponse queryBatch(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute sendScheduled(CourierRequest request) {
+    public CourierResponse sendScheduled(CourierRequest request) {
         return handle(request);
     }
 
     @Override
-    public ResponseAttribute queryScheduled(CourierRequest request) {
+    public CourierResponse queryScheduled(CourierRequest request) {
         return handle(request);
     }
 
     /**
      * 默认的处理逻辑是抛出{@link VacancyCourierHostException}异常。
      *
-     * @param courierRequest
+     * @param request
      * @return
      */
-    protected ResponseAttribute handle(CourierRequest courierRequest) {
+    protected CourierResponse handle(CourierRequest request) {
         throw new VacancyCourierHostException();
     }
 }

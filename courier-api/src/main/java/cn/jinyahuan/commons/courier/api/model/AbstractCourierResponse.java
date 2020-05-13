@@ -23,38 +23,46 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * 抽象的响应信息类。
+ * 抽象的信使响应属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@Getter
-@Setter
 @ToString
 @EqualsAndHashCode
-public abstract class AbstractResponse<T> implements ResponseAttribute<T> {
+public abstract class AbstractCourierResponse<T> implements CourierResponse<T> {
     private static final long serialVersionUID = 1L;
 
     /** 状态码 */
+    @Getter
+    @Setter
     protected int state;
     /** 错误码 */
+    @Getter
+    @Setter
     protected String code;
     /** 错误信息 */
+    @Getter
+    @Setter
     protected String msg;
     /** 响应的数据 */
+    @Getter
+    @Setter
     protected T responseData;
     /** 签名 */
+    @Getter
+    @Setter
     protected String sign;
 
-    public AbstractResponse() {}
+    public AbstractCourierResponse() {}
 
-    public AbstractResponse(ResponseStateAccessor responseState) {
+    public AbstractCourierResponse(ResponseStateAccessor responseState) {
         this.state = responseState.getState();
         this.code = responseState.getCode();
         this.msg = responseState.getMsg();
     }
 
-    public AbstractResponse(ResponseStateAccessor responseState, T responseData) {
+    public AbstractCourierResponse(ResponseStateAccessor responseState, T responseData) {
         this(responseState);
         this.responseData = responseData;
     }

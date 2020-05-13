@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.api;
 
 import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
 
 /**
  * 异步操作的信使。
@@ -32,7 +32,7 @@ public interface AsyncCourier extends Courierable {
      * @param request
      * @return
      */
-    default ResponseAttribute sendAsync(CourierRequest request) {
+    default CourierResponse sendAsync(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

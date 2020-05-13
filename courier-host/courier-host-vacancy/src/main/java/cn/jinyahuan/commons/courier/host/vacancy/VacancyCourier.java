@@ -18,7 +18,7 @@ package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
 import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
 
 import java.util.Objects;
 
@@ -46,37 +46,37 @@ public class VacancyCourier implements Courier {
     }
 
     @Override
-    public ResponseAttribute send(CourierRequest request) {
+    public CourierResponse send(CourierRequest request) {
         return courier.send(request);
     }
 
     @Override
-    public ResponseAttribute query(CourierRequest request) {
+    public CourierResponse query(CourierRequest request) {
         return courier.query(request);
     }
 
     @Override
-    public ResponseAttribute sendAsync(CourierRequest request) {
+    public CourierResponse sendAsync(CourierRequest request) {
         return courier.sendAsync(request);
     }
 
     @Override
-    public ResponseAttribute sendBatch(CourierRequest request) {
+    public CourierResponse sendBatch(CourierRequest request) {
         return courier.sendBatch(request);
     }
 
     @Override
-    public ResponseAttribute queryBatch(CourierRequest request) {
+    public CourierResponse queryBatch(CourierRequest request) {
         return courier.queryBatch(request);
     }
 
     @Override
-    public ResponseAttribute sendScheduled(CourierRequest request) {
+    public CourierResponse sendScheduled(CourierRequest request) {
         return courier.sendScheduled(request);
     }
 
     @Override
-    public ResponseAttribute queryScheduled(CourierRequest request) {
+    public CourierResponse queryScheduled(CourierRequest request) {
         return courier.queryScheduled(request);
     }
 

@@ -17,8 +17,8 @@
 package cn.jinyahuan.commons.courier.host.vacancy;
 
 import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.ResponseAttribute;
-import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableResponse;
+import cn.jinyahuan.commons.courier.api.model.CourierResponse;
+import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableCourierResponse;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 public class StatefulVacancyCourier_ResponseServiceUnavailableState_Test {
     private static final VacancyHostHandleStrategy STRATEGY =
             VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE;
-    private static final ResponseAttribute EXPECTED_RESPONSE = new ServiceUnavailableResponse();
+    private static final CourierResponse EXPECTED_RESPONSE = new ServiceUnavailableCourierResponse();
 
     private Courier courier;
 
@@ -47,51 +47,51 @@ public class StatefulVacancyCourier_ResponseServiceUnavailableState_Test {
 
     @Test
     public void testSend() {
-        ResponseAttribute response = courier.send(null);
+        CourierResponse response = courier.send(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testQuery() {
-        ResponseAttribute response = courier.query(null);
+        CourierResponse response = courier.query(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testSendAsync() {
-        ResponseAttribute response = courier.sendAsync(null);
+        CourierResponse response = courier.sendAsync(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testSendBatch() {
-        ResponseAttribute response = courier.sendBatch(null);
+        CourierResponse response = courier.sendBatch(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testQueryBatch() {
-        ResponseAttribute response = courier.queryBatch(null);
+        CourierResponse response = courier.queryBatch(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testSendScheduled() {
-        ResponseAttribute response = courier.sendScheduled(null);
+        CourierResponse response = courier.sendScheduled(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testQueryScheduled() {
-        ResponseAttribute response = courier.queryScheduled(null);
+        CourierResponse response = courier.queryScheduled(null);
         assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
     public void testGetResponseInstanceByHandleStrategy() {
-        ResponseAttribute responseAttribute =
+        CourierResponse response =
                 ((StatefulVacancyCourier) courier).getResponseInstanceByHandleStrategy(STRATEGY);
-        assertEquals(EXPECTED_RESPONSE, responseAttribute);
+        assertEquals(EXPECTED_RESPONSE, response);
     }
 
     @Test
