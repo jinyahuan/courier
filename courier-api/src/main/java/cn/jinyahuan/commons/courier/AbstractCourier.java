@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.model;
-
-import java.io.Serializable;
+package cn.jinyahuan.commons.courier;
 
 /**
- * 信使响应属性类。
+ * todo 使用 aop，还是模板来实现固定的请求参数拦截、校验、失败重试、响应参数拦截等。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierResponse<T> extends CourierResponseAttributeAccessor<T>, Serializable {
+public abstract class AbstractCourier implements Courier {
 
 }

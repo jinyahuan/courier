@@ -16,7 +16,6 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator;
 
-import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 import cn.jinyahuan.commons.courier.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public abstract class AbstractCourierSupplierDelegator implements CourierSupplie
     /**
      * 存放委派器类名的 key 名。
      */
-    protected String delegatorKeyName = CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME;
+    protected String delegatorKeyName = DEFAULT_DELEGATOR_KEY_NAME;
 
     public AbstractCourierSupplierDelegator() {}
 

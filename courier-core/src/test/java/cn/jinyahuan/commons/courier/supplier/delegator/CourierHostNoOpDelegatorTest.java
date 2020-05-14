@@ -16,8 +16,7 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +42,7 @@ public class CourierHostNoOpDelegatorTest {
     @Test
     public void testAssign_key() {
         assertNull(delegator.assign((String) null));
-        assertNull(delegator.assign(CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME));
+        assertNull(delegator.assign(CourierSupplierDelegator.DEFAULT_DELEGATOR_KEY_NAME));
     }
 
     @Test
@@ -54,6 +53,6 @@ public class CourierHostNoOpDelegatorTest {
     @Test
     public void testAssign_key_request() {
         assertNull(delegator.assign(null, null));
-        assertNull(delegator.assign(CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME, null));
+        assertNull(delegator.assign(CourierSupplierDelegator.DEFAULT_DELEGATOR_KEY_NAME, null));
     }
 }

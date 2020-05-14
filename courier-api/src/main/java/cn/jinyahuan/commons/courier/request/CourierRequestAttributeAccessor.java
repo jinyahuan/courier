@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.model;
+package cn.jinyahuan.commons.courier.request;
 
 import java.util.Objects;
 

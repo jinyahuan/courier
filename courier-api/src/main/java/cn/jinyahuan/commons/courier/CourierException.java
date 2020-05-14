@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.exception;
+package cn.jinyahuan.commons.courier;
 
 /**
+ * 信使中所有异常类的超类。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class CourierHostException extends CourierException {
+public class CourierException extends RuntimeException {
     static final long serialVersionUID = 1L;
 
-    public CourierHostException() {
+    public CourierException() {
         super();
     }
 
-    public CourierHostException(String message) {
+    public CourierException(String message) {
         super(message);
     }
 
-    public CourierHostException(Throwable cause) {
+    public CourierException(Throwable cause) {
         super(cause);
     }
 }

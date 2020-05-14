@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier.response;
+
+import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
+import lombok.ToString;
 
 /**
- * 信使。
+ * 带有服务不可用状态的信使响应属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface Courier extends AsyncCourier, BatchCourier, ScheduledCourier {
+@ToString(callSuper = true)
+public class ServiceUnavailableCourierResponse<T> extends AbstractCourierResponse<T> {
+    private static final long serialVersionUID = 1L;
 
+    public ServiceUnavailableCourierResponse() {
+        super(CourierResponseState.SERVICE_UNAVAILABLE);
+    }
+
+    public ServiceUnavailableCourierResponse(T responseData) {
+        super(CourierResponseState.SERVICE_UNAVAILABLE, responseData);
+    }
 }

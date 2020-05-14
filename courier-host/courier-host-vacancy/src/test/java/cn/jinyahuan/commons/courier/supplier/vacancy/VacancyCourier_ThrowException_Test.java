@@ -16,8 +16,7 @@
 
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
-import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.supplier.vacancy.exception.VacancyCourierHostException;
+import cn.jinyahuan.commons.courier.Courier;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,37 +36,37 @@ public class VacancyCourier_ThrowException_Test {
         courier = new VacancyCourier(STRATEGY);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testSend() {
         courier.send(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testQuery() {
         courier.query(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testSendAsync() {
         courier.sendAsync(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testSendBatch() {
         courier.sendBatch(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testQueryBatch() {
         courier.queryBatch(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testSendScheduled() {
         courier.sendScheduled(null);
     }
 
-    @Test(expected = VacancyCourierHostException.class)
+    @Test(expected = VacancyCourierSupplierException.class)
     public void testQueryScheduled() {
         courier.queryScheduled(null);
     }

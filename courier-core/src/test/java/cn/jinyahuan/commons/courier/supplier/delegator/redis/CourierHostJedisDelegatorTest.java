@@ -16,7 +16,6 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator.redis;
 
-import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 import cn.jinyahuan.commons.courier.supplier.delegator.CourierSupplierDelegator;
 import cn.jinyahuan.commons.courier.supplier.delegator.redis.host.OtherCourierSupplier;
@@ -31,7 +30,8 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.util.Pool;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Yahuan Jin
@@ -59,7 +59,7 @@ public class CourierHostJedisDelegatorTest {
 
     @Test
     public void testAssign() {
-        final String key = CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME;
+        final String key = CourierSupplierDelegator.DEFAULT_DELEGATOR_KEY_NAME;
         String className = String.class.getName();
 
         jedisPool.getResource().del(key);

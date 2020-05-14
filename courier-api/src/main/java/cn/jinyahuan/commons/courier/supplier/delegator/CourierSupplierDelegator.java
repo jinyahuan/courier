@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 
 import java.io.Serializable;
@@ -28,6 +28,11 @@ import java.io.Serializable;
  * @since 0.1
  */
 public interface CourierSupplierDelegator extends Serializable {
+    /**
+     * 默认的存放委派器类的 key 名。
+     */
+    String DEFAULT_DELEGATOR_KEY_NAME = "courier:host:delegator";
+
     /**
      * 获取委派的信使的服务供应商。
      *

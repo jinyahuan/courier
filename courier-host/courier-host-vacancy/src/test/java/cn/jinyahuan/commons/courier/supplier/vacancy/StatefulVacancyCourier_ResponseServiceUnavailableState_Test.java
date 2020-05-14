@@ -16,9 +16,9 @@
 
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
-import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.CourierResponse;
-import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableCourierResponse;
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
+import cn.jinyahuan.commons.courier.response.ServiceUnavailableCourierResponse;
 import org.junit.Before;
 import org.junit.Test;
 

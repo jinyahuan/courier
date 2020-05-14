@@ -14,16 +14,31 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.model;
+package cn.jinyahuan.commons.courier;
 
-import java.io.Serializable;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
 
 /**
- * 信使请求属性类。
+ * 有信使能力的。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierRequest extends CourierRequestAttributeAccessor, Serializable {
+public interface Courierable {
+    /**
+     * 派送。
+     *
+     * @param request
+     * @return
+     */
+    CourierResponse send(CourierRequest request);
 
+    /**
+     * 查询。
+     *
+     * @param request
+     * @return
+     */
+    CourierResponse query(CourierRequest request);
 }

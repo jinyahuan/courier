@@ -16,10 +16,9 @@
 
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
-import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.CourierResponse;
-import cn.jinyahuan.commons.courier.supplier.vacancy.exception.VacancyCourierHostException;
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
 
 /**
  * 抛异常的空缺服务商信使。即信使工作时就会抛异常。
@@ -64,12 +63,12 @@ public class ThrowableVacancyCourier implements Courier {
     }
 
     /**
-     * 默认的处理逻辑是抛出{@link VacancyCourierHostException}异常。
+     * 默认的处理逻辑是抛出{@link VacancyCourierSupplierException}异常。
      *
      * @param request
      * @return
      */
     protected CourierResponse handle(CourierRequest request) {
-        throw new VacancyCourierHostException();
+        throw new VacancyCourierSupplierException();
     }
 }

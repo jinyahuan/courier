@@ -16,7 +16,7 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator;
 
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 
 /**

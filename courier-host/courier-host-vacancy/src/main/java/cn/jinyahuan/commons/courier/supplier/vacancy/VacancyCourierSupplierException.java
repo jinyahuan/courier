@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.state;
+package cn.jinyahuan.commons.courier.supplier.vacancy;
 
-import cn.jinyahuan.commons.courier.api.model.AbstractCourierResponse;
-import lombok.ToString;
+import cn.jinyahuan.commons.courier.CourierException;
 
 /**
- * 带有服务不可用状态的信使响应属性类。
+ * 信使服务商空缺异常。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@ToString(callSuper = true)
-public class ServiceUnavailableCourierResponse<T> extends AbstractCourierResponse<T> {
-    private static final long serialVersionUID = 1L;
+public class VacancyCourierSupplierException extends CourierException {
+    static final long serialVersionUID = 1L;
 
-    public ServiceUnavailableCourierResponse() {
-        super(ResponseState.SERVICE_UNAVAILABLE);
+    public VacancyCourierSupplierException() {
+        super();
     }
 
-    public ServiceUnavailableCourierResponse(T responseData) {
-        super(ResponseState.SERVICE_UNAVAILABLE, responseData);
+    public VacancyCourierSupplierException(String message) {
+        super(message);
     }
 }

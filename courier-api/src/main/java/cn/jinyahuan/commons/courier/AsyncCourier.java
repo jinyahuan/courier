@@ -14,35 +14,25 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier;
 
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.CourierResponse;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
 
 /**
- * 批操作的信使。
+ * 异步操作的信使。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface BatchCourier extends Courierable {
+public interface AsyncCourier extends Courierable {
     /**
-     * 派送批量的信件。
+     * 派送异步的信件。
      *
      * @param request
      * @return
      */
-    default CourierResponse sendBatch(CourierRequest request) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * 查询批量的信件。
-     *
-     * @param request
-     * @return
-     */
-    default CourierResponse queryBatch(CourierRequest request) {
+    default CourierResponse sendAsync(CourierRequest request) {
         throw new UnsupportedOperationException();
     }
 }

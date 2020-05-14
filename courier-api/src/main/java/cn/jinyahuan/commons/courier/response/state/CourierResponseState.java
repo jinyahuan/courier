@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.state;
+package cn.jinyahuan.commons.courier.response.state;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -25,9 +24,7 @@ import lombok.Getter;
  * @author Yahuan Jin
  * @since 0.1
  */
-@Getter
-@AllArgsConstructor
-public enum ResponseState implements ResponseStateAccessor {
+public enum CourierResponseState implements CourierResponseStateAccessor {
     /**
      * 失败。
      */
@@ -57,15 +54,24 @@ public enum ResponseState implements ResponseStateAccessor {
     /**
      * 状态码。
      */
+    @Getter
     private final int state;
 
     /**
      * 错误编码。
      */
+    @Getter
     private final String code;
 
     /**
      * 错误信息。
      */
+    @Getter
     private final String msg;
+
+    CourierResponseState(int state, String code, String msg) {
+        this.state = state;
+        this.code = code;
+        this.msg = msg;
+    }
 }

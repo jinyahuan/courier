@@ -16,10 +16,10 @@
 
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
-import cn.jinyahuan.commons.courier.api.Courier;
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.CourierResponse;
-import cn.jinyahuan.commons.courier.api.state.ServiceUnavailableCourierResponse;
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
+import cn.jinyahuan.commons.courier.response.ServiceUnavailableCourierResponse;
 
 import java.util.Objects;
 

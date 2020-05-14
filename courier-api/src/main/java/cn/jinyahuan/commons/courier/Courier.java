@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.supplier.vacancy.exception;
-
-import cn.jinyahuan.commons.courier.exception.CourierHostException;
+package cn.jinyahuan.commons.courier;
 
 /**
- * 信使服务商空缺异常。
+ * 信使。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierHostException extends CourierHostException {
-    static final long serialVersionUID = 1L;
+public interface Courier extends AsyncCourier, BatchCourier, ScheduledCourier {
 
-    public VacancyCourierHostException() {
-        super();
-    }
-
-    public VacancyCourierHostException(String message) {
-        super(message);
-    }
 }

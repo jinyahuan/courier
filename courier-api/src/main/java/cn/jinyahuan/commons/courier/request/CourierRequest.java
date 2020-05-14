@@ -14,26 +14,16 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.state;
+package cn.jinyahuan.commons.courier.request;
 
-import cn.jinyahuan.commons.courier.api.model.AbstractCourierResponse;
-import lombok.ToString;
+import java.io.Serializable;
 
 /**
- * 带有发送成功状态的信使响应属性类。
+ * 信使请求属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@ToString(callSuper = true)
-public class SuccessfulCourierResponse<T> extends AbstractCourierResponse<T> {
-    private static final long serialVersionUID = 1L;
+public interface CourierRequest extends CourierRequestAttributeAccessor, Serializable {
 
-    public SuccessfulCourierResponse() {
-        super(ResponseState.SUCCESS);
-    }
-
-    public SuccessfulCourierResponse(T responseData) {
-        super(ResponseState.SUCCESS, responseData);
-    }
 }

@@ -14,24 +14,26 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.exception;
+package cn.jinyahuan.commons.courier.response;
+
+import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
+import lombok.ToString;
 
 /**
+ * 带有发送成功状态的信使响应属性类。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class CourierException extends RuntimeException {
-    static final long serialVersionUID = 1L;
+@ToString(callSuper = true)
+public class SuccessfulCourierResponse<T> extends AbstractCourierResponse<T> {
+    private static final long serialVersionUID = 1L;
 
-    public CourierException() {
-        super();
+    public SuccessfulCourierResponse() {
+        super(CourierResponseState.SUCCESS);
     }
 
-    public CourierException(String message) {
-        super(message);
-    }
-
-    public CourierException(Throwable cause) {
-        super(cause);
+    public SuccessfulCourierResponse(T responseData) {
+        super(CourierResponseState.SUCCESS, responseData);
     }
 }

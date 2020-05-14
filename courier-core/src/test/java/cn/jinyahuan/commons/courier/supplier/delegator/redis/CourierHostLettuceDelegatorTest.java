@@ -16,7 +16,6 @@
 
 package cn.jinyahuan.commons.courier.supplier.delegator.redis;
 
-import cn.jinyahuan.commons.courier.constant.CourierRedisKeyConstants;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 import cn.jinyahuan.commons.courier.supplier.delegator.CourierSupplierDelegator;
 import cn.jinyahuan.commons.courier.supplier.delegator.redis.host.OtherCourierSupplier;
@@ -75,7 +74,7 @@ public class CourierHostLettuceDelegatorTest {
 
     @Test
     public void testAssign() throws Exception {
-        final String key = CourierRedisKeyConstants.DEFAULT_DELEGATOR_KEY_NAME;
+        final String key = CourierSupplierDelegator.DEFAULT_DELEGATOR_KEY_NAME;
         String className = String.class.getName();
 
         this.delRedisKey(key);

@@ -14,14 +14,33 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier.response.state;
 
 /**
- * todo 使用 aop，还是模板来实现固定的请求参数拦截、校验、失败重试、响应参数拦截等。
+ * 响应状态的属性访问器。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public abstract class AbstractCourier implements Courier {
+public interface CourierResponseStateAccessor {
+    /**
+     * 获取响应的状态码。
+     *
+     * @return
+     */
+    int getState();
 
+    /**
+     * 获取响应的错误编码。
+     *
+     * @return
+     */
+    String getCode();
+
+    /**
+     * 获取响应的错误信息。
+     *
+     * @return
+     */
+    String getMsg();
 }

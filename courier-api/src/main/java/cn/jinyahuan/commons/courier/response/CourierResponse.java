@@ -14,25 +14,16 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api;
+package cn.jinyahuan.commons.courier.response;
 
-import cn.jinyahuan.commons.courier.api.model.CourierRequest;
-import cn.jinyahuan.commons.courier.api.model.CourierResponse;
+import java.io.Serializable;
 
 /**
- * 异步操作的信使。
+ * 信使响应属性类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface AsyncCourier extends Courierable {
-    /**
-     * 派送异步的信件。
-     *
-     * @param request
-     * @return
-     */
-    default CourierResponse sendAsync(CourierRequest request) {
-        throw new UnsupportedOperationException();
-    }
+public interface CourierResponse<T> extends CourierResponseAttributeAccessor<T>, Serializable {
+
 }

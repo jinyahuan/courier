@@ -14,17 +14,35 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.constant;
+package cn.jinyahuan.commons.courier;
+
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
 
 /**
+ * 定时操作的信使。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public final class CourierRedisKeyConstants {
-    private CourierRedisKeyConstants() {}
+public interface ScheduledCourier extends Courierable {
+    /**
+     * 派送定时的信件。
+     *
+     * @param request
+     * @return
+     */
+    default CourierResponse sendScheduled(CourierRequest request) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
-     * 默认的存放委派器类的 key 名。
+     * 查询定时的信件。
+     *
+     * @param request
+     * @return
      */
-    public static final String DEFAULT_DELEGATOR_KEY_NAME = "courier:host:delegator";
+    default CourierResponse queryScheduled(CourierRequest request) {
+        throw new UnsupportedOperationException();
+    }
 }

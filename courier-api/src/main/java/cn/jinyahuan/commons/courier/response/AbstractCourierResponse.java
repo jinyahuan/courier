@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.api.model;
+package cn.jinyahuan.commons.courier.response;
 
-import cn.jinyahuan.commons.courier.api.state.ResponseStateAccessor;
+import cn.jinyahuan.commons.courier.response.state.CourierResponseStateAccessor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,13 +56,13 @@ public abstract class AbstractCourierResponse<T> implements CourierResponse<T> {
 
     public AbstractCourierResponse() {}
 
-    public AbstractCourierResponse(ResponseStateAccessor responseState) {
+    public AbstractCourierResponse(CourierResponseStateAccessor responseState) {
         this.state = responseState.getState();
         this.code = responseState.getCode();
         this.msg = responseState.getMsg();
     }
 
-    public AbstractCourierResponse(ResponseStateAccessor responseState, T responseData) {
+    public AbstractCourierResponse(CourierResponseStateAccessor responseState, T responseData) {
         this(responseState);
         this.responseData = responseData;
     }
