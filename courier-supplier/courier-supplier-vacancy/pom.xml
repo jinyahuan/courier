@@ -20,12 +20,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.jinyahuan.commons</groupId>
-    <artifactId>courier-host-simulation</artifactId>
+    <artifactId>courier-supplier-vacancy</artifactId>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>cn.jinyahuan.commons</groupId>
-        <artifactId>courier-host</artifactId>
+        <artifactId>courier-supplier</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
 </project>

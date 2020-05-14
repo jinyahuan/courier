@@ -20,29 +20,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.jinyahuan.commons</groupId>
-    <artifactId>courier-host</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>courier-supplier-simulation</artifactId>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>cn.jinyahuan.commons</groupId>
-        <artifactId>courier</artifactId>
+        <artifactId>courier-supplier</artifactId>
         <version>0.1-SNAPSHOT</version>
     </parent>
-
-    <modules>
-        <module>courier-host-simulation</module>
-        <module>courier-host-vacancy</module>
-    </modules>
-
-    <dependencies>
-        <dependency>
-            <groupId>cn.jinyahuan.commons</groupId>
-            <artifactId>courier-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 </project>

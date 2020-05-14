@@ -18,10 +18,10 @@ Courier(信使): 集成的各大短信服务商的短信操作功能。提供一
 #### 1期-项目模块
 > * courier-api:  提供 api 规范
 > * courier-core: 提供核心功能
-> * courier-host
->     * courier-host-vacancy:    空缺短信服务商的 api 实现包
->     * courier-host-simulation: 仿真短信服务商的 api 实现包（可以用于测试，模拟等用途）
-> * courier-host-xxx: 各个短信服务商的 api 实现包（每个服务商都会开一个独立的仓库）
+> * courier-supplier
+>     * courier-supplier-vacancy:    空缺短信服务商的 api 实现包
+>     * courier-supplier-simulation: 仿真短信服务商的 api 实现包（可以用于测试，模拟等用途）
+> * courier-supplier-xxx: 各个短信服务商的 api 实现包（每个服务商都会开一个独立的仓库）
 
 ## 怎么为项目做贡献
 查看[CONTRIBUTING.md](CONTRIBUTING.md)

@@ -27,7 +27,7 @@
     <modules>
         <module>courier-api</module>
         <module>courier-core</module>
-        <module>courier-host</module>
+        <module>courier-supplier</module>
     </modules>
 
     <properties>
