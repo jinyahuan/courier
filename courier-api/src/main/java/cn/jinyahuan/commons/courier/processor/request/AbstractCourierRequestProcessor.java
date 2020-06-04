@@ -16,22 +16,66 @@
 
 package cn.jinyahuan.commons.courier.processor.request;
 
+import cn.jinyahuan.commons.courier.processor.CourierProcessorPriority;
 import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
+import cn.jinyahuan.commons.courier.util.CollectionUtils;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
 public abstract class AbstractCourierRequestProcessor implements CourierRequestProcessor {
-    protected CourierRequestInterceptor requestInterceptor;
+    protected List<CourierRequestInterceptor> interceptors;
 
-    public AbstractCourierRequestProcessor(CourierRequestInterceptor requestInterceptor) {
-        this.requestInterceptor = requestInterceptor;
+    public AbstractCourierRequestProcessor() {
+        this(getDefaultInterceptors());
+    }
+
+    public AbstractCourierRequestProcessor(List<CourierRequestInterceptor> interceptors) {
+        setInterceptors(interceptors);
+    }
+
+    @Override
+    public List<CourierRequestInterceptor> getInterceptors() {
+        return this.interceptors;
+    }
+
+    @Override
+    public void setInterceptors(List<CourierRequestInterceptor> interceptors) {
+        if (CollectionUtils.isNotEmpty(interceptors)) {
+            List<CourierRequestInterceptor> list = interceptors.stream()
+                    .sorted(Comparator.comparing(
+                            p -> {
+                                CourierProcessorPriority annotation =
+                                        p.getClass().getAnnotation(CourierProcessorPriority.class);
+                                return Objects.nonNull(annotation) ? annotation.value() : Integer.MAX_VALUE;
+                            })
+                    )
+                    .collect(Collectors.toList());
+
+            this.interceptors = new CopyOnWriteArrayList<>(list);
+        }
     }
 
     @Override
     public void process(CourierRequest request, CourierSupplier supplier) {
-        requestInterceptor.intercept(request, supplier);
+        if (CollectionUtils.isNotEmpty(interceptors)) {
+            for (final CourierRequestInterceptor interceptor : interceptors) {
+                interceptor.intercept(request, supplier);
+            }
+        }
+    }
+
+    protected static List<CourierRequestInterceptor> getDefaultInterceptors() {
+        List<CourierRequestInterceptor> list = new CopyOnWriteArrayList<>();
+        list.add(new CourierRequestNoOpInterceptor());
+        return list;
     }
 }

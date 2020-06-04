@@ -14,29 +14,11 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.util;
-
-import java.util.Collection;
-import java.util.Objects;
+package cn.jinyahuan.commons.courier.processor;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
-public final class CollectionUtils {
-    private CollectionUtils() {
-        throw new UnsupportedOperationException();
-    }
-
-    public static int size(final Collection collection) {
-        return Objects.isNull(collection) ? 0 : collection.size();
-    }
-
-    public static boolean isEmpty(final Collection collection) {
-        return size(collection) == 0;
-    }
-
-    public static boolean isNotEmpty(final Collection collection) {
-        return !isEmpty(collection);
-    }
+public interface CourierProcessor {
 }

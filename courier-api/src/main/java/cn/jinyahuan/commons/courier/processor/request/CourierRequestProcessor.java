@@ -16,15 +16,31 @@
 
 package cn.jinyahuan.commons.courier.processor.request;
 
-import cn.jinyahuan.commons.courier.processor.Processor;
+import cn.jinyahuan.commons.courier.processor.CourierProcessor;
 import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
+
+import java.util.List;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierRequestProcessor extends Processor {
+public interface CourierRequestProcessor extends CourierProcessor {
+    /**
+     * 获取所有的请求的拦截器。
+     *
+     * @return
+     */
+    List<CourierRequestInterceptor> getInterceptors();
+
+    /**
+     * 替换所有的请求的拦截器。
+     *
+     * @param interceptors
+     */
+    void setInterceptors(List<CourierRequestInterceptor> interceptors);
+
     /**
      * 处理信使请求。
      *

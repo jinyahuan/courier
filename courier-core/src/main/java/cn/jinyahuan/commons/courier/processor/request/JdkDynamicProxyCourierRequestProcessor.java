@@ -30,12 +30,12 @@ import java.util.Objects;
  * @author Yahuan Jin
  * @since 0.1
  */
-public class JdkDynamicProxyRequestProcessor implements InvocationHandler {
+public class JdkDynamicProxyCourierRequestProcessor implements InvocationHandler {
     private Courier courier;
 
     private CourierRequestProcessor processor;
 
-    public JdkDynamicProxyRequestProcessor(Courier courier, CourierRequestProcessor processor) {
+    public JdkDynamicProxyCourierRequestProcessor(Courier courier, CourierRequestProcessor processor) {
         this.courier = courier;
         this.processor = processor;
     }

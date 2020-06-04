@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.processor;
+package cn.jinyahuan.commons.courier.processor.request;
+
+import cn.jinyahuan.commons.courier.processor.CourierProcessorPriority;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 
 /**
+ * 无操作的请求的拦截器。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface Processor {
+@CourierProcessorPriority
+public class CourierRequestNoOpInterceptor implements CourierRequestInterceptor {
+    @Override
+    public void intercept(CourierRequest request, CourierSupplier supplier) {}
 }
