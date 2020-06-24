@@ -22,6 +22,7 @@ Courier(信使): 集成的各大短信服务商的短信操作功能。提供一
 >     * courier-supplier-vacancy:    空缺短信服务商的 api 实现包
 >     * courier-supplier-simulation: 仿真短信服务商的 api 实现包（可以用于测试，模拟等用途）
 > * courier-supplier-xxx: 各个短信服务商的 api 实现包（每个服务商都会开一个独立的仓库）
+> * courier-samples: 样例和demo
 
 ## 怎么为项目做贡献
 查看[CONTRIBUTING.md](CONTRIBUTING.md)

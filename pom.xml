@@ -28,6 +28,7 @@
         <module>courier-api</module>
         <module>courier-core</module>
         <module>courier-supplier</module>
+        <module>courier-samples</module>
     </modules>
 
     <properties>
@@ -64,6 +65,26 @@
             <dependency>
                 <groupId>cn.jinyahuan.commons</groupId>
                 <artifactId>courier-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.jinyahuan.commons</groupId>
+                <artifactId>courier-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.jinyahuan.commons</groupId>
+                <artifactId>courier-supplier-simulation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.jinyahuan.commons</groupId>
+                <artifactId>courier-supplier-vacancy</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.jinyahuan.commons</groupId>
+                <artifactId>courier-samples</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
