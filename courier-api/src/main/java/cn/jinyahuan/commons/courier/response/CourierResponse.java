@@ -16,6 +16,8 @@
 
 package cn.jinyahuan.commons.courier.response;
 
+import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
+
 import java.io.Serializable;
 
 /**
@@ -25,5 +27,14 @@ import java.io.Serializable;
  * @since 0.1
  */
 public interface CourierResponse<T> extends CourierResponseAttributeAccessor<T>, Serializable {
-
+    /**
+     * 是否是成功（发送成功，而非请求成功）的状态。
+     *
+     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
+     * @see CourierResponseState#isSuccess(java.lang.Integer)
+     * @see CourierResponseState#isSuccess(cn.jinyahuan.commons.courier.response.state.CourierResponseState)
+     */
+    default Boolean isSuccess() {
+        return CourierResponseState.isSuccess(this.getState());
+    }
 }

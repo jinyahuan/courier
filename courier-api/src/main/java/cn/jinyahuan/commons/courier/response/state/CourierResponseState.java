@@ -18,6 +18,8 @@ package cn.jinyahuan.commons.courier.response.state;
 
 import lombok.Getter;
 
+import java.util.Objects;
+
 /**
  * 响应状态码枚举类。
  *
@@ -51,6 +53,8 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
     SERVICE_UNAVAILABLE(101, "101", "service unavailable"),
     ;
 
+    private static final CourierResponseState[] ENUMS = CourierResponseState.values();
+
     /**
      * 状态码。
      */
@@ -73,5 +77,43 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
         this.state = state;
         this.code = code;
         this.msg = msg;
+    }
+
+    /**
+     * @param state
+     * @return may be null
+     */
+    public static CourierResponseState valueOf(Integer state) {
+        if (Objects.nonNull(state)) {
+            final int value = state.intValue();
+            for (final CourierResponseState anEnum : ENUMS) {
+                if (value == anEnum.getState()) {
+                    return anEnum;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 是否是成功（发送成功，而非请求成功）的状态。
+     *
+     * @param state
+     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
+     * @see #isSuccess(Integer)
+     */
+    public static Boolean isSuccess(CourierResponseState state) {
+        return state == SUCCESS;
+    }
+
+    /**
+     * 是否是成功（发送成功，而非请求成功）的状态。
+     *
+     * @param state
+     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
+     * @see #isSuccess(CourierResponseState)
+     */
+    public static Boolean isSuccess(Integer state) {
+        return isSuccess(valueOf(state));
     }
 }
