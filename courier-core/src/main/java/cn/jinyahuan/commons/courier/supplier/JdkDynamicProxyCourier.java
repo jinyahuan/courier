@@ -21,8 +21,10 @@ import cn.jinyahuan.commons.courier.context.CourierContext;
 import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
 import cn.jinyahuan.commons.courier.processor.request.CourierRequestProcessor;
 import cn.jinyahuan.commons.courier.processor.response.CourierResponseProcessor;
+import cn.jinyahuan.commons.courier.processor.retry.CourierRetryProcessor;
 import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
+import cn.jinyahuan.commons.courier.util.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -74,12 +76,17 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
     protected void processRequest(final CourierRequest request, final CourierSupplier supplier) {
         final CourierProcessorContext processorContext = this.context.getProcessorContext();
-        final List<CourierRequestProcessor> requestProcessors = processorContext.getRequestProcessors();
-
-        for (final CourierRequestProcessor processor : requestProcessors) {
-            try {
-                processor.process(request, supplier);
-            } catch (Exception e) {
+        if (Objects.nonNull(processorContext)) {
+            final List<CourierRequestProcessor> requestProcessors = processorContext.getRequestProcessors();
+            if (CollectionUtils.isNotEmpty(requestProcessors)) {
+                for (final CourierRequestProcessor processor : requestProcessors) {
+                    try {
+                        processor.process(request, supplier);
+                    } catch (Exception e) {
+                        log.error("Courier (JdkDynamicProxy) process request failure.", e);
+                        // todo process request exception callback
+                    }
+                }
             }
         }
     }
@@ -90,24 +97,40 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
     protected CourierResponse processRetry(final Method method, final Object[] args) {
         CourierResponse result = null;
-        // todo retry
         try {
             result = (CourierResponse) method.invoke(this.courier, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
-
+            log.error("Courier (JdkDynamicProxy) process failure.", e);
         }
+
+        if (Objects.isNull(result) || !result.isSuccess()) {
+            final CourierProcessorContext processorContext = this.context.getProcessorContext();
+            if (Objects.nonNull(processorContext)) {
+                final List<CourierRetryProcessor> retryProcessors = processorContext.getRetryProcessors();
+                if (CollectionUtils.isNotEmpty(retryProcessors)) {
+                    for (final CourierRetryProcessor processor : retryProcessors) {
+                        // todo how to retry ?
+                    }
+                }
+            }
+        }
+
         return result;
     }
 
     protected void processResponse(final CourierResponse response, final CourierSupplier supplier) {
         final CourierProcessorContext processorContext = this.context.getProcessorContext();
-        final List<CourierResponseProcessor> responseProcessors = processorContext.getResponseProcessors();
-
-        for (final CourierResponseProcessor processor : responseProcessors) {
-            try {
-                processor.process(response, supplier);
-            } catch (Exception e) {
-
+        if (Objects.nonNull(processorContext)) {
+            final List<CourierResponseProcessor> responseProcessors = processorContext.getResponseProcessors();
+            if (CollectionUtils.isNotEmpty(responseProcessors)) {
+                for (final CourierResponseProcessor processor : responseProcessors) {
+                    try {
+                        processor.process(response, supplier);
+                    } catch (Exception e) {
+                        log.error("Courier (JdkDynamicProxy) process response failure.", e);
+                        // todo process response exception callback
+                    }
+                }
             }
         }
     }
