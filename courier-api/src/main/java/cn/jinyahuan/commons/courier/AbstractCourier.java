@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier;
 
 /**
- * todo 使用 aop，还是模板来实现固定的请求参数拦截、校验、失败重试、响应参数拦截等。
+ * 抽象的信使。
  *
  * @author Yahuan Jin
  * @since 0.1
