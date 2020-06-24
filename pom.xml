@@ -23,6 +23,19 @@
     <artifactId>courier</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://github.com/jinyahuan/courier</url>
+    <inceptionYear>2020</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <!-- <distribution>repo</distribution> -->
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/jinyahuan/courier/issues</url>
+    </issueManagement>
 
     <modules>
         <module>courier-api</module>
