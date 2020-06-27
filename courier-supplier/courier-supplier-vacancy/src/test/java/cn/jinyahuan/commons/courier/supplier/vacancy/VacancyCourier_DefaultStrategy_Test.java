@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class VacancyCourier_DefaultStrategy_Test {
     private Courier courier;
-    private static final CourierResponse SERVICE_UNAVAILABLE_RESPONSE = CourierResponseFactory.COMMON_SERVICE_UNAVAILABLE_RESPONSE;
+    private static final CourierResponse SERVICE_UNAVAILABLE_RESPONSE = CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE;
 
     @Before
     public void before() {

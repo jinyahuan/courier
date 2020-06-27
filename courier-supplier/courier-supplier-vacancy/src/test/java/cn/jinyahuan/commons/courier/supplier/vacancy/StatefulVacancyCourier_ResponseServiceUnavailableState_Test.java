@@ -31,7 +31,7 @@ import static org.junit.Assert.assertEquals;
 public class StatefulVacancyCourier_ResponseServiceUnavailableState_Test {
     private static final VacancyHostHandleStrategy STRATEGY =
             VacancyHostHandleStrategy.RESPONSE_SERVICE_UNAVAILABLE_STATE;
-    private static final CourierResponse EXPECTED_RESPONSE = CourierResponseFactory.COMMON_SERVICE_UNAVAILABLE_RESPONSE;
+    private static final CourierResponse EXPECTED_RESPONSE = CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE;
 
     private Courier courier;
 

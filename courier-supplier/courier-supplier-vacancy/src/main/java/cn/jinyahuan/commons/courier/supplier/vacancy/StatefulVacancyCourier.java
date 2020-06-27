@@ -96,7 +96,7 @@ public class StatefulVacancyCourier implements Courier {
 
         switch (handleStrategy) {
             case RESPONSE_SERVICE_UNAVAILABLE_STATE:
-                response = CourierResponseFactory.COMMON_SERVICE_UNAVAILABLE_RESPONSE;
+                response = CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE;
                 break;
             default:
                 throw new UnsupportedOperationException();

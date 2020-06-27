@@ -29,23 +29,23 @@ public class CourierResponseFactory {
      * 公共的{@link CourierResponseState#FAILURE 失败状态}的信使响应属性类。
      * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
      *
-     * @see #newFailedResponse(Object) (Object)
+     * @see #newImmutableFailedResponse(Object) (Object)
      */
-    public static final CourierResponse COMMON_FAILED_RESPONSE = newFailedResponse(null);
+    public static final CourierResponse IMMUTABLE_FAILED_RESPONSE = newImmutableFailedResponse(null);
     /**
      * 公共的{@link CourierResponseState#SUCCESS 成功状态}的信使响应属性类。
      * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
      *
-     * @see #newSuccessfulResponse(Object)
+     * @see #newImmutableSuccessfulResponse(Object)
      */
-    public static final CourierResponse COMMON_SUCCESSFUL_RESPONSE = newSuccessfulResponse(null);
+    public static final CourierResponse IMMUTABLE_SUCCESSFUL_RESPONSE = newImmutableSuccessfulResponse(null);
     /**
      * 公共的{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的信使响应属性类。
      * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
      *
-     * @see #newServiceUnavailableResponse(Object)
+     * @see #newImmutableServiceUnavailableResponse(Object)
      */
-    public static final CourierResponse COMMON_SERVICE_UNAVAILABLE_RESPONSE = newServiceUnavailableResponse(null);
+    public static final CourierResponse IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE = newImmutableServiceUnavailableResponse(null);
 
     // - - -
 
@@ -55,9 +55,9 @@ public class CourierResponseFactory {
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
      * @return
-     * @see #COMMON_SUCCESSFUL_RESPONSE
+     * @see #IMMUTABLE_SUCCESSFUL_RESPONSE
      */
-    public static <T> CourierResponse<T> newSuccessfulResponse(T data) {
+    public static <T> CourierResponse<T> newImmutableSuccessfulResponse(T data) {
         return new ImmutableCourierResponse<>(CourierResponseState.SUCCESS, data);
     }
 
@@ -67,9 +67,9 @@ public class CourierResponseFactory {
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
      * @return
-     * @see #COMMON_SERVICE_UNAVAILABLE_RESPONSE
+     * @see #IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE
      */
-    public static <T> CourierResponse<T> newServiceUnavailableResponse(T data) {
+    public static <T> CourierResponse<T> newImmutableServiceUnavailableResponse(T data) {
         return new ImmutableCourierResponse<>(CourierResponseState.SERVICE_UNAVAILABLE, data);
     }
 
@@ -79,9 +79,9 @@ public class CourierResponseFactory {
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
      * @return
-     * @see #COMMON_FAILED_RESPONSE
+     * @see #IMMUTABLE_FAILED_RESPONSE
      */
-    public static <T> CourierResponse<T> newFailedResponse(T data) {
+    public static <T> CourierResponse<T> newImmutableFailedResponse(T data) {
         return new ImmutableCourierResponse<>(CourierResponseState.FAILURE, data);
     }
 }
