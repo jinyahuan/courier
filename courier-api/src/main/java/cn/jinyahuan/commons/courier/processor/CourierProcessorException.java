@@ -14,30 +14,32 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier;
+package cn.jinyahuan.commons.courier.processor;
+
+import cn.jinyahuan.commons.courier.CourierException;
 
 /**
- * 信使中所有异常类的超类。
+ * 信使处理器进行相关处理时出现的某些异常。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public class CourierException extends RuntimeException {
-    static final long serialVersionUID = 1L;
+public class CourierProcessorException extends CourierException {
+    private static final long serialVersionUID = 1L;
 
-    public CourierException() {
+    public CourierProcessorException() {
         super();
     }
 
-    public CourierException(String message) {
+    public CourierProcessorException(String message) {
         super(message);
     }
 
-    public CourierException(Throwable cause) {
+    public CourierProcessorException(Throwable cause) {
         super(cause);
     }
 
-    public CourierException(String message, Throwable cause) {
+    public CourierProcessorException(String message, Throwable cause) {
         super(message, cause);
     }
 }
