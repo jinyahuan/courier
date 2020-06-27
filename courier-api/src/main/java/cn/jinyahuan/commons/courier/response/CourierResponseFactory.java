@@ -26,22 +26,22 @@ import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
  */
 public class CourierResponseFactory {
     /**
-     * 公共的{@link CourierResponseState#FAILURE 失败状态}的信使响应属性类。
-     * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
+     * 一个不可变的{@link CourierResponseState#FAILURE 失败状态}的信使响应属性对象常量。
+     * <p>此对象的{@link AbstractCourierResponse#responseData 响应内容}为{@code null}。</p>
      *
      * @see #newImmutableFailedResponse(Object) (Object)
      */
     public static final CourierResponse IMMUTABLE_FAILED_RESPONSE = newImmutableFailedResponse(null);
     /**
-     * 公共的{@link CourierResponseState#SUCCESS 成功状态}的信使响应属性类。
-     * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
+     * 一个不可变的{@link CourierResponseState#SUCCESS 成功状态}的信使响应属性对象常量。
+     * <p>此对象的{@link AbstractCourierResponse#responseData 响应内容}为{@code null}。</p>
      *
      * @see #newImmutableSuccessfulResponse(Object)
      */
     public static final CourierResponse IMMUTABLE_SUCCESSFUL_RESPONSE = newImmutableSuccessfulResponse(null);
     /**
-     * 公共的{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的信使响应属性类。
-     * <p>没有{@link AbstractCourierResponse#responseData 响应内容}。</p>
+     * 一个不可变的{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的信使响应属性对象常量。
+     * <p>此对象的{@link AbstractCourierResponse#responseData 响应内容}为{@code null}。</p>
      *
      * @see #newImmutableServiceUnavailableResponse(Object)
      */
@@ -50,7 +50,7 @@ public class CourierResponseFactory {
     // - - -
 
     /**
-     * 创建一个{@link CourierResponseState#SUCCESS 成功状态}的信使响应属性类。
+     * 实例化一个不可变的{@link CourierResponseState#SUCCESS 成功状态}的信使响应属性对象。
      *
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
@@ -62,7 +62,7 @@ public class CourierResponseFactory {
     }
 
     /**
-     * 创建一个{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的信使响应属性类。
+     * 实例化一个不可变的{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的信使响应属性对象。
      *
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
@@ -74,7 +74,7 @@ public class CourierResponseFactory {
     }
 
     /**
-     * 创建一个{@link CourierResponseState#FAILURE 失败状态}的信使响应属性类。
+     * 实例化一个不可变的{@link CourierResponseState#FAILURE 失败状态}的信使响应属性对象。
      *
      * @param data {@link AbstractCourierResponse#responseData 响应内容}
      * @param <T>  {@link AbstractCourierResponse#responseData 响应内容}的类型
