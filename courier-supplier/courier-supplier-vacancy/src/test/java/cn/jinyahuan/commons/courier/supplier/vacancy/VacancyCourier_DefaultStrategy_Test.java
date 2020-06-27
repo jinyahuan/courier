@@ -18,7 +18,7 @@ package cn.jinyahuan.commons.courier.supplier.vacancy;
 
 import cn.jinyahuan.commons.courier.Courier;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
-import cn.jinyahuan.commons.courier.response.ServiceUnavailableCourierResponse;
+import cn.jinyahuan.commons.courier.response.CourierResponseFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class VacancyCourier_DefaultStrategy_Test {
     private Courier courier;
-    private static final CourierResponse SERVICE_UNAVAILABLE_RESPONSE = new ServiceUnavailableCourierResponse();
+    private static final CourierResponse SERVICE_UNAVAILABLE_RESPONSE = CourierResponseFactory.COMMON_SERVICE_UNAVAILABLE_RESPONSE;
 
     @Before
     public void before() {

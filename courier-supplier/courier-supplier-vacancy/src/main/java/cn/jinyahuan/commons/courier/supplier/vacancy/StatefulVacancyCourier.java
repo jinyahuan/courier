@@ -19,7 +19,7 @@ package cn.jinyahuan.commons.courier.supplier.vacancy;
 import cn.jinyahuan.commons.courier.Courier;
 import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
-import cn.jinyahuan.commons.courier.response.ServiceUnavailableCourierResponse;
+import cn.jinyahuan.commons.courier.response.CourierResponseFactory;
 
 import java.util.Objects;
 
@@ -96,7 +96,7 @@ public class StatefulVacancyCourier implements Courier {
 
         switch (handleStrategy) {
             case RESPONSE_SERVICE_UNAVAILABLE_STATE:
-                response = new ServiceUnavailableCourierResponse();
+                response = CourierResponseFactory.COMMON_SERVICE_UNAVAILABLE_RESPONSE;
                 break;
             default:
                 throw new UnsupportedOperationException();
