@@ -19,6 +19,7 @@ package cn.jinyahuan.commons.courier.supplier;
 import cn.jinyahuan.commons.courier.Courier;
 import cn.jinyahuan.commons.courier.context.CourierContext;
 import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
+import cn.jinyahuan.commons.courier.processor.CourierProcessorException;
 import cn.jinyahuan.commons.courier.processor.request.CourierRequestProcessor;
 import cn.jinyahuan.commons.courier.processor.response.CourierResponseProcessor;
 import cn.jinyahuan.commons.courier.processor.retry.CourierRetryProcessor;
@@ -35,6 +36,7 @@ import java.util.Objects;
 
 /**
  * todo 完善
+ * todo 抽象出执行流程的抽象方法
  *
  * @author Yahuan Jin
  * @since 0.1
@@ -45,9 +47,16 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
     protected CourierContext context;
 
+    /**
+     * 是否需要重试。
+     */
+    protected volatile boolean needRetry = false;
+
     public JdkDynamicProxyCourier(Courier courier, CourierContext context) {
         this.courier = courier;
         this.context = context;
+
+        needRetry = hasRetryProcessor(this.context);
     }
 
     @Override
@@ -61,7 +70,15 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
         processBeforeRequestCallback(request, supplier);
 
-        CourierResponse response = processRetry(method, args);
+        CourierResponse response = null;
+
+        try {
+            response = invokeCourier(method, args);
+        } catch (Exception e) {
+            // todo invoke courier exception callback
+        }
+
+        response = processRetry(response, method, args);
 
         processResponse(response, supplier);
 
@@ -74,6 +91,12 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
     }
 
+    /**
+     * 处理请求参数。
+     *
+     * @param request
+     * @param supplier
+     */
     protected void processRequest(final CourierRequest request, final CourierSupplier supplier) {
         final CourierProcessorContext processorContext = this.context.getProcessorContext();
         if (Objects.nonNull(processorContext)) {
@@ -83,39 +106,67 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
                     try {
                         processor.process(request, supplier);
                     } catch (Exception e) {
-                        log.error("Courier (JdkDynamicProxy) process request failure.", e);
-                        // todo process request exception callback
+                        throw new CourierProcessorException("Courier (JdkDynamicProxy) process request failure", e);
                     }
                 }
             }
         }
     }
 
+    /**
+     * 请求信使服务商前的回调。
+     *
+     * @param request
+     * @param supplier
+     */
     protected void processBeforeRequestCallback(final CourierRequest request, final CourierSupplier supplier) {
 
     }
 
-    protected CourierResponse processRetry(final Method method, final Object[] args) {
+    /**
+     * 调用信使（实际执行的方法）。
+     *
+     * @param method
+     * @param args
+     * @return
+     */
+    protected CourierResponse invokeCourier(final Method method, final Object[] args) {
         CourierResponse result = null;
         try {
             result = (CourierResponse) method.invoke(this.courier, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             log.error("Courier (JdkDynamicProxy) process failure.", e);
         }
+        return result;
+    }
 
-        if (Objects.isNull(result) || !result.isSuccess()) {
-            final CourierProcessorContext processorContext = this.context.getProcessorContext();
-            if (Objects.nonNull(processorContext)) {
-                final List<CourierRetryProcessor> retryProcessors = processorContext.getRetryProcessors();
-                if (CollectionUtils.isNotEmpty(retryProcessors)) {
-                    for (final CourierRetryProcessor processor : retryProcessors) {
-                        // todo how to retry ?
+    /**
+     * 处理失败重试。
+     *
+     * @param response
+     * @param method
+     * @param args
+     * @return
+     */
+    protected CourierResponse processRetry(final CourierResponse response, final Method method, final Object[] args) {
+        if (needRetry) {
+            if (Objects.isNull(response) || !response.isSuccess()) {
+                final CourierProcessorContext processorContext = this.context.getProcessorContext();
+                if (Objects.nonNull(processorContext)) {
+                    final List<CourierRetryProcessor> retryProcessors = processorContext.getRetryProcessors();
+                    if (CollectionUtils.isNotEmpty(retryProcessors)) {
+                        CourierResponse tempResponse;
+                        for (final CourierRetryProcessor processor : retryProcessors) {
+                            tempResponse = processor.retry(courier, method, args);
+                            if (Objects.nonNull(tempResponse) && tempResponse.isSuccess()) {
+                                return tempResponse;
+                            }
+                        }
                     }
                 }
             }
         }
-
-        return result;
+        return response;
     }
 
     protected void processResponse(final CourierResponse response, final CourierSupplier supplier) {
@@ -137,6 +188,20 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
     protected void processAfterResponseCallback(final CourierResponse response, final CourierSupplier supplier) {
 
+    }
+
+    /**
+     * 是否有重试处理器。
+     *
+     * @param context
+     * @return
+     */
+    protected boolean hasRetryProcessor(final CourierContext context) {
+        final CourierProcessorContext processorContext = this.context.getProcessorContext();
+        if (Objects.nonNull(processorContext)) {
+            return CollectionUtils.size(processorContext.getRetryProcessors()) > 0;
+        }
+        return false;
     }
 
     protected static CourierRequest obtainCourierRequest(final Object[] args) {
