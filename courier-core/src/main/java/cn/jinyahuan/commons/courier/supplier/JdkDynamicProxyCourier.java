@@ -17,6 +17,7 @@
 package cn.jinyahuan.commons.courier.supplier;
 
 import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.CourierException;
 import cn.jinyahuan.commons.courier.context.CourierContext;
 import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
 import cn.jinyahuan.commons.courier.processor.CourierProcessorException;
@@ -74,8 +75,8 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
 
         try {
             response = invokeCourier(method, args);
-        } catch (Exception e) {
-            // todo invoke courier exception callback
+        } catch (Throwable throwable) {
+            handleInvokeCourierException(courier, method, args, response, throwable);
         }
 
         response = processRetry(response, method, args);
@@ -140,6 +141,13 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
         return result;
     }
 
+    protected void handleInvokeCourierException(Courier courier, Method method, Object[] args, CourierResponse response, Throwable throwable) {
+        log.error("Courier (JdkDynamicProxy) invoke failure.", throwable);
+        if (!getNeedRetry()) {
+            throw new CourierException(throwable);
+        }
+    }
+
     /**
      * 处理失败重试。
      *
@@ -178,8 +186,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
                     try {
                         processor.process(response, supplier);
                     } catch (Exception e) {
-                        log.error("Courier (JdkDynamicProxy) process response failure.", e);
-                        // todo process response exception callback
+                        throw new CourierProcessorException("Courier (JdkDynamicProxy) process response failure", e);
                     }
                 }
             }
@@ -202,6 +209,10 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
             return CollectionUtils.size(processorContext.getRetryProcessors()) > 0;
         }
         return false;
+    }
+
+    protected boolean getNeedRetry() {
+        return needRetry;
     }
 
     protected static CourierRequest obtainCourierRequest(final Object[] args) {
