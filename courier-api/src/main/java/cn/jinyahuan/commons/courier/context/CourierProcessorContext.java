@@ -27,7 +27,7 @@ import java.util.List;
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierProcessorContext {
+public interface CourierProcessorContext extends CourierContextAttributeAccessor {
     /**
      * 获取所有的请求处理器。
      *

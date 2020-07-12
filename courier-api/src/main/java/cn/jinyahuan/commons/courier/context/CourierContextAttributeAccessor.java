@@ -16,27 +16,25 @@
 
 package cn.jinyahuan.commons.courier.context;
 
-import cn.jinyahuan.commons.courier.config.CourierConfigurable;
-
 /**
  * 信使上下文。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierContext extends CourierContextAttributeAccessor {
+public interface CourierContextAttributeAccessor {
     /**
-     * 获取信使的配置信息。
+     * 获取信使上下文的唯一id。
      *
      * @return
      */
-    CourierConfigurable getConfiguration();
+    String getId();
 
     /**
-     * 获取处理器的上下文。
+     * 获取信使上下文的唯一名词。
      *
      * @return
      */
-    CourierProcessorContext getProcessorContext();
+    String getName();
 
 }

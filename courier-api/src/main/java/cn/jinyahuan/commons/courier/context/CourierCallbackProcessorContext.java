@@ -18,19 +18,46 @@ package cn.jinyahuan.commons.courier.context;
 
 import cn.jinyahuan.commons.courier.processor.callback.CourierExceptionCallbackProcessor;
 import cn.jinyahuan.commons.courier.processor.callback.CourierRequestCallbackProcessor;
-import cn.jinyahuan.commons.courier.processor.callback.CourierResendCallbackProcessor;
+import cn.jinyahuan.commons.courier.processor.callback.CourierRetryCallbackProcessor;
 import cn.jinyahuan.commons.courier.processor.callback.CourierResponseCallbackProcessor;
 
 /**
+ * 信使回调处理器的上下文。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierCallbackProcessorContext {
+public interface CourierCallbackProcessorContext extends CourierContextAttributeAccessor {
+    /**
+     * 获取异常回调处理器。
+     *
+     * @return may be null
+     */
     CourierExceptionCallbackProcessor getExceptionCallbackProcessor();
 
-    CourierRequestCallbackProcessor getRequestCallbackProcessor();
+    /**
+     * 获取在请求信使服务商之前的回调处理器。
+     *
+     * @return may be null
+     */
+    CourierRequestCallbackProcessor getBeforeRequestCallbackProcessor();
 
-    CourierResendCallbackProcessor getResendCallbackProcessor();
+    /**
+     * 获取重发回调处理器。
+     * <p>
+     * {@link CourierRetryCallbackProcessor}应当在{@link CourierRequestCallbackProcessor}之后，
+     * {@link CourierResponseCallbackProcessor}之前执行。
+     * </p>
+     *
+     * @return may be null
+     */
+    CourierRetryCallbackProcessor getResendCallbackProcessor();
 
-    CourierResponseCallbackProcessor getResponseCallbackProcessor();
+    /**
+     * 获取在信使服务商响应之后的回调处理器。
+     * <p></p>
+     *
+     * @return may be null
+     */
+    CourierResponseCallbackProcessor getAfterResponseCallbackProcessor();
 }

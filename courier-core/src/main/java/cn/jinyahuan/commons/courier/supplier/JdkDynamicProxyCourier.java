@@ -134,7 +134,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
             if (Objects.nonNull(processorContext)) {
                 CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
                 if (Objects.nonNull(callbackProcessorContext)) {
-                    CourierRequestCallbackProcessor processor = callbackProcessorContext.getRequestCallbackProcessor();
+                    CourierRequestCallbackProcessor processor = callbackProcessorContext.getBeforeRequestCallbackProcessor();
                     if (Objects.nonNull(processor)) {
                         processor.call(courier, request);
                     }
@@ -218,7 +218,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
             if (Objects.nonNull(processorContext)) {
                 CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
                 if (Objects.nonNull(callbackProcessorContext)) {
-                    CourierResponseCallbackProcessor processor = callbackProcessorContext.getResponseCallbackProcessor();
+                    CourierResponseCallbackProcessor processor = callbackProcessorContext.getAfterResponseCallbackProcessor();
                     if (Objects.nonNull(processor)) {
                         processor.call(courier, request, response);
                     }
@@ -246,7 +246,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
         if (Objects.nonNull(processorContext)) {
             CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
             if (Objects.nonNull(callbackProcessorContext)) {
-                return Objects.nonNull(callbackProcessorContext.getRequestCallbackProcessor());
+                return Objects.nonNull(callbackProcessorContext.getBeforeRequestCallbackProcessor());
             }
         }
         return false;
@@ -257,7 +257,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
         if (Objects.nonNull(processorContext)) {
             CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
             if (Objects.nonNull(callbackProcessorContext)) {
-                return Objects.nonNull(callbackProcessorContext.getResponseCallbackProcessor());
+                return Objects.nonNull(callbackProcessorContext.getAfterResponseCallbackProcessor());
             }
         }
         return false;
