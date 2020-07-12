@@ -36,11 +36,11 @@ public interface CourierProcessorContext {
     List<CourierRequestProcessor> getRequestProcessors();
 
     /**
-     * 获取所有的回调处理器。
+     * 获取回调处理器的上下文。
      *
      * @return
      */
-    List<CourierCallbackProcessor> getCallbackProcessors();
+    CourierCallbackProcessorContext getCallbackProcessorContext();
 
     /**
      * 获取所有的重试处理器。
