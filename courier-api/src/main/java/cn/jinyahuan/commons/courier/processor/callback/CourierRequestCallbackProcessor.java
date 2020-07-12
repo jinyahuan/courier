@@ -16,6 +16,9 @@
 
 package cn.jinyahuan.commons.courier.processor.callback;
 
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.request.CourierRequest;
+
 /**
  * 信使请求时的回调处理器。
  *
@@ -23,4 +26,5 @@ package cn.jinyahuan.commons.courier.processor.callback;
  * @since 0.1
  */
 public interface CourierRequestCallbackProcessor extends CourierCallbackProcessor {
+    void call(Courier courier, CourierRequest request);
 }

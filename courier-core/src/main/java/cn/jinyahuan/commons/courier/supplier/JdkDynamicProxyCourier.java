@@ -22,6 +22,7 @@ import cn.jinyahuan.commons.courier.context.CourierCallbackProcessorContext;
 import cn.jinyahuan.commons.courier.context.CourierContext;
 import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
 import cn.jinyahuan.commons.courier.processor.CourierProcessorException;
+import cn.jinyahuan.commons.courier.processor.callback.CourierRequestCallbackProcessor;
 import cn.jinyahuan.commons.courier.processor.callback.CourierResponseCallbackProcessor;
 import cn.jinyahuan.commons.courier.processor.request.CourierRequestProcessor;
 import cn.jinyahuan.commons.courier.processor.response.CourierResponseProcessor;
@@ -40,6 +41,7 @@ import java.util.Objects;
 /**
  * todo 完善
  * todo 抽象出执行流程的抽象方法
+ * todo 拆分功能，每块功能一层代理
  *
  * @author Yahuan Jin
  * @since 0.1
@@ -54,6 +56,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
      * 是否需要重试。
      */
     protected volatile boolean needRetry;
+    protected volatile boolean needCallbackBeforeRequest;
     protected volatile boolean needCallbackAfterResponse;
 
     public JdkDynamicProxyCourier(Courier courier, CourierContext context) {
@@ -61,6 +64,7 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
         this.context = context;
 
         needRetry = hasRetryProcessor(this.context);
+        needCallbackBeforeRequest = hasRequestCallbackProcessor(this.context);
         needCallbackAfterResponse = hasResponseCallbackProcessor(this.context);
     }
 
@@ -125,7 +129,18 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
      * @param supplier
      */
     protected void processBeforeRequestCallback(final CourierRequest request, final CourierSupplier supplier) {
-
+        if (needCallbackBeforeRequest) {
+            final CourierProcessorContext processorContext = this.context.getProcessorContext();
+            if (Objects.nonNull(processorContext)) {
+                CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
+                if (Objects.nonNull(callbackProcessorContext)) {
+                    CourierRequestCallbackProcessor processor = callbackProcessorContext.getRequestCallbackProcessor();
+                    if (Objects.nonNull(processor)) {
+                        processor.call(courier, request);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -222,6 +237,17 @@ public class JdkDynamicProxyCourier implements InvocationHandler {
         final CourierProcessorContext processorContext = this.context.getProcessorContext();
         if (Objects.nonNull(processorContext)) {
             return CollectionUtils.size(processorContext.getRetryProcessors()) > 0;
+        }
+        return false;
+    }
+
+    protected boolean hasRequestCallbackProcessor(final CourierContext context) {
+        final CourierProcessorContext processorContext = this.context.getProcessorContext();
+        if (Objects.nonNull(processorContext)) {
+            CourierCallbackProcessorContext callbackProcessorContext = processorContext.getCallbackProcessorContext();
+            if (Objects.nonNull(callbackProcessorContext)) {
+                return Objects.nonNull(callbackProcessorContext.getRequestCallbackProcessor());
+            }
         }
         return false;
     }
