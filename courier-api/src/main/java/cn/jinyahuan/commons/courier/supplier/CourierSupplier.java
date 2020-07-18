@@ -16,12 +16,21 @@
 
 package cn.jinyahuan.commons.courier.supplier;
 
+import cn.jinyahuan.commons.courier.Courier;
+
 /**
  * 信使的服务供应商。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierSupplier extends CourierSupplierAttributeAccessor {
+public interface CourierSupplier {
+    /**
+     * 获取信使。
+     *
+     * @return
+     */
+    Courier getCourier();
+
     // todo 信使服务商的行为
 }

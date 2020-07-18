@@ -34,4 +34,12 @@ public class VacancyCourierSupplierException extends CourierException {
     public VacancyCourierSupplierException(String message) {
         super(message);
     }
+
+    public VacancyCourierSupplierException(Throwable cause) {
+        super(cause);
+    }
+
+    public VacancyCourierSupplierException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

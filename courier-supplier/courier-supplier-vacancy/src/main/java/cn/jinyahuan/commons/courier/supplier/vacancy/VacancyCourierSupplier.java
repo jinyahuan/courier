@@ -16,15 +16,21 @@
 
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
+import lombok.Getter;
+
 /**
+ * 空缺的信使服务商。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface HandleStrategyAttributeAccessor {
-    /**
-     * 获取 id。
-     *
-     * @return
-     */
-    int getId();
+public class VacancyCourierSupplier implements CourierSupplier {
+    @Getter
+    private Courier courier;
+
+    public VacancyCourierSupplier(VacancyCourier courier) {
+        this.courier = courier;
+    }
 }

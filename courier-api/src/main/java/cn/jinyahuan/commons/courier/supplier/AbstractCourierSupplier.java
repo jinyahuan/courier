@@ -16,27 +16,12 @@
 
 package cn.jinyahuan.commons.courier.supplier;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 /**
  * 抽象的信使的服务供应商。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode
 public abstract class AbstractCourierSupplier implements CourierSupplier {
-    /** 信使服务商的 id */
-    @Getter
-    @Setter
-    protected Integer id;
 
-    /** 信使服务商的名称 */
-    @Getter
-    @Setter
-    protected String name;
 }
