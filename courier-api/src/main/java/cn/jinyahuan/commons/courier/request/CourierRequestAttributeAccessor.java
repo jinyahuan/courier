@@ -16,6 +16,8 @@
 
 package cn.jinyahuan.commons.courier.request;
 
+import cn.jinyahuan.commons.courier.util.ArrayUtils;
+
 import java.util.Objects;
 
 /**
@@ -76,7 +78,7 @@ public interface CourierRequestAttributeAccessor {
      */
     default String getPhone() {
         String[] phones = getPhones();
-        if (Objects.nonNull(phones) && phones.length > 0) {
+        if (ArrayUtils.isNotEmpty(phones)) {
             return phones[0];
         }
         return null;
