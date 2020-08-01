@@ -21,6 +21,9 @@ import cn.jinyahuan.commons.courier.CourierException;
 /**
  * 信使服务商空缺异常。
  *
+ * <p>
+ * 通常用于没有指定信使非服务时，调用信使的方法时抛出的异常。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */

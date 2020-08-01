@@ -20,7 +20,20 @@ import cn.jinyahuan.commons.courier.Courier;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 
 /**
- * 空缺的信使服务商。
+ * 空缺的信使服务商，也就是默认的信使服务商。
+ *
+ * <p>
+ * 注意：不提供无参构造器，且只提供一个参数为{@link VacancyCourier 空缺信使}的构造器。
+ *
+ * <p>
+ * {@link VacancyCourierFactory}提供了几种静态的不可变的{@link VacancyCourier 空缺信使}实例。
+ *
+ * <p>
+ * 如果他们不满足你的要求，也可以通过{@link VacancyCourierFactory#newUnifiedOperationVacancyCourier(java.util.concurrent.Callable) VacancyCourierFactory.newUnifiedOperationVacancyCourier}
+ * 方法来实例化一个自定义执行逻辑的{@link VacancyCourier 空缺信使}
+ *
+ * <p>
+ * 如果上面的要求还不满足你的要求，那么还可以通过继承{@link VacancyCourierFactory.VacancyCourierAdapter VacancyCourierAdapter}类，然后根据需要重写逻辑
  *
  * @author Yahuan Jin
  * @since 0.1
