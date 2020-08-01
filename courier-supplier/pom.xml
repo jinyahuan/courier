@@ -37,7 +37,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.jinyahuan.commons</groupId>
-            <artifactId>courier-api</artifactId>
+            <artifactId>courier-core</artifactId>
         </dependency>
 
         <dependency>
