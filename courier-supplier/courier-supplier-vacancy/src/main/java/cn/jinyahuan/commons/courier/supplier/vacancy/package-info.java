@@ -19,9 +19,8 @@
  *
  * <pre>信使：
  * 1. {@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory VacancyCourierFactory}提供了几种默认的 空缺信使 实现
- * 2. 通过{@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory#newUnifiedOperationVacancyCourier(java.util.concurrent.Callable) VacancyCourierFactory.newUnifiedOperationVacancyCourier}方法来实例化一个自定义执行逻辑的 空缺信使
- * 3. 通过继承{@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory.VacancyCourierAdapter VacancyCourierAdapter}类，然后根据需要重写逻辑
- * 4. 实现{@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourier}接口，并重写全部逻辑
+ * 2. 通过继承{@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory.VacancyCourierAdapter VacancyCourierAdapter}类，然后根据需要重写逻辑
+ * 3. 实现{@link cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourier}接口，并重写全部逻辑
  * </pre>
  *
  * <pre>信使服务提供商：

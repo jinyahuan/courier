@@ -20,8 +20,6 @@ import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
 import cn.jinyahuan.commons.courier.response.CourierResponseFactory;
 
-import java.util.concurrent.Callable;
-
 /**
  * 空缺服务商的信使工厂。提供用于生产空缺服务商的特定信使。
  *
@@ -31,69 +29,30 @@ import java.util.concurrent.Callable;
 public final class VacancyCourierFactory {
     /**
      * 一个不可变的异常化的空缺服务商的信使，该信使的所有方法都会抛出{@link VacancyCourierSupplierException}异常。
-     *
-     * @see #newUnifiedOperationVacancyCourier(Callable)
      */
-    public static final VacancyCourier IMMUTABLE_THROWABLE_COURIER = newUnifiedOperationVacancyCourier(
-            () -> {
-                throw new VacancyCourierSupplierException();
-            }
-    );
+    public static final VacancyCourier IMMUTABLE_THROWABLE_COURIER =
+            new ThrowableVacancyCourier();
 
     /**
      * 一个不可变的服务不可用化的空缺服务商的信使，该信使的所有方法返回
      * {@link CourierResponseFactory#IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE 服务不可用状态的响应}。
-     *
-     * @see #newUnifiedOperationVacancyCourier(Callable)
      */
-    public static final VacancyCourier IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER = newUnifiedOperationVacancyCourier(
-            () -> CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE
-    );
+    public static final VacancyCourier IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER =
+            new ServiceUnavailableResponseVacancyCourier();
 
     /**
      * 一个不可变的失败化的空缺服务商的信使，该信使的所有方法返回
      * {@link CourierResponseFactory#IMMUTABLE_FAILED_RESPONSE 失败状态的响应}。
-     *
-     * @see #newUnifiedOperationVacancyCourier(Callable)
      */
-    public static final VacancyCourier IMMUTABLE_FAILED_STATE_COURIER = newUnifiedOperationVacancyCourier(
-            () -> CourierResponseFactory.IMMUTABLE_FAILED_RESPONSE
-    );
+    public static final VacancyCourier IMMUTABLE_FAILED_STATE_COURIER =
+            new FailedResponseVacancyCourier();
 
     /**
      * 一个不可变的成功化的空缺服务商的信使，该信使的所有方法返回
      * {@link CourierResponseFactory#IMMUTABLE_SUCCESSFUL_RESPONSE 成功状态的响应}。
-     *
-     * @see #newUnifiedOperationVacancyCourier(Callable)
      */
-    public static final VacancyCourier IMMUTABLE_SUCCESSFUL_STATE_COURIER = newUnifiedOperationVacancyCourier(
-            () -> CourierResponseFactory.IMMUTABLE_SUCCESSFUL_RESPONSE
-    );
-
-    // - - -
-
-    /**
-     * 实例化一个统一操作化的空缺服务商的信使，该信使的所有方法的操作逻辑都相同，就是指定的{@code unifiedOperation}。
-     *
-     * <p>
-     * 如果在执行{@code unifiedOperation}期间出现异常，则抛出{@link VacancyCourierSupplierException}异常
-     *
-     * @param unifiedOperation 统一化操作的逻辑
-     * @return 一个新对象，该对象为统一操作化的空缺服务商的信使
-     * @see VacancyCourierFactory.VacancyCourierAdapter
-     */
-    public static VacancyCourier newUnifiedOperationVacancyCourier(Callable<? extends CourierResponse> unifiedOperation) {
-        return new VacancyCourierAdapter() {
-            @Override
-            protected CourierResponse handle(CourierRequest request) {
-                try {
-                    return unifiedOperation.call();
-                } catch (Exception e) {
-                    throw new VacancyCourierSupplierException(e);
-                }
-            }
-        };
-    }
+    public static final VacancyCourier IMMUTABLE_SUCCESSFUL_STATE_COURIER =
+            new SuccessfulResponseVacancyCourier();
 
     // - - -
 
@@ -150,6 +109,57 @@ public final class VacancyCourierFactory {
          */
         protected CourierResponse handle(CourierRequest request) {
             return null;
+        }
+    }
+
+    /**
+     * 异常化的空缺服务商的信使，该信使的所有方法都会抛出{@link VacancyCourierSupplierException}异常。
+     */
+    static class ThrowableVacancyCourier
+            extends VacancyCourierAdapter
+            implements VacancyCourier {
+        @Override
+        protected CourierResponse handle(CourierRequest request) {
+            throw new VacancyCourierSupplierException();
+        }
+    }
+
+    /**
+     * 服务不可用化的空缺服务商的信使，该信使的所有方法返回
+     * {@link CourierResponseFactory#IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE 服务不可用状态的响应}。
+     */
+    static class ServiceUnavailableResponseVacancyCourier
+            extends VacancyCourierAdapter
+            implements VacancyCourier {
+        @Override
+        protected CourierResponse handle(CourierRequest request) {
+            return CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE;
+        }
+    }
+
+    /**
+     * 失败化的空缺服务商的信使，该信使的所有方法返回
+     * {@link CourierResponseFactory#IMMUTABLE_FAILED_RESPONSE 失败状态的响应}。
+     */
+    static class FailedResponseVacancyCourier
+            extends VacancyCourierAdapter
+            implements VacancyCourier {
+        @Override
+        protected CourierResponse handle(CourierRequest request) {
+            return CourierResponseFactory.IMMUTABLE_FAILED_RESPONSE;
+        }
+    }
+
+    /**
+     * 成功化的空缺服务商的信使，该信使的所有方法返回
+     * {@link CourierResponseFactory#IMMUTABLE_SUCCESSFUL_RESPONSE 成功状态的响应}。
+     */
+    static class SuccessfulResponseVacancyCourier
+            extends VacancyCourierAdapter
+            implements VacancyCourier {
+        @Override
+        protected CourierResponse handle(CourierRequest request) {
+            return CourierResponseFactory.IMMUTABLE_SUCCESSFUL_RESPONSE;
         }
     }
 }
