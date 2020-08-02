@@ -18,8 +18,6 @@ package cn.jinyahuan.commons.courier.request;
 
 import cn.jinyahuan.commons.courier.util.ArrayUtils;
 
-import java.util.Objects;
-
 /**
  * 信使请求属性的访问器。
  *
@@ -90,6 +88,12 @@ public interface CourierRequestAttributeAccessor {
      * @param phone
      */
     default void setPhone(String phone) {
-        setPhones(new String[]{phone});
+        String[] phones = getPhones();
+        if (ArrayUtils.size(phones) > 0) {
+            phones[0] = phone;
+        }
+        else {
+            setPhones(new String[]{phone});
+        }
     }
 }
