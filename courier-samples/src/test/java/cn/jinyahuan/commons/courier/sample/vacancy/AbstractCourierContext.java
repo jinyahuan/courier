@@ -14,13 +14,22 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.processor.callback;
+package cn.jinyahuan.commons.courier.sample.vacancy;
+
+import cn.jinyahuan.commons.courier.config.CourierConfigurable;
+import cn.jinyahuan.commons.courier.context.CourierContext;
+import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
 
 /**
- * 信使重发回调处理器。
+ * 抽象的信使上下文。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierResendCallbackProcessor extends CourierCallbackProcessor {
+public abstract class AbstractCourierContext implements CourierContext {
+    protected String id;
+    protected String name;
+
+    protected CourierConfigurable configurable;
+    protected CourierProcessorContext processorContext;
 }
