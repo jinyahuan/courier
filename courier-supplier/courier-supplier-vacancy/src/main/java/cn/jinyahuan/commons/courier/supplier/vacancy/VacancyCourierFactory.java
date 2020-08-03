@@ -57,13 +57,14 @@ public final class VacancyCourierFactory {
     // - - -
 
     /**
-     * 空缺服务商的信使适配器。
+     * {@link VacancyCourier}接口的适配器类，用于简化其实现。
      *
      * <p>
-     * 提供快速创建一个{@link VacancyCourier}实例的基类。可以通过覆盖方法的进行自定义设计。
+     * 本类所有方法的默认操作都是直接返回{@code null}。
      *
      * <p>
-     * 本实例所有方法的默认操作都是直接返回{@code null}。
+     * 可以通过覆写{@link VacancyCourierAdapter#handle(cn.jinyahuan.commons.courier.request.CourierRequest)}
+     * 方法来进行统一自定义设计；也可以只覆写特定方法。
      */
     public static class VacancyCourierAdapter implements VacancyCourier {
         @Override
