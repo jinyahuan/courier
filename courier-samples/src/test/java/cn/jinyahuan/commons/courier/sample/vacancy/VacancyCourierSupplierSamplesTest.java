@@ -16,12 +16,12 @@
 
 package cn.jinyahuan.commons.courier.sample.vacancy;
 
-import cn.jinyahuan.commons.courier.Courier;
-import cn.jinyahuan.commons.courier.context.CourierContext;
-import cn.jinyahuan.commons.courier.supplier.JdkDynamicProxyCourier;
-import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourier;
-import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory;
-import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierSupplier;
+//import cn.jinyahuan.commons.courier.Courier;
+//import cn.jinyahuan.commons.courier.context.CourierContext;
+//import cn.jinyahuan.commons.courier.supplier.JdkDynamicProxyCourier;
+//import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourier;
+//import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory;
+//import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierSupplier;
 import org.junit.Test;
 
 import java.lang.reflect.Proxy;
@@ -33,17 +33,17 @@ import java.lang.reflect.Proxy;
 public class VacancyCourierSupplierSamplesTest {
     @Test
     public void test() {
-        VacancyCourier courier = VacancyCourierFactory.IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER;
-        // todo [urgent] 代理类 由 Courier 变成 CourierSupplier
-        VacancyCourierSupplier supplier = new VacancyCourierSupplier(courier);
-        CourierContext context = new DefaultCourierContextImpl();
-
-        Class clazz = courier.getClass();
-        ClassLoader classLoader = clazz.getClassLoader();
-        Class<?>[] interfaces = clazz.getInterfaces();
-        JdkDynamicProxyCourier courierProxy = new JdkDynamicProxyCourier(courier, context);
-
-        Courier courierEnhancer = (Courier)Proxy.newProxyInstance(classLoader, interfaces, courierProxy);
-        System.out.println(courierEnhancer.query(new DefaultCourierRequest()));
+//        VacancyCourier courier = VacancyCourierFactory.IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER;
+//        // todo [urgent] 代理类 由 Courier 变成 CourierSupplier
+//        VacancyCourierSupplier supplier = new VacancyCourierSupplier(courier);
+//        CourierContext context = new DefaultCourierContext();
+//
+//        Class clazz = courier.getClass();
+//        ClassLoader classLoader = clazz.getClassLoader();
+//        Class<?>[] interfaces = clazz.getInterfaces();
+//        JdkDynamicProxyCourier courierProxy = new JdkDynamicProxyCourier(courier, context);
+//
+//        Courier courierEnhancer = (Courier)Proxy.newProxyInstance(classLoader, interfaces, courierProxy);
+//        System.out.println(courierEnhancer.query(new DefaultCourierRequest()));
     }
 }

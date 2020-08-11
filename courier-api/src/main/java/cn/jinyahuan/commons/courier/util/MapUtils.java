@@ -14,27 +14,29 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.context;
+package cn.jinyahuan.commons.courier.util;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
- * 信使上下文。
- *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierContextAttributeAccessor {
-    /**
-     * 获取信使上下文的唯一id。
-     *
-     * @return
-     */
-    String getId();
+public final class MapUtils {
+    private MapUtils() {
+        throw new UnsupportedOperationException();
+    }
 
-    /**
-     * 获取信使上下文的唯一名词。
-     *
-     * @return
-     */
-    String getName();
+    public static <K, V> int size(final Map<K, V> map) {
+        return Objects.isNull(map) ? 0 : map.size();
+    }
 
+    public static <K, V> boolean isEmpty(final Map<K, V> map) {
+        return size(map) == 0;
+    }
+
+    public static <K, V> boolean isNotEmpty(final Map<K, V> map) {
+        return !isEmpty(map);
+    }
 }

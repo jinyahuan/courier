@@ -16,31 +16,11 @@
 
 package cn.jinyahuan.commons.courier.sample.vacancy;
 
-import cn.jinyahuan.commons.courier.config.CourierConfigurable;
-import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
+import cn.jinyahuan.commons.courier.context.AbstractCourierContext;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
-public class DefaultCourierContextImpl extends AbstractCourierContext {
-    @Override
-    public CourierConfigurable getConfiguration() {
-        return configurable;
-    }
-
-    @Override
-    public CourierProcessorContext getProcessorContext() {
-        return processorContext;
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
+public class DefaultCourierContext extends AbstractCourierContext {
 }

@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.sample.vacancy;
+package cn.jinyahuan.commons.courier.context;
 
 import cn.jinyahuan.commons.courier.config.CourierConfigurable;
-import cn.jinyahuan.commons.courier.context.CourierContext;
-import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
+import cn.jinyahuan.commons.courier.processor.CourierProcessor;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 抽象的信使上下文。
@@ -26,10 +28,31 @@ import cn.jinyahuan.commons.courier.context.CourierProcessorContext;
  * @author Yahuan Jin
  * @since 0.1
  */
-public abstract class AbstractCourierContext implements CourierContext {
+public abstract class AbstractCourierContext
+        implements CourierConfigurableContext, CourierProcessorContext {
+
     protected String id;
     protected String name;
+    protected CourierConfigurable configuration;
+    protected Map<Class<?>, List<CourierProcessor>> processors;
 
-    protected CourierConfigurable configurable;
-    protected CourierProcessorContext processorContext;
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public CourierConfigurable getConfiguration() {
+        return configuration;
+    }
+
+    @Override
+    public Map<Class<?>, List<CourierProcessor>> getProcessorContext() {
+        return processors;
+    }
 }
