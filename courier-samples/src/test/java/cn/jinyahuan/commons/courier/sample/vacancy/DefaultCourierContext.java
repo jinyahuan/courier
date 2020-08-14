@@ -17,10 +17,35 @@
 package cn.jinyahuan.commons.courier.sample.vacancy;
 
 import cn.jinyahuan.commons.courier.context.AbstractCourierContext;
+import cn.jinyahuan.commons.courier.processor.CourierProcessor;
+import cn.jinyahuan.commons.courier.processor.request.CourierRequestProcessor;
+import cn.jinyahuan.commons.courier.sample.vacancy.processor.DefaultCourierRequestProcessor;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
 public class DefaultCourierContext extends AbstractCourierContext {
+    @Override
+    public List<? extends CourierProcessor> setProcessorsOfType(Class<? extends CourierProcessor> type, List<? extends CourierProcessor> processors) {
+        this.processors = new HashMap<>();
+
+        return this.processors.put(type, processors);
+    }
+
+    public static void main(String[] args) {
+        List<CourierRequestProcessor> processors = new ArrayList<>();
+        processors.add(new DefaultCourierRequestProcessor());
+
+        DefaultCourierContext context = new DefaultCourierContext();
+
+        context.setRequestProcessors(processors);
+
+        List<CourierRequestProcessor> requestProcessors = context.getRequestProcessors();
+        System.out.println(requestProcessors);
+    }
 }
