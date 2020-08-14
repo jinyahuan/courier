@@ -34,7 +34,7 @@ public abstract class AbstractCourierContext
     protected String id;
     protected String name;
     protected CourierConfigurable configuration;
-    protected Map<Class<?>, List<CourierProcessor>> processors;
+    protected Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> processors;
 
     @Override
     public String getId() {
@@ -52,7 +52,7 @@ public abstract class AbstractCourierContext
     }
 
     @Override
-    public Map<Class<?>, List<CourierProcessor>> getProcessorContext() {
+    public Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> getProcessorContext() {
         return processors;
     }
 }

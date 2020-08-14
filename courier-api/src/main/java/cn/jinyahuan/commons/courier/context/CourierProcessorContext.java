@@ -26,33 +26,81 @@ import cn.jinyahuan.commons.courier.util.MapUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
+ * 信使的处理器上下文。
+ *
  * @author Yahuan Jin
  * @since 0.1
  */
 public interface CourierProcessorContext extends CourierContext {
     /**
+     * 设置指定类型的处理器。
+     *
+     * @param type
+     * @param processors
+     * @return 之前设置的处理器 (may be null)
+     */
+    List<? extends CourierProcessor> setProcessorsOfType(Class<? extends CourierProcessor> type,
+                                                         List<? extends CourierProcessor> processors);
+
+    /**
+     * 设置请求处理器。
+     *
+     * @param processors
+     * @return 之前设置的请求处理器 (may be null)
+     */
+    default List<CourierRequestProcessor> setRequestProcessors(List<CourierRequestProcessor> processors) {
+        return (List<CourierRequestProcessor>) setProcessorsOfType(CourierRequestProcessor.class, processors);
+    }
+
+    /**
+     * 设置重试处理器。
+     *
+     * @param processors
+     * @return 之前设置的重试处理器 (may be null)
+     */
+    default List<CourierRetryProcessor> setRetryProcessors(List<CourierRetryProcessor> processors) {
+        return (List<CourierRetryProcessor>) setProcessorsOfType(CourierRetryProcessor.class, processors);
+    }
+
+    /**
+     * 设置响应处理器。
+     *
+     * @param processors
+     * @return 之前设置的响应处理器 (may be null)
+     */
+    default List<CourierResponseProcessor> setResponseProcessors(List<CourierResponseProcessor> processors) {
+        return (List<CourierResponseProcessor>) setProcessorsOfType(CourierResponseProcessor.class, processors);
+    }
+
+    // - - -
+
+    /**
      * 获取所有的处理器。
      *
      * @return 所有可用的处理器
      */
-    Map<Class<?>, List<CourierProcessor>> getProcessorContext();
+    Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> getProcessorContext();
 
     /**
      * 获取指定类型的所有处理器。
      *
-     * @param clazz 需要匹配的类型
+     * @param type 需要匹配的类型
      * @return not null, may be empty
      */
-    default List<? extends CourierProcessor> getProcessorsOfType(Class<?> clazz) {
-        Map<Class<?>, List<CourierProcessor>> processorMap = getProcessorContext();
+    default List<? extends CourierProcessor> getProcessorsOfType(Class<? extends CourierProcessor> type) {
+        Objects.requireNonNull(type);
+
+        Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> processorMap = getProcessorContext();
         if (MapUtils.isNotEmpty(processorMap)) {
-            List<CourierProcessor> processors = processorMap.get(clazz);
+            List<? extends CourierProcessor> processors = processorMap.get(type);
             if (CollectionUtils.isNotEmpty(processors)) {
                 return processors;
             }
         }
+
         return Collections.emptyList();
     }
 
@@ -61,8 +109,8 @@ public interface CourierProcessorContext extends CourierContext {
      *
      * @return not null, may be empty
      */
-    default List<? extends CourierRequestProcessor> getRequestProcessors() {
-        return (List<? extends CourierRequestProcessor>) getProcessorsOfType(CourierRequestProcessor.class);
+    default List<CourierRequestProcessor> getRequestProcessors() {
+        return (List<CourierRequestProcessor>) getProcessorsOfType(CourierRequestProcessor.class);
     }
 
     /**
@@ -70,8 +118,8 @@ public interface CourierProcessorContext extends CourierContext {
      *
      * @return not null, may be empty
      */
-    default List<? extends CourierRetryProcessor> getRetryProcessors() {
-        return (List<? extends CourierRetryProcessor>) getProcessorsOfType(CourierRetryProcessor.class);
+    default List<CourierRetryProcessor> getRetryProcessors() {
+        return (List<CourierRetryProcessor>) getProcessorsOfType(CourierRetryProcessor.class);
     }
 
     /**
@@ -79,7 +127,45 @@ public interface CourierProcessorContext extends CourierContext {
      *
      * @return not null, may be empty
      */
-    default List<? extends CourierResponseProcessor> getResponseProcessors() {
-        return (List<? extends CourierResponseProcessor>) getProcessorsOfType(CourierResponseProcessor.class);
+    default List<CourierResponseProcessor> getResponseProcessors() {
+        return (List<CourierResponseProcessor>) getProcessorsOfType(CourierResponseProcessor.class);
+    }
+
+    // - - -
+
+    /**
+     * 处理器上下文中是否有处理器（包括所有处理器）。
+     *
+     * @return {@code true}, 有至少一个或更多的处理器；否则没有处理器
+     */
+    default boolean hasProcessors() {
+        return MapUtils.isNotEmpty(getProcessorContext());
+    }
+
+    /**
+     * 处理器上下文是否有请求处理器。
+     *
+     * @return {@code true}, 有至少一个或更多的请求处理器；否则没有请求处理器
+     */
+    default boolean hasRequestProcessors() {
+        return CollectionUtils.isNotEmpty(getRequestProcessors());
+    }
+
+    /**
+     * 处理器上下文是否有重试处理器。
+     *
+     * @return {@code true}, 有至少一个或更多的重试处理器；否则没有重试处理器
+     */
+    default boolean hasRetryProcessors() {
+        return CollectionUtils.isNotEmpty(getRetryProcessors());
+    }
+
+    /**
+     * 处理器上下文是否有响应处理器。
+     *
+     * @return {@code true}, 有至少一个或更多的响应处理器；否则没有响应处理器
+     */
+    default boolean hasResponseProcessors() {
+        return CollectionUtils.isNotEmpty(getResponseProcessors());
     }
 }
