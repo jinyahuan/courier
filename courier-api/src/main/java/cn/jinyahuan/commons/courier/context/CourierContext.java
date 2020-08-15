@@ -36,4 +36,63 @@ public interface CourierContext {
      * @return
      */
     String getName();
+
+    /**
+     * 获取容器的状态。
+     *
+     * @return
+     */
+    State getState();
+
+    /**
+     * 容器是否处于运行中状态。如果不处于运行中，则信使不应该执行逻辑。
+     *
+     * @return {@code true}, 容器正在运行中; 否则容器不处于运行中状态
+     */
+    default boolean isRunning() {
+        return getState() == State.RUNNING;
+    }
+
+    /**
+     * 容器的状态枚举类。
+     * <pre>状态的流转流程如下：
+     *    NEW -> INITIALIZING -> INITIALIZED
+     *                               |
+     *                              \|/
+     *                           RUNNING  <-> MAINTAINING
+     *                               |            |
+     *                              \|/           |
+     *              DESTROYED <- STOPPING <-------|
+     * </pre>
+     */
+    enum State {
+        /**
+         * 容器刚创建。
+         */
+        NEW,
+        /**
+         * before 初始化。
+         */
+        INITIALIZING,
+        /**
+         * after 初始化。
+         */
+        INITIALIZED,
+        /**
+         * 运行中。
+         */
+        RUNNING,
+        /**
+         * 容器正在进行维护。
+         */
+        MAINTAINING,
+        /**
+         * 容器正在关闭。
+         */
+        STOPPING,
+        /**
+         * 容器已被摧毁。
+         */
+        DESTROYED;
+    }
 }

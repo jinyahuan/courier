@@ -34,6 +34,7 @@ public abstract class AbstractCourierContext
     protected String id;
     protected String name;
     protected CourierConfigurable configuration;
+    protected State state;
     protected Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> processors;
 
     @Override
@@ -49,6 +50,11 @@ public abstract class AbstractCourierContext
     @Override
     public CourierConfigurable getConfiguration() {
         return configuration;
+    }
+
+    @Override
+    public State getState() {
+        return state;
     }
 
     @Override
