@@ -45,24 +45,16 @@ public interface CourierContext {
     State getState();
 
     /**
-     * 容器是否处于运行中状态。如果不处于运行中，则信使不应该执行逻辑。
-     *
-     * @return {@code true}, 容器正在运行中; 否则容器不处于运行中状态
-     */
-    default boolean isRunning() {
-        return getState() == State.RUNNING;
-    }
-
-    /**
      * 容器的状态枚举类。
      * <pre>状态的流转流程如下：
-     *    NEW -> INITIALIZING -> INITIALIZED
-     *                               |
-     *                              \|/
-     *                           RUNNING  <-> MAINTAINING
-     *                               |            |
-     *                              \|/           |
-     *              DESTROYED <- STOPPING <-------|
+     *    NEW -> INITIALIZING -> INITIALIZED -----------
+     *     |         |               |                 |
+     *     |         |               |                \|/
+     *     |---->----|------>--------|-------<-------RUNNING
+     *                               |                /|\
+     *                               |                 |
+     *                              \|/               \|/
+     *              DESTROYED <- STOPPING <--------MAINTAINING
      * </pre>
      */
     enum State {
@@ -94,5 +86,55 @@ public interface CourierContext {
          * 容器已被摧毁。
          */
         DESTROYED;
+
+        /**
+         * 是否是{@link #NEW}状态。
+         *
+         * @param state 需要检查的枚举状态实例
+         * @return {@code true}，是{@link #NEW}状态；否则不是{@link #NEW}状态
+         */
+        public static boolean isNew(final State state) {
+            return state == NEW;
+        }
+
+        /**
+         * 是否是{@link #INITIALIZING}状态。
+         *
+         * @param state 需要检查的枚举状态实例
+         * @return {@code true}，是{@link #INITIALIZING}状态；否则不是{@link #INITIALIZING}状态
+         */
+        public static boolean isInitializing(final State state) {
+            return state == INITIALIZING;
+        }
+
+        /**
+         * 是否是{@link #RUNNING}状态。
+         *
+         * @param state 需要检查的枚举状态实例
+         * @return {@code true}，是{@link #RUNNING}状态；否则不是{@link #RUNNING}状态
+         */
+        public static boolean isRunning(final State state) {
+            return state == RUNNING;
+        }
+
+        /**
+         * 是否是可以运行的状态。
+         *
+         * @param state 需要检查的枚举状态实例
+         * @return {@code true}，是可以运行的状态；否则不是可运行的状态
+         */
+        public static boolean canRunning(final State state) {
+            return state == MAINTAINING || state == INITIALIZED;
+        }
+
+        /**
+         * 是否是可以进行维护的状态。
+         *
+         * @param state 需要检查的枚举状态实例
+         * @return {@code true}，是可以进行维护的状态；否则不是可维护的状态
+         */
+        public static boolean canMaintaining(final State state) {
+            return state == RUNNING;
+        }
     }
 }

@@ -21,6 +21,7 @@ import cn.jinyahuan.commons.courier.processor.CourierProcessor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 抽象的信使上下文。
@@ -34,31 +35,53 @@ public abstract class AbstractCourierContext
     protected String id;
     protected String name;
     protected CourierConfigurable configuration;
-    protected State state;
+    @sun.misc.Contended
+    protected volatile State state;
     protected Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> processors;
+
+    public AbstractCourierContext() {
+        init();
+    }
+
+    // todo 构造器重载
 
     @Override
     public String getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
     public CourierConfigurable getConfiguration() {
-        return configuration;
+        return this.configuration;
     }
 
     @Override
     public State getState() {
-        return state;
+        return this.state;
+    }
+
+    @Override
+    public List<? extends CourierProcessor> setProcessorsOfType(Class<? extends CourierProcessor> type, List<? extends CourierProcessor> processors) {
+        return this.processors.put(type, processors);
     }
 
     @Override
     public Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> getProcessorContext() {
-        return processors;
+        return this.processors;
+    }
+
+    protected void init() {
+        this.id = getClass().getName() + "@" + System.identityHashCode(this);
+        // 默认情况下 name 与 id 是一样的
+        this.name = this.id;
+        // todo 设计并实现 CourierConfigurable
+        this.configuration = null;
+        this.state = State.NEW;
+        this.processors = new ConcurrentHashMap<>(64);
     }
 }

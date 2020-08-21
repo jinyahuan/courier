@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.sample.vacancy.processor;
+package cn.jinyahuan.commons.courier.sample.processor;
 
-import cn.jinyahuan.commons.courier.processor.request.AbstractCourierRequestProcessor;
+import cn.jinyahuan.commons.courier.processor.response.AbstractCourierResponseProcessor;
 
 /**
  * @author Yahuan Jin
  * @since 0.1
  */
-public class DefaultCourierRequestProcessor extends AbstractCourierRequestProcessor {
+public class DefaultCourierResponseProcessor extends AbstractCourierResponseProcessor {
 }
