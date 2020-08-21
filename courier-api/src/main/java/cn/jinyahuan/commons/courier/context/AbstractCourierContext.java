@@ -35,7 +35,6 @@ public abstract class AbstractCourierContext
     protected String id;
     protected String name;
     protected CourierConfigurable configuration;
-    @sun.misc.Contended
     protected volatile State state;
     protected Map<Class<? extends CourierProcessor>, List<? extends CourierProcessor>> processors;
 
