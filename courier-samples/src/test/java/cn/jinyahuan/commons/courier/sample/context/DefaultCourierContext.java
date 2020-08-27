@@ -30,7 +30,7 @@ public class DefaultCourierContext extends AbstractCourierContext {
         State state = getState();
         if (State.isNew(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.isNew(state)) {
+                if (State.isNew(state = getState())) {
                     this.state = State.INITIALIZING;
                     return;
                 }
@@ -44,7 +44,7 @@ public class DefaultCourierContext extends AbstractCourierContext {
         State state = getState();
         if (State.isInitializing(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.isInitializing(state)) {
+                if (State.isInitializing(state = getState())) {
                     this.state = State.INITIALIZED;
                     return;
                 }
@@ -58,7 +58,7 @@ public class DefaultCourierContext extends AbstractCourierContext {
         State state = getState();
         if (State.canRunning(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.canRunning(state)) {
+                if (State.canRunning(state = getState())) {
                     this.state = State.RUNNING;
                     return;
                 }
