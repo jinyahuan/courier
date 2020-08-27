@@ -27,41 +27,44 @@ public class DefaultCourierContext extends AbstractCourierContext {
     private static final Object STATE_LOCK_FLAG = new Object();
 
     public void setStateToInitializing() {
-        if (State.isNew(getState())) {
+        State state = getState();
+        if (State.isNew(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.isNew(getState())) {
+                if (State.isNew(state)) {
                     this.state = State.INITIALIZING;
                     return;
                 }
             }
         }
         throw new IllegalCourierContextStateException(
-                "Required state must be State#NEW, but found " + getState());
+                "Required state must be State#NEW, but found " + state);
     }
 
     public void setStateToInitialized() {
-        if (State.isInitializing(getState())) {
+        State state = getState();
+        if (State.isInitializing(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.isInitializing(getState())) {
+                if (State.isInitializing(state)) {
                     this.state = State.INITIALIZED;
                     return;
                 }
             }
         }
         throw new IllegalCourierContextStateException(
-                "Required state must be State#INITIALIZING, but found " + getState());
+                "Required state must be State#INITIALIZING, but found " + state);
     }
 
     public void setStateToRunning() {
-        if (State.canRunning(getState())) {
+        State state = getState();
+        if (State.canRunning(state)) {
             synchronized (STATE_LOCK_FLAG) {
-                if (State.canRunning(getState())) {
+                if (State.canRunning(state)) {
                     this.state = State.RUNNING;
                     return;
                 }
             }
         }
         throw new IllegalCourierContextStateException(
-                "Required state must be State#MAINTAINING or State#INITIALIZED, but found " + getState());
+                "Required state must be State#MAINTAINING or State#INITIALIZED, but found " + state);
     }
 }
