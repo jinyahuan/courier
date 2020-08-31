@@ -23,9 +23,6 @@ import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
  * 空缺的信使服务商，也就是默认的信使服务商。
  *
  * <p>
- * 注意：不提供无参构造器，且只提供一个参数为{@link VacancyCourier 空缺信使}的构造器。
- *
- * <p>
  * {@link VacancyCourierFactory}提供了几种静态的不可变的{@link VacancyCourier 空缺信使}实例。
  *
  * <p>
@@ -36,6 +33,15 @@ import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
  */
 public class VacancyCourierSupplier implements CourierSupplier {
     private Courier courier;
+
+    /**
+     * 无参构造器。
+     * <p>内部构造一个服务不可用的信使，该信使所有的方法都会返回
+     * {@link VacancyCourierFactory#IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER 服务不可用状态的响应对象}。
+     */
+    public VacancyCourierSupplier() {
+        this(VacancyCourierFactory.IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER);
+    }
 
     public VacancyCourierSupplier(VacancyCourier courier) {
         this.courier = courier;
