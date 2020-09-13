@@ -16,13 +16,11 @@
 
 package cn.jinyahuan.commons.courier.supplier;
 
-import cn.jinyahuan.commons.courier.Courier;
-import cn.jinyahuan.commons.courier.response.CourierResponseFactory;
+import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory;
+import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierSupplier;
 import org.junit.Test;
 
-import java.util.ServiceLoader;
-
-import static org.junit.Assert.assertEquals;
+import java.util.List;
 
 /**
  * @author Yahuan Jin
@@ -30,16 +28,21 @@ import static org.junit.Assert.assertEquals;
  */
 public class VacancyCourierSupplierSimpleTest {
     @Test
-    public void test() {
-        ServiceLoader<CourierSupplier> suppliers = ServiceLoader.load(CourierSupplier.class);
+    public void test() throws ClassNotFoundException {
+        Class.forName("cn.jinyahuan.commons.courier.supplier.CourierSupplierManager");
 
-        for (final CourierSupplier supplier : suppliers) {
-            final Courier courier = supplier.getCourier();
+        List<CourierSupplier> suppliers = CourierSupplierManager.getSuppliers();
+        suppliers.forEach(System.out::println);
+        System.out.println("-----------------------");
 
-            assertEquals(
-                    CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE,
-                    courier.send(null)
-            );
-        }
+        CourierSupplierManager.register(new VacancyCourierSupplier(VacancyCourierFactory.IMMUTABLE_SUCCESSFUL_STATE_COURIER));
+
+        suppliers = CourierSupplierManager.getSuppliers();
+        suppliers.forEach(System.out::println);
+        System.out.println("-----------------------");
+
+        CourierSupplierManager.deregisterDriver(2);
+        suppliers = CourierSupplierManager.getSuppliers();
+        suppliers.forEach(System.out::println);
     }
 }

@@ -17,6 +17,7 @@
 package cn.jinyahuan.commons.courier.supplier.vacancy;
 
 import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.supplier.AbstractCourierSupplier;
 import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
 
 /**
@@ -31,7 +32,9 @@ import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
  * @author Yahuan Jin
  * @since 0.1
  */
-public class VacancyCourierSupplier implements CourierSupplier {
+public class VacancyCourierSupplier extends AbstractCourierSupplier
+        implements CourierSupplier
+{
     private Courier courier;
 
     /**

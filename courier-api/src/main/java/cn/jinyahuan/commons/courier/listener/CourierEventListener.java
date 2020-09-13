@@ -16,12 +16,15 @@
 
 package cn.jinyahuan.commons.courier.listener;
 
+import java.util.EventListener;
+
 /**
  * 相关事件的监听器。
- * <p>例如：委托信使服务商、信使执行出异常、执行回调等。</p>
+ * <p>例如：委托信使服务商、信使执行出异常、执行回调等。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface CourierListener {
+public interface CourierEventListener extends EventListener {
+
 }
