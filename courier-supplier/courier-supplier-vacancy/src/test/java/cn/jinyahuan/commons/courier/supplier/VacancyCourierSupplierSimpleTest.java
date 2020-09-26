@@ -16,8 +16,6 @@
 
 package cn.jinyahuan.commons.courier.supplier;
 
-import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory;
-import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierSupplier;
 import org.junit.Test;
 
 import java.util.List;
@@ -35,14 +33,14 @@ public class VacancyCourierSupplierSimpleTest {
         suppliers.forEach(System.out::println);
         System.out.println("-----------------------");
 
-        CourierSupplierManager.register(new VacancyCourierSupplier(VacancyCourierFactory.IMMUTABLE_SUCCESSFUL_STATE_COURIER));
+        CourierSupplierManager.register("cn.jinyahuan.commons.courier.supplier.ManualSupplierFactory");
 
         suppliers = CourierSupplierManager.getSuppliers();
         suppliers.forEach(System.out::println);
         System.out.println("-----------------------");
 
-        CourierSupplierManager.deregisterDriver(2);
-        suppliers = CourierSupplierManager.getSuppliers();
-        suppliers.forEach(System.out::println);
+//        CourierSupplierManager.deregister(2);
+//        suppliers = CourierSupplierManager.getSuppliers();
+//        suppliers.forEach(System.out::println);
     }
 }
