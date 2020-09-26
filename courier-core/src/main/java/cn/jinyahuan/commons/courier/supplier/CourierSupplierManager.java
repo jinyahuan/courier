@@ -19,10 +19,14 @@ package cn.jinyahuan.commons.courier.supplier;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Predicate;
 
 /**
- * todo 所有信使服务商的管理器。通过 java spi 机制进行导入。
+ * 信使服务商的管理器。通过 java spi 机制进行导入。
+ * todo 管理运行时的信使服务商
  *
  * @author Yahuan Jin
  * @since 0.1
@@ -30,9 +34,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class CourierSupplierManager {
     private static final CopyOnWriteArrayList<CourierSupplier> registeredSuppliers = new CopyOnWriteArrayList<>();
+    private static final ConcurrentMap<String, CourierSupplierFactory> registeredSupplierFactories = new ConcurrentHashMap<>();
 
     static {
-        loadAndRegisterSpiSuppliers();
+        loadAndRegisterSuppliers();
     }
 
     /**
@@ -90,14 +95,87 @@ public class CourierSupplierManager {
         return Collections.emptyList();
     }
 
-    private static void loadAndRegisterSpiSuppliers() {
-        ServiceLoader<CourierSupplier> suppliers = ServiceLoader.load(CourierSupplier.class);
-        Iterator<CourierSupplier> iterator = suppliers.iterator();
-        try {
-            while (iterator.hasNext()) {
-                register(iterator.next());
+    private static void loadAndRegisterSuppliers() {
+        loadSupplierFactories();
+
+        excludeSupplierFactories();
+
+        registerSuppliers();
+    }
+
+    private static void loadSupplierFactories() {
+        ServiceLoader<CourierSupplierFactory> factories = ServiceLoader.load(CourierSupplierFactory.class);
+
+        Iterator<CourierSupplierFactory> factoryIterator = factories.iterator();
+        while (factoryIterator.hasNext()) {
+            CourierSupplierFactory factory = factoryIterator.next();
+            registeredSupplierFactories.putIfAbsent(factory.getClass().getName(), factory);
+        }
+
+        log.info("Courier supplier factory loaded, loading {} instance", registeredSupplierFactories.size());
+    }
+
+    private static void excludeSupplierFactories() {
+        if (registeredSupplierFactories.isEmpty()) {
+            return;
+        }
+
+        Set<Predicate<CourierSupplierFactory>> predicates = getExcludedPredicate();
+
+        log.info("Has {} predicates to exclude courier supplier factory", predicates.size());
+
+        if (!predicates.isEmpty()) {
+            doExcludeSupplierFactories(predicates);
+
+            log.info("After exclude courier supplier factory, final has {} instance", registeredSupplierFactories.size());
+        }
+    }
+
+    private static Set<Predicate<CourierSupplierFactory>> getExcludedPredicate() {
+        Set<Predicate<CourierSupplierFactory>> predicates = new HashSet<>(8);
+
+        Iterator<Map.Entry<String, CourierSupplierFactory>> iterator = registeredSupplierFactories.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Predicate<CourierSupplierFactory> predicate = iterator.next().getValue().getExcludedPredicate();
+            if (Objects.nonNull(predicate)) {
+                predicates.add(predicate);
             }
-        } catch (Exception ex) {
+        }
+
+        return predicates;
+    }
+
+    private static void doExcludeSupplierFactories(Set<Predicate<CourierSupplierFactory>> excludePredicates) {
+        for (Predicate<CourierSupplierFactory> predicate : excludePredicates) {
+            if (registeredSupplierFactories.isEmpty()) {
+                break;
+            }
+
+            Iterator<Map.Entry<String, CourierSupplierFactory>> innerIterator = registeredSupplierFactories.entrySet().iterator();
+            while (innerIterator.hasNext()) {
+                CourierSupplierFactory factory = innerIterator.next().getValue();
+                if (predicate.test(factory)) {
+                    innerIterator.remove();
+                }
+            }
+
+            log.info("After {} exclude, has {} instance",
+                    predicate.getClass().getSimpleName(), registeredSupplierFactories.size());
+        }
+    }
+
+    private static void registerSuppliers() {
+        if (registeredSupplierFactories.isEmpty()) {
+            throw new RuntimeException("None available CourierSupplier instance");
+        }
+        else {
+            Collection<CourierSupplierFactory> supplierFactories = registeredSupplierFactories.values();
+            for (CourierSupplierFactory factory : supplierFactories) {
+                CourierSupplier supplier = factory.getSupplier();
+                if (Objects.nonNull(supplier)) {
+                    register(supplier);
+                }
+            }
         }
     }
 }

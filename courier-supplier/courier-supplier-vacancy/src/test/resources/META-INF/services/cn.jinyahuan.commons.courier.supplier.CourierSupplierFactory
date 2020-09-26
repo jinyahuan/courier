@@ -1,0 +1,3 @@
+cn.jinyahuan.commons.courier.supplier.ExcludedSupplierFactory
+cn.jinyahuan.commons.courier.supplier.InvalidSupplierFactory
+cn.jinyahuan.commons.courier.supplier.ReplacedSupplierFactory
