@@ -167,6 +167,10 @@ public class CourierSupplierManager {
                 if (updatedSuppliers.isEmpty()) {
                     log.warn("Suppliers deregister failure[after deregister will none available supplier] <= {}",
                             supplierFactoryClassName);
+
+                    // 还原
+                    factories.putIfAbsent(supplierFactoryClassName, factory);
+                    log.info("Supplier factory registered[rollback] <= {}", supplierFactoryClassName);
                 }
                 else {
                     if (!compareAndSetRegisteredSuppliers(updatedSuppliers)) {
