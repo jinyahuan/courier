@@ -29,7 +29,7 @@ public class VacancyCourierSupplierSimpleTest {
     public void test() throws ClassNotFoundException {
         Class.forName("cn.jinyahuan.commons.courier.supplier.CourierSupplierManager");
 
-        List<CourierSupplier> suppliers = CourierSupplierManager.getSuppliers();
+        List<CourierSupplierInfo> suppliers = CourierSupplierManager.getSuppliers();
         suppliers.forEach(System.out::println);
         System.out.println("-----------------------");
 
@@ -39,8 +39,14 @@ public class VacancyCourierSupplierSimpleTest {
         suppliers.forEach(System.out::println);
         System.out.println("-----------------------");
 
-//        CourierSupplierManager.deregister(2);
-//        suppliers = CourierSupplierManager.getSuppliers();
-//        suppliers.forEach(System.out::println);
+        CourierSupplierManager.deregister("cn.jinyahuan.commons.courier.supplier.ManualSupplierFactory");
+        suppliers = CourierSupplierManager.getSuppliers();
+        System.out.println("current suppliers size: " + suppliers.size());
+        System.out.println("-----------------------");
+
+        CourierSupplierManager.deregister("cn.jinyahuan.commons.courier.supplier.ReplacedSupplierFactory");
+        suppliers = CourierSupplierManager.getSuppliers();
+        System.out.println("current suppliers size: " + suppliers.size());
+        System.out.println("-----------------------");
     }
 }

@@ -20,6 +20,7 @@ import cn.jinyahuan.commons.courier.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -46,7 +47,7 @@ public class CourierSupplierManager {
         return register(supplierFactoryClassName, true);
     }
 
-    public static synchronized boolean register(String supplierFactoryClassName, boolean cover) {
+    public static boolean register(String supplierFactoryClassName, boolean cover) {
         boolean isRegistered = false;
 
         if (StringUtils.isNotEmpty(supplierFactoryClassName)) {
@@ -75,7 +76,7 @@ public class CourierSupplierManager {
         return register(supplierFactory, true);
     }
 
-    public static boolean register(CourierSupplierFactory supplierFactory, boolean cover) {
+    public static synchronized boolean register(CourierSupplierFactory supplierFactory, boolean cover) {
         if (Objects.isNull(supplierFactory)) {
             return false;
         }
@@ -122,20 +123,77 @@ public class CourierSupplierManager {
         return isRegistered;
     }
 
-//    /**
-//     * 注销信使服务商。todo 重新设计 两个容器都要 deregister
-//     *
-//     * @param supplier
-//     */
-//    public static synchronized void deregister
+    /**
+     * 注销信使服务商。
+     *
+     * @param supplierFactory
+     * @throws RuntimeException 如果注销中断
+     */
+    public static void deregister(CourierSupplierFactory supplierFactory) {
+        Objects.requireNonNull(supplierFactory, "supplierFactory must not be null");
+
+        deregister(supplierFactory.getClass().getName());
+    }
+
+    /**
+     * 注销信使服务商。
+     *
+     * @param supplierFactoryClassName
+     * @throws RuntimeException 如果注销中断
+     */
+    public static synchronized void deregister(String supplierFactoryClassName) {
+        if (StringUtils.isNotEmpty(supplierFactoryClassName)) {
+            ConcurrentMap<String, CourierSupplierFactory> factories = holder.getRegisteredSupplierFactories();
+
+            // 移除工厂
+            final CourierSupplierFactory factory = factories.remove(supplierFactoryClassName);
+
+            if (Objects.isNull(factory)) {
+                log.warn("Supplier factory deregister failure[not registered in factories] => {}", supplierFactoryClassName);
+            }
+            else {
+                log.info("Supplier factory deregistered => {}", supplierFactoryClassName);
+
+                final String factoryName = factory.getName();
+                final List<CourierSupplierInfo> updatedSuppliers = new ArrayList<>();
+
+                List<CourierSupplierInfo> supplierInfos = new ArrayList<>(holder.getRegisteredSuppliers());
+                for (CourierSupplierInfo supplierInfo : supplierInfos) {
+                    if (!Objects.equals(factoryName, supplierInfo.getFactoryName())) {
+                        updatedSuppliers.add(supplierInfo);
+                    }
+                }
+
+                if (updatedSuppliers.isEmpty()) {
+                    log.warn("Suppliers deregister failure[after deregister will none available supplier] <= {}",
+                            supplierFactoryClassName);
+                }
+                else {
+                    if (!compareAndSetRegisteredSuppliers(updatedSuppliers)) {
+                        // 还原
+                        factories.putIfAbsent(supplierFactoryClassName, factory);
+                        log.info("Supplier factory registered[rollback] <= {}", supplierFactoryClassName);
+
+                        throw new RuntimeException("Deregister " + supplierFactoryClassName + " failure");
+                    }
+                    else {
+                        for (final CourierSupplierInfo supplierInfo : updatedSuppliers) {
+                            final CourierSupplier courierSupplier = supplierInfo.getCourierSupplier();
+                            log.info("Supplier deregistered => {}@{}", courierSupplier.getClass().getName(), courierSupplier.hashCode());
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * 获取所有的信使服务商。
      *
      * @return not null, may be EMPTY
      */
-    public static List<CourierSupplier> getSuppliers() {
-        CopyOnWriteArrayList<CourierSupplier> registeredSuppliers = holder.getRegisteredSuppliers();
+    public static List<CourierSupplierInfo> getSuppliers() {
+        CopyOnWriteArrayList<CourierSupplierInfo> registeredSuppliers = holder.getRegisteredSuppliers();
         if (!registeredSuppliers.isEmpty()) {
             return new ArrayList<>(registeredSuppliers);
         }
@@ -224,33 +282,50 @@ public class CourierSupplierManager {
         ConcurrentMap<String, CourierSupplierFactory> registeredSupplierFactories = holder.getRegisteredSupplierFactories();
         int size = registeredSupplierFactories.size();
         if (size == 0) {
-            log.warn("None available supplier factories");
+            log.warn("Suppliers registered failure[none available supplier factories]");
             return;
         }
 
-        List<CourierSupplier> suppliers = new ArrayList<>(size);
+        List<CourierSupplierInfo> suppliers = new ArrayList<>(size);
         Collection<CourierSupplierFactory> factories = registeredSupplierFactories.values();
         for (final CourierSupplierFactory courierSupplierFactory : factories) {
-            suppliers.add(courierSupplierFactory.getSupplier());
+            String factoryName = courierSupplierFactory.getName();
+            CourierSupplier supplier = courierSupplierFactory.getSupplier();
+            Instant now = Instant.now();
+            CourierSupplierInfo supplierInfo = new CourierSupplierInfo(factoryName, supplier, now);
+
+            suppliers.add(supplierInfo);
         }
 
-        final CopyOnWriteArrayList<CourierSupplier> registeredSuppliers = holder.getRegisteredSuppliers();
+        boolean registered = compareAndSetRegisteredSuppliers(suppliers);
+        if (!registered) {
+            log.warn("Suppliers registered failure");
+        }
+        else {
+            for (final CourierSupplierInfo supplierInfo : suppliers) {
+                CourierSupplier supplier = supplierInfo.getCourierSupplier();
+                log.info("Supplier registered <= {}@{}", supplier.getClass().getName(), supplier.hashCode());
+            }
+        }
+    }
 
+    private static boolean compareAndSetRegisteredSuppliers(List<CourierSupplierInfo> updatedSuppliers) {
         AtomicReferenceFieldUpdater<CourierSupplierContainerHolder, CopyOnWriteArrayList> updater =
                 AtomicReferenceFieldUpdater.newUpdater(
                         CourierSupplierContainerHolder.class,
                         CopyOnWriteArrayList.class,
                         "registeredSuppliers"
                 );
-        updater.compareAndSet(
+
+        return updater.compareAndSet(
                 holder,
-                registeredSuppliers,
-                new CopyOnWriteArrayList(suppliers)
+                holder.getRegisteredSuppliers(),
+                new CopyOnWriteArrayList(updatedSuppliers)
         );
     }
 
     private static class CourierSupplierContainerHolder {
-        volatile CopyOnWriteArrayList<CourierSupplier> registeredSuppliers = new CopyOnWriteArrayList<>();
+        volatile CopyOnWriteArrayList<CourierSupplierInfo> registeredSuppliers = new CopyOnWriteArrayList<>();
 
         private static final ConcurrentMap<String, CourierSupplierFactory> registeredSupplierFactories;
 
@@ -258,7 +333,7 @@ public class CourierSupplierManager {
             registeredSupplierFactories = new ConcurrentHashMap<>(16);
         }
 
-        CopyOnWriteArrayList<CourierSupplier> getRegisteredSuppliers() {
+        CopyOnWriteArrayList<CourierSupplierInfo> getRegisteredSuppliers() {
             return registeredSuppliers;
         }
 

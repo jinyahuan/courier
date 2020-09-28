@@ -31,4 +31,13 @@ public interface CourierSupplierFactory {
     default Predicate<CourierSupplierFactory> getExcludedPredicate() {
         return null;
     }
+
+    /**
+     * 名称。
+     *
+     * @return default value is class full name(include package)
+     */
+    default String getName() {
+        return getClass().getName();
+    }
 }
