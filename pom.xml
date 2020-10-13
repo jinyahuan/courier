@@ -53,7 +53,7 @@
         <plugin.compiler.conf.target>${java.version}</plugin.compiler.conf.target>
         <plugin.compiler.conf.encoding>${file.encoding}</plugin.compiler.conf.encoding>
 
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
 
         <lombok.version>1.18.12</lombok.version>
 
