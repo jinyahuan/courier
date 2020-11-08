@@ -17,79 +17,81 @@
 package cn.jinyahuan.commons.courier.response;
 
 /**
- * 信使响应属性的访问器。
+ * 信使响应信息的属性访问器。
  *
+ * @param <T> 响应的数据的类型
  * @author Yahuan Jin
+ * @see CourierResponse
  * @since 0.1
  */
 public interface CourierResponseAttributeAccessor<T> {
     /**
      * 获取响应的状态码。
      *
-     * @return
+     * @return 响应的状态码
      */
     int getState();
 
     /**
      * 设置响应的状态码。
      *
-     * @param state
+     * @param state 响应的状态码
      */
     void setState(int state);
 
     /**
      * 获取响应的错误编码。
      *
-     * @return
+     * @return 响应的错误编码
      */
     String getCode();
 
     /**
      * 设置响应的错误编码。
      *
-     * @param code
+     * @param code 响应的错误编码
      */
     void setCode(String code);
 
     /**
      * 获取响应的错误信息。
      *
-     * @return
+     * @return 响应的错误信息
      */
     String getMsg();
 
     /**
      * 设置响应的错误信息。
      *
-     * @param msg
+     * @param msg 响应的错误信息
      */
     void setMsg(String msg);
 
     /**
      * 获取响应的数据。
      *
-     * @return
+     * @return 响应的数据
      */
     T getResponseData();
 
     /**
      * 设置响应的数据。
      *
-     * @param responseData
+     * @param responseData 响应的数据
      */
     void setResponseData(T responseData);
 
     /**
      * 获取签名。
      *
-     * @return
+     * @return 签名
      */
     String getSign();
 
     /**
      * 设置签名。
      *
-     * @param sign
+     * @param sign 签名
      */
     void setSign(String sign);
 }

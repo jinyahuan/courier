@@ -17,67 +17,109 @@
 package cn.jinyahuan.commons.courier.response;
 
 import cn.jinyahuan.commons.courier.response.state.CourierResponseStateAccessor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * 不可变的信使响应属性类。
+ * 不可变的信使响应信息类。
  *
+ * @param <T> 响应的数据的类型
  * @author Yahuan Jin
+ * @see DefaultCourierResponse
+ * @see AbstractCourierResponse
+ * @see CourierResponse
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode
-public final class ImmutableCourierResponse<T> implements CourierResponse<T> {
+public final class ImmutableCourierResponse<T> implements CourierResponse<T>, Serializable {
     private static final long serialVersionUID = 1L;
 
-    /** 状态码 */
-    @Getter
+    /** 状态码。 */
     private final int state;
-    /** 错误码 */
-    @Getter
+    /** 错误码。 */
     private final String code;
-    /** 错误信息 */
-    @Getter
+    /** 错误信息。 */
     private final String msg;
-    /** 响应的数据 */
-    @Getter
+    /** 响应的数据。 */
     private final T responseData;
-    /** 签名 */
-    @Getter
+    /** 签名。 */
     private final String sign;
 
-    public ImmutableCourierResponse(CourierResponseStateAccessor responseState, T responseData) {
+    public ImmutableCourierResponse(CourierResponseStateAccessor responseState, T responseData, String sign) {
         this.state = responseState.getState();
         this.code = responseState.getCode();
         this.msg = responseState.getMsg();
         this.responseData = responseData;
-        this.sign = null;
+        this.sign = sign;
+    }
+
+    public ImmutableCourierResponse(CourierResponseStateAccessor responseState, T responseData) {
+        this(responseState, responseData, null);
+    }
+
+    public ImmutableCourierResponse(CourierResponseStateAccessor responseState) {
+        this(responseState, null);
     }
 
     @Override
-    public void setState(int state) {
-        throw new UnsupportedOperationException();
+    public int getState() { return state; }
+
+    @Override
+    public void setState(int state) { throw new UnsupportedOperationException(); }
+
+    @Override
+    public String getCode() { return code; }
+
+    @Override
+    public void setCode(String code) { throw new UnsupportedOperationException(); }
+
+    @Override
+    public String getMsg() { return msg; }
+
+    @Override
+    public void setMsg(String msg) { throw new UnsupportedOperationException(); }
+
+    @Override
+    public T getResponseData() { return responseData; }
+
+    @Override
+    public void setResponseData(T responseData) { throw new UnsupportedOperationException(); }
+
+    @Override
+    public String getSign() { return sign; }
+
+    @Override
+    public void setSign(String sign) { throw new UnsupportedOperationException(); }
+
+    @Override
+    public String toString() {
+        return "ImmutableCourierResponse{" +
+                "state=" + state +
+                ", code='" + code + '\'' +
+                ", msg='" + msg + '\'' +
+                ", responseData=" + responseData +
+                ", sign='" + sign + '\'' +
+                '}';
     }
 
     @Override
-    public void setCode(String code) {
-        throw new UnsupportedOperationException();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ImmutableCourierResponse<?> that = (ImmutableCourierResponse<?>) o;
+        return state == that.state &&
+                Objects.equals(code, that.code) &&
+                Objects.equals(msg, that.msg) &&
+                Objects.equals(responseData, that.responseData) &&
+                Objects.equals(sign, that.sign);
     }
 
     @Override
-    public void setMsg(String msg) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setResponseData(T responseData) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setSign(String sign) {
-        throw new UnsupportedOperationException();
+    public int hashCode() {
+        return Objects.hash(state, code, msg, responseData, sign);
     }
 }

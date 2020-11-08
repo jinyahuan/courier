@@ -18,7 +18,8 @@ package cn.jinyahuan.commons.courier.supplier.vacancy;
 
 import cn.jinyahuan.commons.courier.request.CourierRequest;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
-import cn.jinyahuan.commons.courier.response.CourierResponseFactory;
+import cn.jinyahuan.commons.courier.response.ImmutableCourierResponse;
+import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
 
 /**
  * 空缺服务商的信使工厂。提供用于生产空缺服务商的特定信使。
@@ -35,21 +36,12 @@ public final class VacancyCourierFactory {
 
     /**
      * 一个不可变的服务不可用化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE 服务不可用状态的响应}。
      */
     public static final VacancyCourier IMMUTABLE_SERVICE_UNAVAILABLE_STATE_COURIER =
             new ServiceUnavailableResponseVacancyCourier();
 
     /**
-     * 一个不可变的失败化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_FAILED_RESPONSE 失败状态的响应}。
-     */
-    public static final VacancyCourier IMMUTABLE_FAILED_STATE_COURIER =
-            new FailedResponseVacancyCourier();
-
-    /**
      * 一个不可变的成功化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_SUCCESSFUL_RESPONSE 成功状态的响应}。
      */
     public static final VacancyCourier IMMUTABLE_SUCCESSFUL_STATE_COURIER =
             new SuccessfulResponseVacancyCourier();
@@ -68,37 +60,37 @@ public final class VacancyCourierFactory {
      */
     public static class VacancyCourierAdapter implements VacancyCourier {
         @Override
-        public CourierResponse send(CourierRequest request) {
+        public CourierResponse<?> send(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse query(CourierRequest request) {
+        public CourierResponse<?> query(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse sendAsync(CourierRequest request) {
+        public CourierResponse<?> sendAsync(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse sendBatch(CourierRequest request) {
+        public CourierResponse<?> sendBatch(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse queryBatch(CourierRequest request) {
+        public CourierResponse<?> queryBatch(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse sendScheduled(CourierRequest request) {
+        public CourierResponse<?> sendScheduled(CourierRequest request) {
             return handle(request);
         }
 
         @Override
-        public CourierResponse queryScheduled(CourierRequest request) {
+        public CourierResponse<?> queryScheduled(CourierRequest request) {
             return handle(request);
         }
 
@@ -108,7 +100,7 @@ public final class VacancyCourierFactory {
          * @param request 请求参数
          * @return {@code null}
          */
-        protected CourierResponse handle(CourierRequest request) {
+        protected CourierResponse<?> handle(CourierRequest request) {
             return null;
         }
     }
@@ -118,49 +110,37 @@ public final class VacancyCourierFactory {
      */
     static class ThrowableVacancyCourier
             extends VacancyCourierAdapter
-            implements VacancyCourier {
+            implements VacancyCourier
+    {
         @Override
-        protected CourierResponse handle(CourierRequest request) {
+        protected CourierResponse<?> handle(CourierRequest request) {
             throw new VacancyCourierSupplierException();
         }
     }
 
     /**
-     * 服务不可用化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE 服务不可用状态的响应}。
+     * 服务不可用化的空缺服务商的信使，该信使的所有方法返回{@link CourierResponseState#SERVICE_UNAVAILABLE 服务不可用状态}的响应信息。
      */
     static class ServiceUnavailableResponseVacancyCourier
             extends VacancyCourierAdapter
-            implements VacancyCourier {
+            implements VacancyCourier
+    {
         @Override
-        protected CourierResponse handle(CourierRequest request) {
-            return CourierResponseFactory.IMMUTABLE_SERVICE_UNAVAILABLE_RESPONSE;
+        protected CourierResponse<?> handle(CourierRequest request) {
+            return new ImmutableCourierResponse<>(CourierResponseState.SERVICE_UNAVAILABLE);
         }
     }
 
     /**
-     * 失败化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_FAILED_RESPONSE 失败状态的响应}。
-     */
-    static class FailedResponseVacancyCourier
-            extends VacancyCourierAdapter
-            implements VacancyCourier {
-        @Override
-        protected CourierResponse handle(CourierRequest request) {
-            return CourierResponseFactory.IMMUTABLE_FAILED_RESPONSE;
-        }
-    }
-
-    /**
-     * 成功化的空缺服务商的信使，该信使的所有方法返回
-     * {@link CourierResponseFactory#IMMUTABLE_SUCCESSFUL_RESPONSE 成功状态的响应}。
+     * 成功化的空缺服务商的信使，该信使的所有方法返回{@link CourierResponseState#SUCCESS 成功状态}的响应信息。
      */
     static class SuccessfulResponseVacancyCourier
             extends VacancyCourierAdapter
-            implements VacancyCourier {
+            implements VacancyCourier
+    {
         @Override
-        protected CourierResponse handle(CourierRequest request) {
-            return CourierResponseFactory.IMMUTABLE_SUCCESSFUL_RESPONSE;
+        protected CourierResponse<?> handle(CourierRequest request) {
+            return new ImmutableCourierResponse<>(CourierResponseState.SUCCESS);
         }
     }
 }

@@ -17,53 +17,114 @@
 package cn.jinyahuan.commons.courier.response;
 
 import cn.jinyahuan.commons.courier.response.state.CourierResponseStateAccessor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
+import java.util.Objects;
 
 /**
- * 抽象的信使响应属性类。
+ * 抽象的信使响应信息。
  *
+ * @param <T> 响应的数据的类型
  * @author Yahuan Jin
  * @since 0.1
  */
-@ToString
-@EqualsAndHashCode
 public abstract class AbstractCourierResponse<T> implements CourierResponse<T> {
-    private static final long serialVersionUID = 1L;
-
     /** 状态码 */
-    @Getter
-    @Setter
     protected int state;
     /** 错误码 */
-    @Getter
-    @Setter
     protected String code;
     /** 错误信息 */
-    @Getter
-    @Setter
     protected String msg;
     /** 响应的数据 */
-    @Getter
-    @Setter
     protected T responseData;
     /** 签名 */
-    @Getter
-    @Setter
     protected String sign;
 
-    public AbstractCourierResponse() {}
-
-    public AbstractCourierResponse(CourierResponseStateAccessor responseState) {
+    public AbstractCourierResponse(CourierResponseStateAccessor responseState, T responseData, String sign) {
         this.state = responseState.getState();
         this.code = responseState.getCode();
         this.msg = responseState.getMsg();
+        this.responseData = responseData;
+        this.sign = sign;
     }
 
     public AbstractCourierResponse(CourierResponseStateAccessor responseState, T responseData) {
-        this(responseState);
+        this(responseState, responseData, null);
+    }
+
+    public AbstractCourierResponse(CourierResponseStateAccessor responseState) {
+        this(responseState, null);
+    }
+
+    public AbstractCourierResponse() {}
+
+    @Override
+    public int getState() {
+        return state;
+    }
+
+    @Override
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String getMsg() {
+        return msg;
+    }
+
+    @Override
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    @Override
+    public T getResponseData() {
+        return responseData;
+    }
+
+    @Override
+    public void setResponseData(T responseData) {
         this.responseData = responseData;
+    }
+
+    @Override
+    public String getSign() {
+        return sign;
+    }
+
+    @Override
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CourierResponse<?> that = (CourierResponse<?>) o;
+        return getState() == that.getState() &&
+                Objects.equals(getCode(), that.getCode()) &&
+                Objects.equals(getMsg(), that.getMsg()) &&
+                Objects.equals(getResponseData(), that.getResponseData()) &&
+                Objects.equals(getSign(), that.getSign());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getState(), getCode(), getMsg(), getResponseData(), getSign());
     }
 }

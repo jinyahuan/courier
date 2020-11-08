@@ -17,7 +17,7 @@
 package cn.jinyahuan.commons.courier.response.state;
 
 /**
- * 响应状态的属性访问器。
+ * 信使响应状态码的属性访问器。
  *
  * @author Yahuan Jin
  * @since 0.1
@@ -26,21 +26,21 @@ public interface CourierResponseStateAccessor {
     /**
      * 获取响应的状态码。
      *
-     * @return
+     * @return 响应的状态码
      */
     int getState();
 
     /**
      * 获取响应的错误编码。
      *
-     * @return
+     * @return 响应的错误编码
      */
     String getCode();
 
     /**
      * 获取响应的错误信息。
      *
-     * @return
+     * @return 响应的错误信息
      */
     String getMsg();
 }

@@ -16,21 +16,17 @@
 
 package cn.jinyahuan.commons.courier.response.state;
 
-import lombok.Getter;
+import cn.jinyahuan.commons.courier.response.CourierResponse;
 
 import java.util.Objects;
 
 /**
- * 响应状态码枚举类。
+ * 信使响应状态码枚举类。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
 public enum CourierResponseState implements CourierResponseStateAccessor {
-    /**
-     * 失败。
-     */
-    FAILURE(0, "0", "failure"),
     /**
      * 成功。
      */
@@ -48,9 +44,13 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
      */
     SCHEDULED_SUBMIT_SUCCESS(4, "4", "scheduled submit ok"),
     /**
+     * 失败。
+     */
+    FAILURE(99, "99", "failure"),
+    /**
      * 服务不可用。
      */
-    SERVICE_UNAVAILABLE(101, "101", "service unavailable"),
+    SERVICE_UNAVAILABLE(503, "503", "service unavailable"),
     ;
 
     private static final CourierResponseState[] ENUMS = CourierResponseState.values();
@@ -58,19 +58,16 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
     /**
      * 状态码。
      */
-    @Getter
     private final int state;
 
     /**
      * 错误编码。
      */
-    @Getter
     private final String code;
 
     /**
      * 错误信息。
      */
-    @Getter
     private final String msg;
 
     CourierResponseState(int state, String code, String msg) {
@@ -79,13 +76,30 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
         this.msg = msg;
     }
 
+    @Override
+    public int getState() {
+        return state;
+    }
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMsg() {
+        return msg;
+    }
+
     /**
-     * @param state
+     * 根据状态值找到对应的枚举。
+     *
+     * @param state 状态值
      * @return may be null
      */
     public static CourierResponseState valueOf(Integer state) {
         if (Objects.nonNull(state)) {
-            final int value = state.intValue();
+            final int value = state;
             for (final CourierResponseState anEnum : ENUMS) {
                 if (value == anEnum.getState()) {
                     return anEnum;
@@ -96,24 +110,38 @@ public enum CourierResponseState implements CourierResponseStateAccessor {
     }
 
     /**
-     * 是否是成功（发送成功，而非请求成功）的状态。
+     * 是否是成功状态。
      *
-     * @param state
-     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
+     * @param state 状态枚举实例
+     * @return (not null) {@code true}，成功状态；{@code false}，其他状态
      * @see #isSuccess(Integer)
+     * @see #isSuccess(CourierResponse)
      */
     public static Boolean isSuccess(CourierResponseState state) {
         return state == SUCCESS;
     }
 
     /**
-     * 是否是成功（发送成功，而非请求成功）的状态。
+     * 是否是成功状态。
      *
-     * @param state
-     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
+     * @param state 状态值
+     * @return (not null) {@code true}，成功状态；{@code false}，其他状态
      * @see #isSuccess(CourierResponseState)
+     * @see #isSuccess(CourierResponse)
      */
     public static Boolean isSuccess(Integer state) {
-        return isSuccess(valueOf(state));
+        return Objects.nonNull(state) && state == SUCCESS.getState();
+    }
+
+    /**
+     * 是否是成功状态。
+     *
+     * @param response 响应信息
+     * @return (not null) {@code true}，成功状态；{@code false}，其他状态
+     * @see #isSuccess(Integer)
+     * @see #isSuccess(CourierResponseState)
+     */
+    public static Boolean isSuccess(CourierResponse<?> response) {
+        return Objects.nonNull(response) && isSuccess(response.getState());
     }
 }

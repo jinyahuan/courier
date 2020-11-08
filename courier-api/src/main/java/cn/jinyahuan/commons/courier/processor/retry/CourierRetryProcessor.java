@@ -19,6 +19,7 @@ package cn.jinyahuan.commons.courier.processor.retry;
 import cn.jinyahuan.commons.courier.Courier;
 import cn.jinyahuan.commons.courier.processor.CourierProcessor;
 import cn.jinyahuan.commons.courier.response.CourierResponse;
+import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public interface CourierRetryProcessor extends CourierProcessor {
                     handleException(courier, method, args, response, e);
                 }
 
-                if (Objects.nonNull(response) && response.isSuccess()) {
+                if (CourierResponseState.isSuccess(response)) {
                     handleRetrySuccess(courier, method, args, currentRetryCount);
                     break;
                 }

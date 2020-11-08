@@ -16,25 +16,19 @@
 
 package cn.jinyahuan.commons.courier.response;
 
-import cn.jinyahuan.commons.courier.response.state.CourierResponseState;
-
-import java.io.Serializable;
-
 /**
- * 信使响应属性类。
+ * 信使响应信息类。
+ * <p>
+ * 判断响应信息的状态可以使用{@link cn.jinyahuan.commons.courier.response.state.CourierResponseState}类的{@code isSuccess}方法。
  *
+ * @param <T> 响应的数据的类型
  * @author Yahuan Jin
+ * @see DefaultCourierResponse
+ * @see ImmutableCourierResponse
+ * @see AbstractCourierResponse
+ * @see CourierResponseAttributeAccessor
  * @since 0.1
  */
-public interface CourierResponse<T> extends CourierResponseAttributeAccessor<T>, Serializable {
-    /**
-     * 是否是成功（发送成功，而非请求成功）的状态。
-     *
-     * @return (not null) {@code true}，成功的状态；{@code false}，失败的状态
-     * @see CourierResponseState#isSuccess(java.lang.Integer)
-     * @see CourierResponseState#isSuccess(cn.jinyahuan.commons.courier.response.state.CourierResponseState)
-     */
-    default Boolean isSuccess() {
-        return CourierResponseState.isSuccess(this.getState());
-    }
+public interface CourierResponse<T> extends CourierResponseAttributeAccessor<T> {
+
 }
