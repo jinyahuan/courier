@@ -18,6 +18,7 @@ package cn.jinyahuan.commons.courier.sample.vacancy;
 
 //import cn.jinyahuan.commons.courier.Courier;
 //import cn.jinyahuan.commons.courier.context.CourierContext;
+//import cn.jinyahuan.commons.courier.request.normal.DefaultNormalCourierRequest;
 //import cn.jinyahuan.commons.courier.supplier.JdkDynamicProxyCourier;
 //import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourier;
 //import cn.jinyahuan.commons.courier.supplier.vacancy.VacancyCourierFactory;
@@ -44,6 +45,6 @@ public class VacancyCourierSupplierSamplesTest {
 //        JdkDynamicProxyCourier courierProxy = new JdkDynamicProxyCourier(courier, context);
 //
 //        Courier courierEnhancer = (Courier)Proxy.newProxyInstance(classLoader, interfaces, courierProxy);
-//        System.out.println(courierEnhancer.query(new DefaultCourierRequest()));
+//        System.out.println(courierEnhancer.query(new DefaultNormalCourierRequest()));
     }
 }

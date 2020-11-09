@@ -16,14 +16,15 @@
 
 package cn.jinyahuan.commons.courier.request;
 
-import java.io.Serializable;
-
 /**
- * 信使请求属性类。
+ * 信使请求信息类。
+ * <p>
+ * 目前只用于标识信使请求信息类，后面做批处理时可能会将通用方法放到这里。
  *
  * @author Yahuan Jin
+ * @see cn.jinyahuan.commons.courier.request.normal.NormalCourierRequest
  * @since 0.1
  */
-public interface CourierRequest extends CourierRequestAttributeAccessor, Serializable {
+public interface CourierRequest {
 
 }
