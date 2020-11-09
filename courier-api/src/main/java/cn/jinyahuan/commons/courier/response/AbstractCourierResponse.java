@@ -25,6 +25,9 @@ import java.util.Objects;
  *
  * @param <T> 响应的数据的类型
  * @author Yahuan Jin
+ * @see DefaultCourierResponse
+ * @see ImmutableCourierResponse
+ * @see CourierResponse
  * @since 0.1
  */
 public abstract class AbstractCourierResponse<T> implements CourierResponse<T> {
