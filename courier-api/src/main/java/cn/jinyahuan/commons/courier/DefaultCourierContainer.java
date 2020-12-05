@@ -16,15 +16,18 @@
 
 package cn.jinyahuan.commons.courier;
 
+import java.util.Map;
+
 /**
- * 信使。
- * <p>
- * 信使的实现类必须 override {@link Object#equals(Object) equals}及{@link Object#hashCode() hashCode}方法，
- * 因为{@link CourierContainer 信使容器}会用到。
+ * 默认的信使容器实现。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface Courier extends AsyncCourier, BatchCourier, ScheduledCourier {
+public class DefaultCourierContainer extends AbstractCourierContainer {
+    public DefaultCourierContainer() {}
 
+    public DefaultCourierContainer(Map<String, Courier> couriers) {
+        super(couriers);
+    }
 }

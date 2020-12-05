@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier;
+package cn.jinyahuan.commons.courier.chooser;
 
 /**
- * 信使。
+ * 带缓存池的信使选择器。
  * <p>
- * 信使的实现类必须 override {@link Object#equals(Object) equals}及{@link Object#hashCode() hashCode}方法，
- * 因为{@link CourierContainer 信使容器}会用到。
+ * 此接口目前仅用于标记信使选择器是带缓存功能的。
  *
  * @author Yahuan Jin
  * @since 0.1
  */
-public interface Courier extends AsyncCourier, BatchCourier, ScheduledCourier {
+public interface PooledCourierChooser {
 
 }

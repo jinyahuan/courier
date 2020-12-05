@@ -28,14 +28,14 @@ import java.util.Objects;
  * 为啥这么搞？因为程序不知道该用哪个构造器实例化呀。
  *
  * @author Yahuan Jin
- * @see AbstractJdkSerializationDynamicCourierChooser
+ * @see AbstractJdkSerializationCourierChooser
  * @see AbstractDynamicCourierChooser
  * @see DynamicCourierChooser
  * @see StaticCourierChooser
  * @see CourierChooser
  * @since 0.1
  */
-public abstract class AbstractClassNameDynamicCourierChooser extends AbstractDynamicCourierChooser {
+public abstract class AbstractClassNameCourierChooser extends AbstractDynamicCourierChooser {
     /**
      * 将待委派的信使的类名转换成实例。
      *

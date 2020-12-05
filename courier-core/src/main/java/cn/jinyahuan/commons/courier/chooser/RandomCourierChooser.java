@@ -14,33 +14,37 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.supplier.chooser;
+package cn.jinyahuan.commons.courier.chooser;
 
-import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.CourierContainer;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * 信使服务商随机选择器，随机选择一个已配置的服务商。
  *
  * @author Yahuan Jin
- * @see CourierSupplierFixedChooser
- * @see CourierSupplierManualChooser
- * @see CourierSupplierPriorityChooser
- * @see CourierSupplierRoundChooser
  * @since 0.1
  */
-public class CourierSupplierRandomChooser extends AbstractCourierSupplierChooser {
-    protected volatile Random random;
+public class RandomCourierChooser
+        extends AbstractStaticCourierChooser
+        implements StaticCourierChooser, PooledCourierChooser, Serializable
+{
+    private static final long serialVersionUID = 1L;
 
-    public CourierSupplierRandomChooser() {
-        super();
+    protected transient volatile Random random;
+
+    protected CourierContainer courierContainer;
+
+    public RandomCourierChooser(Random random, CourierContainer courierContainer) {
+        this.random = random;
+        this.courierContainer = courierContainer;
     }
 
-    public CourierSupplierRandomChooser(List<CourierSupplier> enableCourierHosts) {
-        super(enableCourierHosts);
+    public RandomCourierChooser(CourierContainer courierContainer) {
+        this(null, courierContainer);
     }
 
     /**
@@ -48,21 +52,25 @@ public class CourierSupplierRandomChooser extends AbstractCourierSupplierChooser
      *
      * @param key 当前实现类中，此参数无效，所以可以传任何值，包括{@code null}
      * @return maybe null
+     * @throws ChoosingCourierFailException Most likely because courier container execute remove operation
      */
     @Override
-    public CourierSupplier choose(Object key) {
-        CourierSupplier courierHost = null;
+    public Courier choose(Object key) throws ChoosingCourierFailException {
+        Courier courier = null;
 
-        List<CourierSupplier> enableCourierHosts = getEnableCourierSuppliers();
-        int count = enableCourierHosts.size();
-        if (count == 1) {
-            courierHost = enableCourierHosts.get(0);
-        }
-        else if (count > 1) {
-            courierHost = enableCourierHosts.get(getNextIndex(count));
+        int size = courierContainer.size();
+        if (size > 0) {
+            List<Courier> list = new ArrayList<>(courierContainer.getCouriers());
+            try {
+                courier = size == 1 ? list.get(0)
+                        : list.get(getNextIndex(size));
+            } catch (Exception e) {
+                // may be remove courier
+                throw new ChoosingCourierFailException(e);
+            }
         }
 
-        return courierHost;
+        return courier;
     }
 
     /**

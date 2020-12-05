@@ -30,14 +30,14 @@ import java.util.Objects;
  * 这种实现方式要求信使对象必须实现{@link java.io.Serializable}接口。
  *
  * @author Yahuan Jin
- * @see AbstractClassNameDynamicCourierChooser
+ * @see AbstractClassNameCourierChooser
  * @see AbstractDynamicCourierChooser
  * @see DynamicCourierChooser
  * @see StaticCourierChooser
  * @see CourierChooser
  * @since 0.1
  */
-public abstract class AbstractJdkSerializationDynamicCourierChooser extends AbstractDynamicCourierChooser {
+public abstract class AbstractJdkSerializationCourierChooser extends AbstractDynamicCourierChooser {
     /**
      * 将待委派的信使的序列化字符串转换成实例。
      *

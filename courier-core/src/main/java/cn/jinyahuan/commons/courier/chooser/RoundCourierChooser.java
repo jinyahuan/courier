@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package cn.jinyahuan.commons.courier.supplier.chooser;
+package cn.jinyahuan.commons.courier.chooser;
 
-import cn.jinyahuan.commons.courier.supplier.CourierSupplier;
+import cn.jinyahuan.commons.courier.Courier;
+import cn.jinyahuan.commons.courier.CourierContainer;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,21 +28,20 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 信使服务商轮询选择器，轮询选择已配置的服务商。
  *
  * @author Yahuan Jin
- * @see CourierSupplierFixedChooser
- * @see CourierSupplierManualChooser
- * @see CourierSupplierPriorityChooser
- * @see CourierSupplierRandomChooser
  * @since 0.1
  */
-public class CourierSupplierRoundChooser extends AbstractCourierSupplierChooser {
-    private final AtomicInteger currentIndex = new AtomicInteger(-1);
+public class RoundCourierChooser
+        extends AbstractStaticCourierChooser
+        implements StaticCourierChooser, PooledCourierChooser, Serializable
+{
+    private static final long serialVersionUID = 1L;
 
-    public CourierSupplierRoundChooser() {
-        super();
-    }
+    protected final AtomicInteger currentIndex = new AtomicInteger(-1);
 
-    public CourierSupplierRoundChooser(List<CourierSupplier> enableCourierHosts) {
-        super(enableCourierHosts);
+    protected CourierContainer courierContainer;
+
+    public RoundCourierChooser(CourierContainer courierContainer) {
+        this.courierContainer = courierContainer;
     }
 
     /**
@@ -47,21 +49,25 @@ public class CourierSupplierRoundChooser extends AbstractCourierSupplierChooser 
      *
      * @param key 当前实现类中，此参数无效，所以可以传任何值，包括{@code null}
      * @return maybe null
+     * @throws ChoosingCourierFailException Most likely because courier container execute remove operation
      */
     @Override
-    public CourierSupplier choose(Object key) {
-        CourierSupplier courierHost = null;
+    public Courier choose(Object key) throws ChoosingCourierFailException {
+        Courier courier = null;
 
-        List<CourierSupplier> enableCourierHosts = getEnableCourierSuppliers();
-        int count = enableCourierHosts.size();
-        if (count == 1) {
-            courierHost = enableCourierHosts.get(0);
-        }
-        else if (count > 1) {
-            courierHost = enableCourierHosts.get(getNextIndex(count));
+        int size = courierContainer.size();
+        if (size > 0) {
+            List<Courier> list = new ArrayList<>(courierContainer.getCouriers());
+            try {
+                courier = size == 1 ? list.get(0)
+                        : list.get(getNextIndex(size));
+            } catch (Exception e) {
+                // may be remove courier
+                throw new ChoosingCourierFailException(e);
+            }
         }
 
-        return courierHost;
+        return courier;
     }
 
     /**
@@ -71,7 +77,7 @@ public class CourierSupplierRoundChooser extends AbstractCourierSupplierChooser 
      * @param limit 上限（不包括）
      * @return
      */
-    private int getNextIndex(int limit) {
+    protected int getNextIndex(int limit) {
         for (; ; ) {
             int current = currentIndex.get();
             int next = (current + 1) % limit;
