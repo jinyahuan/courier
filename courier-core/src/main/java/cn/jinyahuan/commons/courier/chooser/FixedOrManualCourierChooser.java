@@ -48,9 +48,12 @@ public class FixedOrManualCourierChooser
      */
     @Override
     public Courier choose(Object key) {
-        Courier result = this.courier;
+        Courier result;
         if (Objects.nonNull(key) && key instanceof Courier) {
             result = (Courier) key;
+        }
+        else {
+            result = this.courier;
         }
         return result;
     }

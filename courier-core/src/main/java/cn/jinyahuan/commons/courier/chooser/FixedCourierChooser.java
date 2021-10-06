@@ -32,7 +32,7 @@ public class FixedCourierChooser
 {
     private static final long serialVersionUID = 1L;
 
-    protected final Courier courier;
+    protected Courier courier;
 
     public FixedCourierChooser(Courier courier) {
         this.courier = courier;

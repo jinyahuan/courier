@@ -35,18 +35,4 @@ public interface CourierChooser {
      * @throws ChoosingCourierFailException 选择失败时会抛出此异常
      */
     Courier choose(Object key) throws ChoosingCourierFailException;
-
-    /**
-     * 特定的选择器实现进行选择时的优先级。
-     * <p>
-     * 默认是以自然序来进行排序，也就是值越小越靠前，值越小优先级越高。
-     */
-    @interface Priority {
-        /**
-         * 优先级的值。
-         *
-         * @return
-         */
-        int value() default Short.MAX_VALUE;
-    }
 }
